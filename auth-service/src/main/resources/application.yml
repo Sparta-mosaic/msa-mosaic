@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        default_batch_fetch_size: 1000 #최적화 옵션
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: create
+      #  create	기존테이블을 삭제하고 다시 생성
+      #  create-drop 기존테이블을 삭제하고 다시생성. 종료 시점에 테이블삭제
+      #  update	변경된 스키마 적용 (운영 DB 에서 사용X)
+      #  validate Entity 와 테이블이 정상 매핑 되었는지 확인
+      #  none 기존테이블을 더 이상 건드리지 않음.
+    open-in-view: true

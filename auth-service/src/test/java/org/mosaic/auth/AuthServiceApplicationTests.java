@@ -1,4 +1,4 @@
-package org.mosaic.auth_service;
+package org.mosaic.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
