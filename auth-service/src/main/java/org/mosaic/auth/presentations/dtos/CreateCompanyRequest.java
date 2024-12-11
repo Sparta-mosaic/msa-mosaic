@@ -1,13 +1,14 @@
 package org.mosaic.auth.presentations.dtos;
 
 import java.util.UUID;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mosaic.auth.application.dtos.CompanyDto;
 import org.mosaic.auth.domain.entity.company.CompanyType;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateCompanyRequest {
 
   private String companyName;
