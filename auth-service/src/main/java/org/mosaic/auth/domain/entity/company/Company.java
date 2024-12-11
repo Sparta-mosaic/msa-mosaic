@@ -13,17 +13,19 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mosaic.auth.domain.entity.user.UserRole;
-import org.mosaic.auth.domain.entity.user.Users;
-import org.mosaic.auth.libs.auditor.AuditingEntity;
+import org.mosaic.auth.domain.entity.user.User;
 
 @Entity
 @Table(name = "p_companies")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Companies extends AuditingEntity {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+public class Company extends AuditingEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,10 +42,25 @@ public class Companies extends AuditingEntity {
   @Column(nullable = false, name = "company_type")
   private CompanyType companyType;
 
-  @Column(nullable = false, name = "slack_email")
-  private String slackEmail;
-
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-  private Users user;
+  private User user;
+
+  @Column(name = "hub_id")
+  private UUID hubId;
+
+  public void updateCompanyUser(User user) {
+    this.user = user;
+  }
+
+  public static Company create(UUID companyId, String companyName, String companyAddress, CompanyType companyType, User user, UUID hubId) {
+    return Company.builder()
+        .companyId(companyId)
+        .companyName(companyName)
+        .companyAddress(companyAddress)
+        .companyType(companyType)
+        .user(user)
+        .hubId(hubId)
+        .build();
+  }
 }

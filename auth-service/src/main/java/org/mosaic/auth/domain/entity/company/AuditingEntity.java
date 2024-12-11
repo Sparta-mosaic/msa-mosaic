@@ -1,4 +1,4 @@
-package org.mosaic.auth.libs.auditor;
+package org.mosaic.auth.domain.entity.company;
 
 
 import jakarta.persistence.Column;

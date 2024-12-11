@@ -10,15 +10,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mosaic.auth.libs.auditor.AuditingEntity;
+import org.mosaic.auth.domain.entity.company.AuditingEntity;
 
 @Entity
 @Table(name = "p_users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Users extends AuditingEntity {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+public class User extends AuditingEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,4 +41,13 @@ public class Users extends AuditingEntity {
 
   @Column(nullable = false, name = "slack_email")
   private String slackEmail;
+
+  public static User create(String username, String password, UserRole role, String slackEmail) {
+    return User.builder()
+        .username(username)
+        .password(password)
+        .role(role)
+        .slackEmail(slackEmail)
+        .build();
+  }
 }
