@@ -11,8 +11,8 @@ import org.mosaic.auth.domain.entity.company.CompanyType;
 
 @Getter
 @NoArgsConstructor
-@Builder(access = AccessLevel.PRIVATE)
-@AllArgsConstructor
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CompanyResponse {
 
   private UUID id;

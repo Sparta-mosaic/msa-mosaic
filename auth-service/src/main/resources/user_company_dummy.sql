@@ -5,11 +5,11 @@ VALUES
     (gen_random_uuid(), 'master1', 'password1', 'MASTER', 'master1@example.com'),
     (gen_random_uuid(), 'yeon', 'yeon', 'MASTER', 'yeonjh915@gmail.com'),
 
-    (gen_random_uuid(), 'manager1', 'password3', 'MANAGER_HUB', 'manager1@example.com'),
-    (gen_random_uuid(), 'manager2', 'password4', 'MANAGER_HUB', 'manager2@example.com'),
-    (gen_random_uuid(), 'manager3', 'password5', 'MANAGER_HUB', 'manager3@example.com'),
-    (gen_random_uuid(), 'manager4', 'password6', 'MANAGER_HUB', 'manager4@example.com'),
-    (gen_random_uuid(), 'manager5', 'password7', 'MANAGER_HUB', 'manager5@example.com'),
+    (gen_random_uuid(), 'manager1', 'password3', 'HUB_MANAGER', 'manager1@example.com'),
+    (gen_random_uuid(), 'manager2', 'password4', 'HUB_MANAGER', 'manager2@example.com'),
+    (gen_random_uuid(), 'manager3', 'password5', 'HUB_MANAGER', 'manager3@example.com'),
+    (gen_random_uuid(), 'manager4', 'password6', 'HUB_MANAGER', 'manager4@example.com'),
+    (gen_random_uuid(), 'manager5', 'password7', 'HUB_MANAGER', 'manager5@example.com'),
 
     (gen_random_uuid(), 'delivery1', 'password8', 'DELIVERY', 'delivery1@example.com'),
     (gen_random_uuid(), 'delivery2', 'password9', 'DELIVERY', 'delivery2@example.com'),

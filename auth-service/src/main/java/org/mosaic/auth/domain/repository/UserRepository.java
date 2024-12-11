@@ -12,5 +12,4 @@ public interface UserRepository {
 
   Optional<User> findById(UUID userId);
 
-  Optional<User> findByUsername(String username);
 }

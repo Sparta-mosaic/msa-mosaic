@@ -6,6 +6,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.application.dtos.CompanyResponse;
 import org.mosaic.auth.application.dtos.UserResponse;
+import org.mosaic.auth.application.service.CompanyService;
 import org.mosaic.auth.application.service.UserService;
 import org.mosaic.auth.libs.ApiResponseUtil.ApiResult;
 import org.mosaic.auth.presentations.dtos.CreateCompanyRequest;
@@ -21,28 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("api/v1/auth")
+@RequestMapping("api/v1/auth/company")
 @RequiredArgsConstructor
-public class UserController {
+public class CompanyController {
 
-    private final UserService userService;
+    private final CompanyService companyService;
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<ApiResult<UserResponse>> getUser(
-        @PathVariable String userId) {
+    @GetMapping("/{companyId}")
+    public ResponseEntity<ApiResult<CompanyResponse>> getCompany(
+        @PathVariable String companyId) {
 
         return new ResponseEntity<>(success(
-            userService.findUserById(userId)),
+            companyService.findCompanyById(UUID.fromString(companyId))),
             HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResult<UserResponse>> createUser(
-        @RequestBody CreateUserRequest request) {
+    public ResponseEntity<ApiResult<CompanyResponse>> createCompany(
+        @RequestBody CreateCompanyRequest request){
 
-      return new ResponseEntity<>(success(
-          userService.createUser(request.toDTO())),
-          HttpStatus.CREATED);
+        return new ResponseEntity<>(success(
+            companyService.createCompany(request.toDTO())),
+            HttpStatus.CREATED);
     }
 
 }
