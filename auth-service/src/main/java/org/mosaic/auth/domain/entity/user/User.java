@@ -38,7 +38,7 @@ public class User extends BaseEntity {
   @Column(unique = true, nullable = false,
       columnDefinition = "VARCHAR(36)",
       name = "user_uuid")
-  private UUID userUUID;
+  private String userUUID;
 
   @Column(nullable = false)
   private String username;

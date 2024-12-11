@@ -45,10 +45,15 @@ public class BaseEntity {
     private Boolean isPublic = true;
 
 
-    public void delete(Long userId) {
+    public void softDelete() {
         this.deletedAt = LocalDateTime.now();
-        this.deletedBy = userId;
         this.isDeleted = true;
+    }
+
+    public void delete() {
+        this.deletedAt = LocalDateTime.now();
+        this.isDeleted = true;
+        this.isPublic = false;
     }
 
     public void updatePrivate() {
