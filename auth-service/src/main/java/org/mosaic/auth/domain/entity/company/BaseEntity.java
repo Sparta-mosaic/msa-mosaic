@@ -16,7 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AuditingEntity {
+public class BaseEntity {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -39,8 +39,19 @@ public class AuditingEntity {
     @Column(name = "deleted_by")
     private UUID deletedBy;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted = false;
+
+    @Column(name = "is_public")
+    private Boolean isPublic = true;
+
+
     public void delete(UUID userId) {
         this.deletedAt = LocalDateTime.now();
         this.deletedBy = userId;
+    }
+
+    public void updatePrivate() {
+        this.isPublic = false;
     }
 }

@@ -1,7 +1,6 @@
 package org.mosaic.auth.application.dtos;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.mosaic.auth.domain.entity.user.UserRole;

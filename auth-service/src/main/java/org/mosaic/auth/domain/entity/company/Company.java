@@ -25,7 +25,7 @@ import org.mosaic.auth.domain.entity.user.User;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class Company extends AuditingEntity {
+public class Company extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

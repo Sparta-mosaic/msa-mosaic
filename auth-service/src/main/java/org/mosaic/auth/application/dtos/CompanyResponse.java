@@ -2,17 +2,13 @@ package org.mosaic.auth.application.dtos;
 
 import java.util.UUID;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.mosaic.auth.domain.entity.company.Company;
 import org.mosaic.auth.domain.entity.company.CompanyType;
 
 @Getter
-@NoArgsConstructor
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
 public class CompanyResponse {
 
   private UUID id;

@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mosaic.auth.domain.entity.company.AuditingEntity;
+import org.mosaic.auth.domain.entity.company.BaseEntity;
 
 @Entity
 @Table(name = "p_users")
@@ -22,7 +22,7 @@ import org.mosaic.auth.domain.entity.company.AuditingEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class User extends AuditingEntity {
+public class User extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
