@@ -2,13 +2,10 @@ package org.mosaic.auth.presentations;
 
 import static org.mosaic.auth.libs.ApiResponseUtil.success;
 
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.mosaic.auth.application.dtos.CompanyResponse;
 import org.mosaic.auth.application.dtos.UserResponse;
 import org.mosaic.auth.application.service.UserService;
 import org.mosaic.auth.libs.ApiResponseUtil.ApiResult;
-import org.mosaic.auth.presentations.dtos.CreateCompanyRequest;
 import org.mosaic.auth.presentations.dtos.CreateUserRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +37,9 @@ public class UserController {
     public ResponseEntity<ApiResult<UserResponse>> createUser(
         @RequestBody CreateUserRequest request) {
 
-      return new ResponseEntity<>(success(
-          userService.createUser(request.toDTO())),
-          HttpStatus.CREATED);
+        return new ResponseEntity<>(success(
+            userService.createUser(request.toDTO())),
+            HttpStatus.CREATED);
     }
 
 }
