@@ -4,8 +4,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.application.dtos.CompanyDto;
 import org.mosaic.auth.application.dtos.CompanyResponse;
-import org.mosaic.auth.application.dtos.UserDto;
-import org.mosaic.auth.application.dtos.UserResponse;
 import org.mosaic.auth.domain.entity.company.Company;
 import org.mosaic.auth.domain.entity.user.User;
 import org.mosaic.auth.domain.repository.CompanyRepository;
