@@ -10,9 +10,8 @@ import org.mosaic.auth.domain.entity.user.UserRole;
 import org.mosaic.auth.domain.entity.user.User;
 
 @Getter
-@NoArgsConstructor
-@Builder(access = AccessLevel.PRIVATE)
-@AllArgsConstructor
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserResponse {
 
   private UUID userId;

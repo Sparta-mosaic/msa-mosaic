@@ -21,7 +21,7 @@ import org.mosaic.auth.domain.entity.company.AuditingEntity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 public class User extends AuditingEntity {
 
   @Id

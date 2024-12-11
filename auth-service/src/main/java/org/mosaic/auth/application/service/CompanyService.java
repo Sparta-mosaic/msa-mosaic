@@ -15,29 +15,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class CompanyService {
 
   private final UserRepository userRepository;
+  private final CompanyRepository companyRepository;
 
   @Transactional
-  public UserResponse createUser(UserDto request) {
+  public CompanyResponse createCompany(CompanyDto request) {
 
-    User user = User.create(
-        request.getUsername(),
-        request.getPassword(),
-        request.getRole(),
-        request.getSlackEmail()
-    );
+    User user = userRepository.findById(request.getUserId())
+        .orElseThrow(() -> new RuntimeException("User not found"));
 
-    return UserResponse.of(userRepository.save(user));
+    Company company = Company.create(
+        request.getId(),
+        request.getCompanyName(),
+        request.getCompanyAddress(),
+        request.getCompanyType(),
+        user,
+        request.getHubId());
+
+    return CompanyResponse.of(companyRepository.save(company));
   }
 
   @Transactional(readOnly = true)
-  public UserResponse findUserById(String userId) {
+  public CompanyResponse findCompanyById(UUID companyId) {
+    Company company = companyRepository.findById(companyId)
+        .orElseThrow(() -> new RuntimeException("Company not found"));
 
-    User user = userRepository.findById(UUID.fromString(userId))
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
-    return UserResponse.of(user);
+    return CompanyResponse.of(company);
   }
 }
