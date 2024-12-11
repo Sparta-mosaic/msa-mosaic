@@ -1,6 +1,5 @@
 package org.mosaic.auth.application.dtos;
 
-import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,19 +10,20 @@ import org.mosaic.auth.domain.entity.company.CompanyType;
 @Builder(access = AccessLevel.PRIVATE)
 public class CompanyResponse {
 
-  private Long id;
-  private String companyName;
-  private String companyAddress;
+  private Long companyId;
+  private String name;
+  private String address;
   private CompanyType companyType;
   private Long userId;
   private Long hubId;
 
   public static CompanyResponse of(Company company){
     return CompanyResponse.builder()
-        .id(company.getCompanyId())
-        .companyName(company.getCompanyName())
-        .companyAddress(company.getCompanyAddress())
+        .companyId(company.getCompanyId())
+        .name(company.getCompanyName())
+        .address(company.getCompanyAddress())
         .companyType(company.getCompanyType())
+        .userId(company.getUser().getUserId())
         .hubId(company.getHubId())
         .build();
   }

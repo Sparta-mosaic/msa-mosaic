@@ -41,7 +41,7 @@ public class Company extends BaseEntity {
   @Column(unique = true, nullable = false,
       columnDefinition = "VARCHAR(36)",
       name = "company_uuid")
-  private UUID companyUUID;
+  private String companyUUID;
 
   @Column(nullable = false, name = "company_name")
   private String companyName;
@@ -69,5 +69,15 @@ public class Company extends BaseEntity {
         .user(user)
         .hubId(hubId)
         .build();
+  }
+
+  public void update(String name, String address, CompanyType companyType) {
+    this.companyName = name;
+    this.companyAddress = address;
+    this.companyType = companyType;
+  }
+
+  public void updateHubId(Long hubId) {
+    this.hubId = hubId;
   }
 }

@@ -7,22 +7,20 @@ import org.mosaic.auth.domain.entity.company.CompanyType;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
-public class CompanyDto {
+public class UpdateCompanyDto {
 
-  private Long id;
+  private Long companyId;
   private String name;
   private String address;
   private CompanyType companyType;
-  private Long userId;
-  private Long hubId;
 
-  public static CompanyDto create(String name, String address, CompanyType companyType, Long userId, Long hubId) {
-    return CompanyDto.builder()
+  public static UpdateCompanyDto create(Long id, String name, String address,
+      CompanyType companyType) {
+    return UpdateCompanyDto.builder()
+        .companyId(id)
         .name(name)
         .address(address)
         .companyType(companyType)
-        .userId(userId)
-        .hubId(hubId)
         .build();
   }
 

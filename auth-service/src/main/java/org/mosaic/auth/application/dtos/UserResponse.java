@@ -1,6 +1,5 @@
 package org.mosaic.auth.application.dtos;
 
-import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

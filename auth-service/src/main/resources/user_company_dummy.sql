@@ -72,13 +72,3 @@ VALUES
     (gen_random_uuid(), '파리바게뜨 옥암대우점', '전남 목포시 남악1로52번길 6-3 (옥암동) 1층(옥암동)', 'DEMAND', (SELECT user_id FROM p_users WHERE username = 'company18'), 15),
     (gen_random_uuid(), '동백카츠 경북 도청점', '경북 예천군 호명면 새움1로 10', 'DEMAND', (SELECT user_id FROM p_users WHERE username = 'company19'), 16),
     (gen_random_uuid(), 'KR 모터스', '경남 창원시 성산구 완암로 28', 'DEMAND', (SELECT user_id FROM p_users WHERE username = 'company20'), 17);
-
--- Insert into Users table
-INSERT INTO p_hub_manager (manager_uuid, user_id, hub_id)
-VALUES
-    (gen_random_uuid(), '(SELECT user_id FROM p_users WHERE username = 'manager1'), 1),
-    (gen_random_uuid(), '(SELECT user_id FROM p_users WHERE username = 'manager2'), 2),
-    (gen_random_uuid(), '(SELECT user_id FROM p_users WHERE username = 'manager3'), 3),
-    (gen_random_uuid(), '(SELECT user_id FROM p_users WHERE username = 'manager4'), 4),
-    (gen_random_uuid(), '(SELECT user_id FROM p_users WHERE username = 'manager5'), 5);
-
