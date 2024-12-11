@@ -11,7 +11,7 @@ import org.mosaic.auth.domain.entity.user.User;
 @Builder(access = AccessLevel.PRIVATE)
 public class UserResponse {
 
-  private UUID userId;
+  private Long userId;
   private String username;
   private UserRole role;
   private String slackEmail;

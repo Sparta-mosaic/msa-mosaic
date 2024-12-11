@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,7 +22,7 @@ public class BaseEntity {
 
     @CreatedBy
     @Column(name = "created_by", updatable = false)
-    private UUID createdBy;
+    private Long createdBy;
 
     @LastModifiedDate
     @Column(name = "updated_at")
@@ -31,13 +30,13 @@ public class BaseEntity {
 
     @LastModifiedBy
     @Column(name = "updated_by")
-    private UUID updatedBy;
+    private Long updatedBy;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
     @Column(name = "deleted_by")
-    private UUID deletedBy;
+    private Long deletedBy;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
@@ -46,9 +45,10 @@ public class BaseEntity {
     private Boolean isPublic = true;
 
 
-    public void delete(UUID userId) {
+    public void delete(Long userId) {
         this.deletedAt = LocalDateTime.now();
         this.deletedBy = userId;
+        this.isDeleted = true;
     }
 
     public void updatePrivate() {

@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResult<UserResponse>> getUser(
-        @PathVariable String userId) {
+        @PathVariable Long userId) {
 
         return new ResponseEntity<>(success(
             userService.findUserById(userId)),

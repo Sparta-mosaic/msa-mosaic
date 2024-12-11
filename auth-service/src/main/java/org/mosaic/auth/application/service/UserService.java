@@ -1,6 +1,5 @@
 package org.mosaic.auth.application.service;
 
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.application.dtos.UserDto;
 import org.mosaic.auth.application.dtos.UserResponse;
@@ -29,11 +28,15 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public UserResponse findUserById(String userId) {
+  public UserResponse findUserById(Long userId) {
 
-    User user = userRepository.findById(UUID.fromString(userId))
+    User user = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("User not found"));
 
     return UserResponse.of(user);
   }
+
+  // update
+
+  // delete
 }
