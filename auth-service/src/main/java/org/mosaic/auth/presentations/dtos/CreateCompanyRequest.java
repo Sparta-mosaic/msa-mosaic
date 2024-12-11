@@ -1,6 +1,5 @@
 package org.mosaic.auth.presentations.dtos;
 
-import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,8 +13,8 @@ public class CreateCompanyRequest {
   private String companyName;
   private String companyAddress;
   private CompanyType companyType;
-  private UUID userId;
-  private UUID hubId;
+  private Long userId;
+  private Long hubId;
 
   public CompanyDto toDTO() {
     return CompanyDto.create(companyName, companyAddress, companyType, userId, hubId);

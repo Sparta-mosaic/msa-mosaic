@@ -2,7 +2,6 @@ package org.mosaic.auth.presentations;
 
 import static org.mosaic.auth.libs.ApiResponseUtil.success;
 
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.application.dtos.CompanyResponse;
 import org.mosaic.auth.application.service.CompanyService;
@@ -27,10 +26,10 @@ public class CompanyController {
 
     @GetMapping("/{companyId}")
     public ResponseEntity<ApiResult<CompanyResponse>> getCompany(
-        @PathVariable String companyId) {
+        @PathVariable Long companyId) {
 
         return new ResponseEntity<>(success(
-            companyService.findCompanyById(UUID.fromString(companyId))),
+            companyService.findCompanyById(companyId)),
             HttpStatus.OK);
     }
 

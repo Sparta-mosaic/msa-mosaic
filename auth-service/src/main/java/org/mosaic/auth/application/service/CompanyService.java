@@ -1,6 +1,5 @@
 package org.mosaic.auth.application.service;
 
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.application.dtos.CompanyDto;
 import org.mosaic.auth.application.dtos.CompanyResponse;
@@ -36,7 +35,7 @@ public class CompanyService {
   }
 
   @Transactional(readOnly = true)
-  public CompanyResponse findCompanyById(UUID companyId) {
+  public CompanyResponse findCompanyById(Long companyId) {
     Company company = companyRepository.findById(companyId)
         .orElseThrow(() -> new RuntimeException("Company not found"));
 
