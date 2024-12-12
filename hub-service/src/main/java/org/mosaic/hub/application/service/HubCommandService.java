@@ -8,6 +8,8 @@ import org.mosaic.hub.application.dto.UpdateHubResponse;
 import org.mosaic.hub.domain.model.Hub;
 import org.mosaic.hub.domain.repository.HubRepository;
 import org.mosaic.hub.libs.exception.CustomException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ public class HubCommandService {
 
   private final HubRepository hubRepository;
 
+  @CachePut(cacheNames = "hubCache", key = "#result.hubUuid")
   public CreateHubResponse createHub(CreateHubRequest request) {
     Hub hub = hubRepository.save(Hub.createHub(
         request.getManagerId(), request.getName(), request.getAddress(),
@@ -27,6 +30,7 @@ public class HubCommandService {
     return CreateHubResponse.from(hub);
   }
 
+  @CachePut(cacheNames = "hubCache", key = "args[0]")
   public UpdateHubResponse updateHub(String hubUuid, UpdateHubRequest request) {
     Hub hub = getHubByUuid(hubUuid);
     hub.update(
@@ -37,6 +41,7 @@ public class HubCommandService {
     return UpdateHubResponse.from(hub);
   }
 
+  @CacheEvict(cacheNames = "hubCache", key = "args[1]")
   public void deleteHub(String userUuid, String hubUuid) {
     Hub hub = getHubByUuid(hubUuid);
     hub.softDelete(userUuid);
