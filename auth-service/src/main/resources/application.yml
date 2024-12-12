@@ -15,8 +15,8 @@ spring:
         format_sql: true
         use_sql_comments: false
         default_batch_fetch_size: 1000
+    open-in-view: false
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: update
-    open-in-view: true
