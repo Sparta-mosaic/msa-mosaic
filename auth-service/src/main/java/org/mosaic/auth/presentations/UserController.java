@@ -2,7 +2,6 @@ package org.mosaic.auth.presentations;
 
 import static org.mosaic.auth.libs.ApiResponseUtil.success;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.application.dtos.UserResponse;
 import org.mosaic.auth.application.service.UserService;
@@ -32,11 +31,6 @@ public class UserController {
         return new ResponseEntity<>(success(
             userService.findUserById(userId)),
             HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<ApiResult<List<UserResponse>>> findPage() {
-        return null;
     }
 
     @PostMapping
