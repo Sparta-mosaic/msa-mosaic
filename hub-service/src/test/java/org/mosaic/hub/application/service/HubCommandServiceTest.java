@@ -9,6 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mosaic.hub.application.dto.CreateHubRequest;
 import org.mosaic.hub.application.dto.CreateHubResponse;
+import org.mosaic.hub.application.dto.UpdateHubRequest;
+import org.mosaic.hub.application.dto.UpdateHubResponse;
+import org.mosaic.hub.domain.model.Hub;
+import org.mosaic.hub.domain.repository.HubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -22,6 +26,9 @@ class HubCommandServiceTest {
 
   @Autowired
   private HubCommandService hubCommandService;
+
+  @Autowired
+  private HubRepository hubRepository;
 
   @BeforeEach
   void setUp() {
@@ -61,5 +68,42 @@ class HubCommandServiceTest {
             response.getLatitude(), response.getLongitude(),
             response.getCreatedAt(), response.getCreatedBy(),
             response.isPublic());
+  }
+
+  @Test
+  @DisplayName("updateHub: 허브 수정 정보를 받아 허브를 수정한다.")
+  void updateHub_success() {
+    // given
+    final Hub hub = createHub();
+
+    final Long managerId = 1L;
+    final String name = "서울특별시 센터 수정";
+    final String address = "서울특별시 송파구 송파대로 55-1";
+    final double latitude = 37.556171545341;
+    final double longitude = 126.80541564685742;
+    final UpdateHubRequest request =
+        new UpdateHubRequest(managerId, name, address, latitude, longitude);
+
+    // when
+    UpdateHubResponse response = hubCommandService.updateHub(hub.getUuid(), request);
+
+    // then
+    assertThat(response.getHubId()).isNotNull();
+    assertThat(response)
+        .extracting(
+            "managerId", "name", "address", "latitude", "longitude",
+            "createdAt", "createdBy", "updatedAt", "updatedBy", "isPublic")
+        .containsExactly(
+            response.getManagerId(), response.getName(), response.getAddress(),
+            response.getLatitude(), response.getLongitude(),
+            response.getCreatedAt(), response.getCreatedBy(),
+            response.getUpdatedAt(), response.getUpdatedBy(),
+            response.isPublic());
+  }
+
+  private Hub createHub() {
+    return hubRepository.save(Hub.createHub(
+        1L, "서울특별시 센터", "서울특별시 송파구 송파대로 55",
+        37.456171545341, 126.70541564685742));
   }
 }

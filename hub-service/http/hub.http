@@ -10,3 +10,15 @@ X-User-Id: 123e4567-e89b-12d3-a456-426614174000
   "latitude": 38,
   "longitude":132
 }
+
+### 허브 수정
+PUT http://localhost:8080/api/v1/admin/hubs/e1b84264-b95b-4a53-b7b9-3fba65bd784e
+Content-Type: application/json
+X-User-Id: 123e4567-e89b-12d3-a456-426614174000
+
+{
+  "name": "테스트 허브",
+  "address": "테스트 허브 주소",
+  "latitude": 35,
+  "longitude":127
+}
