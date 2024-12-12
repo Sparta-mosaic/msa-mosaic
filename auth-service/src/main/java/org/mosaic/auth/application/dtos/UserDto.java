@@ -1,8 +1,10 @@
 package org.mosaic.auth.application.dtos;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import org.mosaic.auth.domain.entity.user.User;
 import org.mosaic.auth.domain.entity.user.UserRole;
 
 @Getter
@@ -21,6 +23,10 @@ public class UserDto {
           .role(role)
           .slackEmail(slackEmail)
           .build();
+    }
+
+    public static List<UserDto> toDtoList(List<User> users) {
+        return null;
     }
 
 }
