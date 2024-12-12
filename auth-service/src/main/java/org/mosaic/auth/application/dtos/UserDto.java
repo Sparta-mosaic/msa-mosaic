@@ -17,16 +17,12 @@ public class UserDto {
     private String slackEmail;
 
     public static UserDto create(String username, String password, UserRole role, String slackEmail) {
-      return UserDto.builder()
-          .username(username)
-          .password(password)
-          .role(role)
-          .slackEmail(slackEmail)
-          .build();
-    }
-
-    public static List<UserDto> toDtoList(List<User> users) {
-        return null;
+        return UserDto.builder()
+            .username(username)
+            .password(password)
+            .role(role)
+            .slackEmail(slackEmail)
+            .build();
     }
 
 }

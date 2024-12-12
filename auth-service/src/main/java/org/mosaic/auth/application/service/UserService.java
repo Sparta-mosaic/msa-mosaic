@@ -36,7 +36,5 @@ public class UserService {
     return UserResponse.of(user);
   }
 
-  // update
 
-  // delete
 }
