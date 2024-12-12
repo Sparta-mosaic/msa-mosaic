@@ -60,4 +60,13 @@ public class Hub extends BaseEntity {
         .coordinates(new Coordinates(latitude, longitude))
         .build();
   }
+
+  public void update(
+      Long managerId, String name, String address,
+      double latitude, double longitude) {
+    this.managerId = managerId;
+    this.name = name;
+    this.address = address;
+    this.coordinates = new Coordinates(latitude, longitude);
+  }
 }
