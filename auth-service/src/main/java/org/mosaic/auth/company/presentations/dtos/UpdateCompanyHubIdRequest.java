@@ -1,0 +1,19 @@
+package org.mosaic.auth.company.presentations.dtos;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.mosaic.auth.company.application.dtos.UpdateCompanyHubIdDto;
+
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class UpdateCompanyHubIdRequest {
+
+  private Long companyId;
+  private Long hubId;
+
+  public UpdateCompanyHubIdDto toDTO() {
+    return UpdateCompanyHubIdDto.create(companyId, hubId);
+  }
+
+}
