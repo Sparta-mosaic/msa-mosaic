@@ -10,7 +10,7 @@ import org.mosaic.hub.domain.model.Hub;
 
 @Getter
 @Builder(access = PRIVATE)
-@AllArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
 public class UpdateHubResponse {
 
   private Long hubId;

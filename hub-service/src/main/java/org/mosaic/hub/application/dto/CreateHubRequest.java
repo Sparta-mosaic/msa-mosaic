@@ -1,12 +1,16 @@
 package org.mosaic.hub.application.dto;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = PRIVATE)
 public class CreateHubRequest {
 
   private Long managerId;
