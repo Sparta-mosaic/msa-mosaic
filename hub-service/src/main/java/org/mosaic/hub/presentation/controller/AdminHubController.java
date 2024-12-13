@@ -7,12 +7,12 @@ import static org.mosaic.hub.libs.util.ApiResponseUtils.ok;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.mosaic.hub.application.dto.CreateHubRequest;
-import org.mosaic.hub.application.dto.CreateHubResponse;
-import org.mosaic.hub.application.dto.UpdateHubRequest;
-import org.mosaic.hub.application.dto.UpdateHubResponse;
+import org.mosaic.hub.application.dtos.CreateHubResponse;
+import org.mosaic.hub.application.dtos.UpdateHubResponse;
 import org.mosaic.hub.application.service.HubCommandService;
 import org.mosaic.hub.libs.util.ApiResponseUtils.CommonResponse;
+import org.mosaic.hub.presentation.dtos.CreateHubRequest;
+import org.mosaic.hub.presentation.dtos.UpdateHubRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,14 +31,14 @@ public class AdminHubController {
   @PostMapping("/api/v1/admin/hubs")
   public ResponseEntity<CommonResponse<CreateHubResponse>> createHub(
       @Valid @RequestBody CreateHubRequest request) {
-    return created(hubCommandService.createHub(request));
+    return created(hubCommandService.createHub(request.toService()));
   }
 
   @PutMapping("/api/v1/admin/hubs/{hubUuid}")
   public ResponseEntity<CommonResponse<UpdateHubResponse>> updateHub(
       @PathVariable String hubUuid,
       @Valid @RequestBody UpdateHubRequest request) {
-    return ok(hubCommandService.updateHub(hubUuid, request));
+    return ok(hubCommandService.updateHub(hubUuid, request.toService()));
   }
 
   @DeleteMapping("/api/v1/admin/hubs/{hubUuid}")

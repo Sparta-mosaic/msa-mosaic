@@ -8,12 +8,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mosaic.hub.application.dto.CreateHubRequest;
-import org.mosaic.hub.application.dto.CreateHubResponse;
-import org.mosaic.hub.application.dto.UpdateHubRequest;
-import org.mosaic.hub.application.dto.UpdateHubResponse;
+import org.mosaic.hub.application.dtos.CreateHubResponse;
+import org.mosaic.hub.application.dtos.UpdateHubResponse;
 import org.mosaic.hub.domain.model.Hub;
 import org.mosaic.hub.domain.repository.HubRepository;
+import org.mosaic.hub.presentation.dtos.CreateHubRequest;
+import org.mosaic.hub.presentation.dtos.UpdateHubRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -57,7 +57,7 @@ class HubCommandServiceTest {
         new CreateHubRequest(managerId, name, address, latitude, longitude);
 
     // when
-    CreateHubResponse response = hubCommandService.createHub(request);
+    CreateHubResponse response = hubCommandService.createHub(request.toService());
 
     // then
     assertThat(response.getHubId()).isNotNull();
@@ -86,7 +86,7 @@ class HubCommandServiceTest {
         new UpdateHubRequest(managerId, name, address, latitude, longitude);
 
     // when
-    UpdateHubResponse response = hubCommandService.updateHub(hub.getUuid(), request);
+    UpdateHubResponse response = hubCommandService.updateHub(hub.getUuid(), request.toService());
 
     // then
     assertThat(response.getHubId()).isNotNull();

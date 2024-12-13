@@ -7,7 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mosaic.hub.application.dto.HubResponse;
+import org.mosaic.hub.application.dtos.HubResponse;
 import org.mosaic.hub.domain.model.Hub;
 import org.mosaic.hub.domain.repository.HubRepository;
 import org.springframework.beans.factory.annotation.Autowired;

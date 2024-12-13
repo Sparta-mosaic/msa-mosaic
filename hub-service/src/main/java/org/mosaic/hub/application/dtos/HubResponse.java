@@ -1,4 +1,4 @@
-package org.mosaic.hub.application.dto;
+package org.mosaic.hub.application.dtos;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -11,9 +11,8 @@ import org.mosaic.hub.domain.model.Hub;
 @Getter
 @Builder(access = PRIVATE)
 @AllArgsConstructor(access = PRIVATE)
-public class CreateHubResponse {
+public class HubResponse {
 
-  private Long hubId;
   private String hubUuid;
   private Long managerId;
   private String name;
@@ -22,11 +21,12 @@ public class CreateHubResponse {
   private double longitude;
   private LocalDateTime createdAt;
   private String createdBy;
+  private LocalDateTime updatedAt;
+  private String updatedBy;
   private boolean isPublic;
 
-  public static CreateHubResponse from(Hub hub) {
-    return CreateHubResponse.builder()
-        .hubId(hub.getId())
+  public static HubResponse from(Hub hub) {
+    return HubResponse.builder()
         .hubUuid(hub.getUuid())
         .managerId(hub.getManagerId())
         .name(hub.getName())
@@ -35,6 +35,8 @@ public class CreateHubResponse {
         .longitude(hub.getCoordinates().getLongitude())
         .createdAt(hub.getCreatedAt())
         .createdBy(hub.getCreatedBy())
+        .updatedAt(hub.getUpdatedAt())
+        .updatedBy(hub.getUpdatedBy())
         .isPublic(hub.isPublic())
         .build();
   }
