@@ -2,8 +2,8 @@ package org.mosaic.hub.application.service;
 
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
-import org.mosaic.hub.application.dto.HubPageResponse;
-import org.mosaic.hub.application.dto.HubResponse;
+import org.mosaic.hub.application.dtos.HubPageResponse;
+import org.mosaic.hub.application.dtos.HubResponse;
 import org.mosaic.hub.domain.model.Hub;
 import org.mosaic.hub.domain.repository.HubRepository;
 import org.mosaic.hub.libs.exception.CustomException;

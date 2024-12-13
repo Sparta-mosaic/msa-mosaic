@@ -1,4 +1,4 @@
-package org.mosaic.hub.application.dto;
+package org.mosaic.hub.presentation.dtos;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -7,11 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
+import org.mosaic.hub.application.dtos.CreateHubServiceRequest;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = PRIVATE)
-public class UpdateHubRequest {
+public class CreateHubRequest {
 
   private Long managerId;
 
@@ -26,4 +27,9 @@ public class UpdateHubRequest {
 
   @Range(min = 124, max = 132)
   private double longitude;
+
+  public CreateHubServiceRequest toService() {
+    return CreateHubServiceRequest.create(
+        managerId, name, address, latitude, longitude);
+  }
 }

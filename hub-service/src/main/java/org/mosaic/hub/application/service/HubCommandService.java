@@ -1,10 +1,10 @@
 package org.mosaic.hub.application.service;
 
 import lombok.RequiredArgsConstructor;
-import org.mosaic.hub.application.dto.CreateHubRequest;
-import org.mosaic.hub.application.dto.CreateHubResponse;
-import org.mosaic.hub.application.dto.UpdateHubRequest;
-import org.mosaic.hub.application.dto.UpdateHubResponse;
+import org.mosaic.hub.application.dtos.CreateHubServiceRequest;
+import org.mosaic.hub.application.dtos.CreateHubResponse;
+import org.mosaic.hub.application.dtos.UpdateHubServiceRequest;
+import org.mosaic.hub.application.dtos.UpdateHubResponse;
 import org.mosaic.hub.domain.model.Hub;
 import org.mosaic.hub.domain.repository.HubRepository;
 import org.mosaic.hub.libs.exception.CustomException;
@@ -22,7 +22,7 @@ public class HubCommandService {
   private final HubRepository hubRepository;
 
   @CachePut(cacheNames = "hubCache", key = "#result.hubUuid")
-  public CreateHubResponse createHub(CreateHubRequest request) {
+  public CreateHubResponse createHub(CreateHubServiceRequest request) {
     Hub hub = hubRepository.save(Hub.createHub(
         request.getManagerId(), request.getName(), request.getAddress(),
         request.getLatitude(), request.getLongitude()));
@@ -31,7 +31,7 @@ public class HubCommandService {
   }
 
   @CachePut(cacheNames = "hubCache", key = "args[0]")
-  public UpdateHubResponse updateHub(String hubUuid, UpdateHubRequest request) {
+  public UpdateHubResponse updateHub(String hubUuid, UpdateHubServiceRequest request) {
     Hub hub = getHubByUuid(hubUuid);
     hub.update(
         request.getManagerId(),

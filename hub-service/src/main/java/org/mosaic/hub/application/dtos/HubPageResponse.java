@@ -1,4 +1,4 @@
-package org.mosaic.hub.application.dto;
+package org.mosaic.hub.application.dtos;
 
 import static lombok.AccessLevel.PRIVATE;
 
