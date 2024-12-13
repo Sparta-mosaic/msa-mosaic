@@ -42,10 +42,6 @@ public class CompanyCommandService {
     return CompanyResponse.of(companyRepository.save(company));
   }
 
-  /*
-    HUB_MANAGER:  담당 허브의 업체 정보만 수정 가능
-    COMPANY:  본인 업체 정보만 수정 가능
- */
   public CompanyResponse updateCompany(UpdateCompanyDto request) {
 
     Company company = companyRepository.findById(request.getCompanyId())
