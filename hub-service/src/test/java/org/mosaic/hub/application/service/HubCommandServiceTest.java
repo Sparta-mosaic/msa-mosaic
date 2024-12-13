@@ -3,6 +3,7 @@ package org.mosaic.hub.application.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mosaic.hub.libs.constant.HttpHeaderConstants.HEADER_USER_ID;
 
+import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -99,6 +100,21 @@ class HubCommandServiceTest {
             response.getCreatedAt(), response.getCreatedBy(),
             response.getUpdatedAt(), response.getUpdatedBy(),
             response.isPublic());
+  }
+
+  @Test
+  @DisplayName("deleteHub: 허브 아이디를 받아 허브를 삭제한다.")
+  void deleteHub_success() {
+    // given
+    final Hub hub = createHub();
+    final String userUuid = UUID.randomUUID().toString();
+
+    // when
+    hubCommandService.deleteHub(userUuid, hub.getUuid());
+
+    // then
+    assertThat(hub.isDeleted()).isTrue();
+    assertThat(hub.getDeletedBy()).isEqualTo(userUuid);
   }
 
   private Hub createHub() {

@@ -37,6 +37,11 @@ public class HubCommandService {
     return UpdateHubResponse.from(hub);
   }
 
+  public void deleteHub(String userUuid, String hubUuid) {
+    Hub hub = getHubByUuid(hubUuid);
+    hub.softDelete(userUuid);
+  }
+
   private Hub getHubByUuid(String hubUuid) {
     return hubRepository.findByUuid(hubUuid).orElseThrow(
         () -> new CustomException(HttpStatus.NOT_FOUND, "존재하지 않는 허브입니다."));

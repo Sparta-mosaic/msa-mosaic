@@ -1,6 +1,8 @@
 package org.mosaic.hub.presentation.controller;
 
+import static org.mosaic.hub.libs.constant.HttpHeaderConstants.HEADER_USER_ID;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -8,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mosaic.hub.application.dto.CreateHubRequest;
@@ -74,6 +77,21 @@ class AdminHubControllerTest {
             .content(objectMapper.writeValueAsString(request)))
         .andDo(print())
         .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true));
+  }
+
+  @Test
+  @DisplayName("deleteHub: 허브 아이디를 받아 허브를 삭제한다.")
+  void deleteHub() throws Exception {
+    // given
+    final String uri = "/api/v1/admin/hubs/{hubUuid}";
+    final String hubUuid = "e1b84264-b95b-4a53-b7b9-3fba65bd784e";
+
+    // expected
+    mockMvc.perform(delete(uri, hubUuid)
+            .header(HEADER_USER_ID, UUID.randomUUID().toString()))
+        .andDo(print())
+        .andExpect(status().isNoContent())
         .andExpect(jsonPath("$.success").value(true));
   }
 }
