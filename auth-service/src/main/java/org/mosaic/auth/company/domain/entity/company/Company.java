@@ -25,8 +25,7 @@ import org.mosaic.auth.libs.config.base.BaseEntity;
 import org.mosaic.auth.user.domain.entity.user.User;
 
 @Entity
-@Table(name = "p_companies",
-    indexes = @Index(name = "idx_company_id", columnList = "company_id"))
+@Table(name = "p_companies")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

@@ -54,9 +54,6 @@ public class CompanyController {
             .findAllByQueryDslPaging(predicate, pageable));
     }
 
-    /*
-        HUB_MANAGER:  담당 허브의 업체 정보만 생성 가능
-     */
     @PostMapping
     public ResponseEntity<ApiResult<CompanyResponse>> createCompany(
         @RequestBody CreateCompanyRequest request){
@@ -75,9 +72,6 @@ public class CompanyController {
             HttpStatus.OK);
     }
 
-    /*
-        HUB_MANAGER:  담당 허브의 업체 정보만 삭제 가능
-     */
     @DeleteMapping("/{companyId}")
     public ResponseEntity<ApiResult<String>> deleteCompanyByManager(
         @PathVariable Long companyId){

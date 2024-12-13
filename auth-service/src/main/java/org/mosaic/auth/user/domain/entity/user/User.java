@@ -21,8 +21,7 @@ import org.hibernate.annotations.UuidGenerator;
 import org.mosaic.auth.libs.config.base.BaseEntity;
 
 @Entity
-@Table(name = "p_users"
-    , indexes = @Index(name = "idx_user_id", columnList = "user_id"))
+@Table(name = "p_users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
