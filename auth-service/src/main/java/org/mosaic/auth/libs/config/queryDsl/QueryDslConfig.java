@@ -1,4 +1,4 @@
-package org.mosaic.auth.config.queryDsl;
+package org.mosaic.auth.libs.config.queryDsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

@@ -1,4 +1,4 @@
-package org.mosaic.auth.config.base;
+package org.mosaic.auth.libs.config.base;
 
 
 import jakarta.persistence.Column;
@@ -15,14 +15,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @CreatedBy
     @Column(name = "created_by", updatable = false)
-    private Long createdBy;
+    private String createdBy;
 
     @LastModifiedDate
     @Column(name = "updated_at")
@@ -30,13 +30,13 @@ public class BaseEntity {
 
     @LastModifiedBy
     @Column(name = "updated_by")
-    private Long updatedBy;
+    private String updatedBy;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
     @Column(name = "deleted_by")
-    private Long deletedBy;
+    private String deletedBy;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
@@ -45,15 +45,11 @@ public class BaseEntity {
     private Boolean isPublic = true;
 
 
-    public void softDelete() {
-        this.deletedAt = LocalDateTime.now();
-        this.isDeleted = true;
-    }
-
     public void delete() {
         this.deletedAt = LocalDateTime.now();
         this.isDeleted = true;
         this.isPublic = false;
+
     }
 
     public void updatePrivate() {

@@ -1,7 +1,10 @@
-package org.mosaic.auth.libs;
+package org.mosaic.auth.libs.util;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiResponseUtil {
 
     public static <T> ApiResult<T> success(T response) {
