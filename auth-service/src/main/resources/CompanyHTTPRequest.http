@@ -1,0 +1,68 @@
+### Company find by companyId
+GET http://localhost:19091/api/v1/company/{{companyId}}
+
+### Company Search
+GET http://localhost:19091/api/v1/company
+
+### Create New Company
+POST http://localhost:19091/api/v1/company
+Content-Type: application/json
+
+{
+  "username": "",
+  "password": "",
+  "role": "COMPANY",
+  "slackEmail": ""
+}
+
+### Update Company
+PUT http://localhost:19091/api/v1/company
+Content-Type: application/json
+
+{
+  "companyId": "",
+  "name": "",
+  "address": "COMPANY",
+  "companyType": ""
+}
+
+### Delete Company
+DELETE http://localhost:19091/api/v1/company/{{companyId}}
+
+
+
+### [Admin] Create New Company
+POST http://localhost:19091/api/v1/admin/company
+Content-Type: application/json
+
+{
+  "name": "",
+  "address": "",
+  "companyType": "SUPPLY",
+  "userId": 0,
+  "hubId": 0
+}
+
+
+### [Admin] Update Company
+PUT http://localhost:19091/api/v1/admin/company
+Content-Type: application/json
+
+{
+  "companyId": "",
+  "name": "",
+  "address": "COMPANY",
+  "companyType": ""
+}
+
+### [Admin] Simple Update Company's Hub_Id
+PATCH http://localhost:19091/api/v1/admin/company
+Content-Type: application/json
+
+{
+  "companyId": "",
+  "hubId": ""
+}
+
+### [Admin] Delete Company
+DELETE http://localhost:19091/api/v1/admin/company/{{companyId}}
