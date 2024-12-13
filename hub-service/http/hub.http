@@ -1,0 +1,12 @@
+### 허브 생성
+POST http://localhost:8080/api/v1/admin/hubs
+Content-Type: application/json
+X-User-Id: 123e4567-e89b-12d3-a456-426614174000
+
+{
+  "managerId": 1,
+  "name": "테스트 허브",
+  "address": "테스트 허브 주소",
+  "latitude": 38,
+  "longitude":132
+}
