@@ -16,8 +16,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UuidGenerator;
-import org.mosaic.auth.config.base.BaseEntity;
+import org.mosaic.auth.libs.config.base.BaseEntity;
 
 @Entity
 @Table(name = "p_users"
@@ -25,7 +26,8 @@ import org.mosaic.auth.config.base.BaseEntity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
+@SQLRestriction("is_deleted = false")
 public class User extends BaseEntity {
 
   @Id
