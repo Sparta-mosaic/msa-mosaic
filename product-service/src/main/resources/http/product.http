@@ -1,5 +1,5 @@
 ### 상품등록-성공
-POST http://localhost:8080/api/v1/admin/product
+POST http://localhost:8080/api/v1/admin/products
 Content-Type: application/json
 X-User-Id: 550e8400-e29b-41d4-a716-446655440006
 
@@ -14,7 +14,7 @@ X-User-Id: 550e8400-e29b-41d4-a716-446655440006
 
 
 ### 상품등록-실패-상품가격과, 수량에 문자가 있을경우
-POST http://localhost:8080/api/v1/admin/product
+POST http://localhost:8080/api/v1/admin/products
 Content-Type: application/json
 #X-User-Id: 550e8400-e29b-41d4-a716-446655440006
 
@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ### 사용자 인증 안된 경우
-POST http://localhost:8080/api/v1/admin/product
+POST http://localhost:8080/api/v1/admin/products
 Content-Type: application/json
 #X-User-Id: 550e8400-e29b-41d4-a716-446655440006
 
@@ -41,3 +41,11 @@ Content-Type: application/json
   "stockQuantity": 1000
 }
 
+### 상품삭제-성공
+DELETE http://localhost:8080/api/v1/admin/products/550e8400-e29b-41d4-a716-446655440005
+X-User-Id: 550e8400-e29b-41d4-a716-446655440006
+
+
+### 상품삭제-실패-상품 uuid가 없는 값
+DELETE http://localhost:8080/api/v1/admin/products/330e840-e29b-41d4-a716-446655440002
+X-User-Id: 550e8400-e29b-41d4-a716-446655440006

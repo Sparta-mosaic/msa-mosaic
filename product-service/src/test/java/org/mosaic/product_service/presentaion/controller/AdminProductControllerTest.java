@@ -1,22 +1,28 @@
 package org.mosaic.product_service.presentaion.controller;
 
+import static org.mosaic.product_service.libs.common.constant.HttpHeaderConstants.HEADER_USER_ID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mosaic.product_service.application.service.ProductMethodService;
+import org.mosaic.product_service.application.service.ProductCommandService;
 import org.mosaic.product_service.presentaion.dtos.CreateProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.mosaic.product_service.application.dtos.CreateProductResponse;
@@ -26,23 +32,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebMvcTest(AdminProductController.class)
 @AutoConfigureRestDocs
 class AdminProductControllerTest {
+	private static final String USER_ID = "550e8400-e29b-41d4-a716-446655440006";
 
 	@Autowired
 	private MockMvc mockMvc;
-
 	@MockitoBean
-	private ProductMethodService productMethodService;
+	private ProductCommandService productCommandService;
 
 	@Autowired
 	private ObjectMapper objectMapper;
 
-
 	@Nested
 	@DisplayName("상품 생성")
 	class CreateProduct {
-
-		final String user_id = "550e8400-e29b-41d4-a716-446655440006";
-
+		final String uri = "/api/v1/admin/products";
 		@Test
 		@DisplayName("성공 했습니다.")
 		void createProductSuccessTest() throws Exception {
@@ -64,10 +67,10 @@ class AdminProductControllerTest {
 				.stockQuantity(1000L)
 				.build();
 
-			given(productMethodService.createProduct(any())).willReturn(response);
+			given(productCommandService.createProduct(any())).willReturn(response);
 
-			mockMvc.perform(post("/api/v1/admin/product")
-					.header("X-User-Id", user_id)
+			mockMvc.perform(post(uri)
+					.header(HEADER_USER_ID, USER_ID)
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(objectMapper.writeValueAsString(request)))
 				.andExpect(status().isCreated())
@@ -92,7 +95,7 @@ class AdminProductControllerTest {
 						fieldWithPath("response.productName").description("상품 이름"),
 						fieldWithPath("response.productPrice").description("상품 가격"),
 						fieldWithPath("response.productDescription").description("상품설명"),
-						fieldWithPath("response.stockQuantity").description("상품 수량")
+						fieldWithPath("response.stockQuantity").description("재고 수량")
 					)
 				));
 		}
@@ -109,8 +112,8 @@ class AdminProductControllerTest {
 				"100df0"
 			);
 
-			mockMvc.perform(post("/api/v1/admin/product")
-					.header("X-User-Id", user_id)
+			mockMvc.perform(post(uri)
+					.header(HEADER_USER_ID, USER_ID)
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(objectMapper.writeValueAsString(request)))
 				.andExpect(status().isBadRequest())
@@ -119,5 +122,28 @@ class AdminProductControllerTest {
 				.andExpect(jsonPath("$.productPrice").value("숫자만 입력 가능합니다"));
 		}
 
+	}
+
+
+	@Nested
+	@DisplayName("상품 삭제")
+	class DeleteProduct {
+		final String uri = "/api/v1/admin/products/{productUuid}";
+		@Test
+		@DisplayName("성공-uuid 값을 받고 해당하는 상품을 논리적 삭제 했습니다.")
+		void deleteProductSuccess() throws Exception {
+
+			final String productUuid = "550e8400-e29b-41d4-a716-446655440002";
+
+			mockMvc.perform(delete(uri, productUuid)
+					.header(HEADER_USER_ID, UUID.randomUUID().toString()))
+				.andExpect(status().isNoContent())
+				.andExpect(jsonPath("$.success").value(true))
+				.andDo(MockMvcRestDocumentation.document("delete-product-success",
+					Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
+					Preprocessors.preprocessResponse(Preprocessors.prettyPrint())
+				)
+			);
+		}
 	}
 }
