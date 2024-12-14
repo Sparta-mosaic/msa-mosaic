@@ -1,5 +1,5 @@
 -- P_USERS 테이블 생성
-DROP TABLE IF EXISTS p_users;
+DROP TABLE IF EXISTS p_users CASCADE ;
 
 CREATE TABLE p_users (
         user_id BIGINT PRIMARY KEY,
@@ -8,7 +8,14 @@ CREATE TABLE p_users (
         password VARCHAR(100) NOT NULL,
         role VARCHAR(50) NOT NULL,
         slack_email VARCHAR(100) NOT NULL,
-        is_deleted BOOLEAN DEFAULT FALSE
+        created_at timestamp(6)     not null,
+        created_by varchar(36)      not null,
+        updated_at timestamp(6),
+        updated_by varchar(36),
+        deleted_at timestamp(6),
+        deleted_by varchar(36),
+        is_deleted boolean          not null,
+        is_public  boolean          not null
 );
 
 -- 인덱스 생성
@@ -25,7 +32,14 @@ CREATE TABLE p_companies (
         company_type VARCHAR(50) NOT NULL,
         user_id BIGINT NOT NULL REFERENCES p_users(user_id) ON DELETE CASCADE,
         hub_id BIGINT NOT NULL,
-        is_deleted BOOLEAN DEFAULT FALSE
+        created_at timestamp(6)     not null,
+        created_by varchar(36)      not null,
+        updated_at timestamp(6),
+        updated_by varchar(36),
+        deleted_at timestamp(6),
+        deleted_by varchar(36),
+        is_deleted boolean          not null,
+        is_public  boolean          not null
 );
 
 -- 인덱스 생성
