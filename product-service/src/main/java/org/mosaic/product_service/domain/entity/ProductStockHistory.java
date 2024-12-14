@@ -1,7 +1,10 @@
 package org.mosaic.product_service.domain.entity;
 
+import org.hibernate.annotations.SQLRestriction;
+
 import org.mosaic.product_service.domain.entity.enums.StockType;
 import org.mosaic.product_service.libs.common.entity.BaseEntity;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "P_PRODUCTS_STOCK_HISTORY")
+@SQLRestriction("IS_DELETE = FALSE")
 public class ProductStockHistory extends BaseEntity {
 
 	@Id
@@ -48,4 +52,5 @@ public class ProductStockHistory extends BaseEntity {
 	}
 
 }
+
 

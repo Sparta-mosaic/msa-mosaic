@@ -46,7 +46,7 @@ public abstract class BaseEntity {
     private LocalDateTime deletedAt;
 
     @Column(name = "DELETED_BY")
-    private String deleteBy;
+    private String deletedBy;
 
     @Column(name = "IS_PUBLIC",
         nullable = false)
@@ -57,5 +57,10 @@ public abstract class BaseEntity {
         nullable = false)
     @ColumnDefault("false")
     protected Boolean isDelete = false;
-
+    public void softDelete(String userUuid) {
+        this.isPublic = false;
+        this.isDelete = true;
+        this.deletedBy = userUuid;
+        this.deletedAt = LocalDateTime.now();
+    }
 }
