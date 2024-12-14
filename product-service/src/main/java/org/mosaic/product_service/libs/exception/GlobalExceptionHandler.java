@@ -46,6 +46,15 @@ public class GlobalExceptionHandler {
 				handleAuthException(AuthException e) {
 		return ApiResponseUtils.failed(e.getStatus(), e);
 	}
+
+	@ExceptionHandler(ProductNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ResponseEntity<Map<String, String>>
+			handleProductNotFoundException(ProductNotFoundException ex) {
+		Map<String, String> error = new HashMap<>();
+		error.put("error", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
 }
 
 

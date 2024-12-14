@@ -7,6 +7,7 @@ import java.util.UUID;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +18,8 @@ import jakarta.persistence.Version;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import org.hibernate.annotations.SQLRestriction;
 import org.mosaic.product_service.domain.entity.enums.StockType;
 import org.mosaic.product_service.libs.common.entity.BaseEntity;
 
@@ -24,6 +27,7 @@ import org.mosaic.product_service.libs.common.entity.BaseEntity;
 @Getter
 @NoArgsConstructor
 @Table(name = "P_PRODUCTS")
+@SQLRestriction("IS_DELETE = FALSE")
 public class Product extends BaseEntity {
 
 	@Id
@@ -64,7 +68,7 @@ public class Product extends BaseEntity {
 	private Long version;
 
 
-	@OneToMany(mappedBy = "product",
+	@OneToMany(mappedBy = "product",  fetch = FetchType.EAGER,
 		       cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductStockHistory> stockHistories = new ArrayList<>();
 
