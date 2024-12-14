@@ -17,15 +17,16 @@ spring:
         default_batch_fetch_size: 1000
     open-in-view: false
     hibernate:
-      ddl-auto: none
-
+      ddl-auto: create
     defer-datasource-initialization: true
   sql:
     init:
-      mode: never
+      mode: always
+#      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
 
 server:
-  port: 19091
+  port: 19092
 
 eureka:
   client:
