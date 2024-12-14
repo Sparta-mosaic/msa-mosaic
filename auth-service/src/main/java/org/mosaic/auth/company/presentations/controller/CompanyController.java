@@ -46,12 +46,12 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<CompanyPageResponse> findPageByQuerydsl(
+    public ResponseEntity<ApiResult<CompanyPageResponse>> findPageByQuerydsl(
         @QuerydslPredicate(root = Company.class) Predicate predicate,
         @PageableDefault(sort = "companyId", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        return ResponseEntity.ok(companyQueryService
-            .findAllByQueryDslPaging(predicate, pageable));
+        return new ResponseEntity<>(success(companyQueryService
+            .findAllByQueryDslPaging(predicate, pageable)), HttpStatus.OK);
     }
 
     @PostMapping

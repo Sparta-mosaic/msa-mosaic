@@ -7,6 +7,8 @@ import org.mosaic.auth.company.application.dtos.CompanyPageResponse;
 import org.mosaic.auth.company.application.dtos.CompanyResponse;
 import org.mosaic.auth.company.domain.entity.company.Company;
 import org.mosaic.auth.company.domain.repository.CompanyRepository;
+import org.mosaic.auth.libs.exception.CustomException;
+import org.mosaic.auth.libs.exception.ExceptionStatus;
 import org.mosaic.auth.user.domain.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +26,7 @@ public class CompanyQueryService {
 
   public CompanyResponse findCompanyById(Long companyId) {
     Company company = companyRepository.findById(companyId)
-        .orElseThrow(() -> new RuntimeException("Company not found"));
+        .orElseThrow(() -> new CustomException(ExceptionStatus.COMPANY_NOT_FOUND));
 
     return CompanyResponse.of(company);
   }
@@ -33,7 +35,10 @@ public class CompanyQueryService {
 
     BooleanBuilder booleanBuilder = new BooleanBuilder(predicate);
     Page<Company> companyEntityPage = companyRepository.findAll(booleanBuilder, pageable);
-    return CompanyPageResponse.of(companyEntityPage);
+    Page<CompanyResponse> companyDtoPage = companyEntityPage
+        .map(CompanyResponse::of);
+
+    return CompanyPageResponse.of(companyDtoPage);
 
   }
 }
