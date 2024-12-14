@@ -1,8 +1,11 @@
 ### Company find by companyId
-GET http://localhost:19091/api/v1/company/{{companyId}}
+GET http://localhost:19091/api/v1/company/12
 
 ### Company Search
 GET http://localhost:19091/api/v1/company
+
+### Company Search By CompanyId
+GET http://localhost:19092/api/v1/company?companyId=10
 
 ### Create New Company
 POST http://localhost:19091/api/v1/company
