@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: order-service
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mosaic
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    properties:
+      format-sql: true
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Seoul
+    
+server:
+  port: 19001
