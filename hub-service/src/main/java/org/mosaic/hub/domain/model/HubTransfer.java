@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,9 @@ public class HubTransfer extends BaseEntity {
   @Column(name = "hub_transfer_id")
   private Long id;
 
+  @Column(nullable = false, name = "hub_transfer_uuid", unique = true)
+  private String uuid;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "departure_hub_id")
   private Hub departureHub;
@@ -51,6 +55,7 @@ public class HubTransfer extends BaseEntity {
       Hub departureHub, Hub arrivalHub,
       int estimatedTime, double estimatedDistance) {
     return HubTransfer.builder()
+        .uuid(UUID.randomUUID().toString())
         .departureHub(departureHub)
         .arrivalHub(arrivalHub)
         .estimatedTime(estimatedTime)

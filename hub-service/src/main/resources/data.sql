@@ -19,31 +19,31 @@ VALUES
     ('0628e362-5b0f-4bc5-84d7-3ef7c6919c9b', 16, '경상북도 센터', '경북 안동시 풍천면 도청대로 455', 36.57599855798378, 128.50547197215465, CURRENT_TIMESTAMP, 'master1', true, false),
     ('c10a579b-d097-4424-a964-d8e362d27a4f', 17, '경상남도 센터', '경남 창원시 의창구 중앙대로 300', 35.237883649443155, 128.69154655690582, CURRENT_TIMESTAMP, 'master1', true, false);
 
-INSERT INTO p_hub_transfers (departure_hub_id, arrival_hub_id, estimated_time, estimated_distance, created_at, created_by, is_public, is_deleted)
+INSERT INTO p_hub_transfers (hub_transfer_uuid, departure_hub_id, arrival_hub_id, estimated_time, estimated_distance, created_at, created_by, is_public, is_deleted)
 VALUES
-    (1, 3, 76, 88, CURRENT_TIMESTAMP, 'master1', true, false),
-    (2, 3, 52, 57,CURRENT_TIMESTAMP, 'master1', true, false),
-    (6, 3, 62, 80,CURRENT_TIMESTAMP, 'master1', true, false),
-    (11, 3, 109, 108,CURRENT_TIMESTAMP, 'master1', true, false),
-    (3, 16, 139, 158,CURRENT_TIMESTAMP, 'master1', true, false),
-    (3, 8, 90, 109,CURRENT_TIMESTAMP, 'master1', true, false),
-    (3, 5, 202, 226,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('a3b84264-b95b-4a53-b7b9-3fba65bd784e', 1, 3, 76, 88, CURRENT_TIMESTAMP, 'master1', true, false),
+    ('bbb84264-b95b-4a53-b7b9-3fba65bd784e', 2, 3, 52, 57,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('ceb84264-b95b-4a53-b7b9-3fba65bd784e', 6, 3, 62, 80,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('beb84264-b95b-4a53-b7b9-3fba65bd784e', 11, 3, 109, 108,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1ac4264-b95b-4a53-b7b9-3fba65bd784e', 3, 16, 139, 158,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84264-b95b-4a53-b7b9-3fba65bd004e', 3, 8, 90, 109,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84264-b95b-4a12-b7b9-3fba65bd784e', 3, 5, 202, 226,CURRENT_TIMESTAMP, 'master1', true, false),
 
-    (13, 8, 64, 90,CURRENT_TIMESTAMP, 'master1', true, false),
-    (12, 8, 43, 38,CURRENT_TIMESTAMP, 'master1', true, false),
-    (10, 8, 27, 21,CURRENT_TIMESTAMP, 'master1', true, false),
-    (14, 8, 72, 85,CURRENT_TIMESTAMP, 'master1', true, false),
-    (7, 8, 108, 169,CURRENT_TIMESTAMP, 'master1', true, false),
-    (15, 8, 142, 220,CURRENT_TIMESTAMP, 'master1', true, false),
-    (3, 8, 90, 109,CURRENT_TIMESTAMP, 'master1', true, false),
-    (8, 5, 102, 151,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84264-b95b-zb53-b7b9-3fba65bd784e', 13, 8, 64, 90,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84312-b95b-4a53-b7b9-3fba65bd784e', 12, 8, 43, 38,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84544-b95b-4a53-b7b9-3fba65bd784e', 10, 8, 27, 21,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('z0b84264-b95b-4a53-b7b9-3fba65bd784e', 14, 8, 72, 85,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84264-b95b-9v53-b7b9-3fba65bd784e', 7, 8, 108, 169,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84264-b95b-4a53-b7b9-3fba65bd790e', 15, 8, 142, 220,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('f4f4029a-b95b-4a53-b7b9-3fba65bd784e', 3, 8, 90, 109,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('21xzw321-b95b-4a53-b7b9-f32f0sdd3292', 8, 5, 102, 151,CURRENT_TIMESTAMP, 'master1', true, false),
 
-    (16, 5, 74, 103,CURRENT_TIMESTAMP, 'master1', true, false),
-    (3, 5, 202, 226,CURRENT_TIMESTAMP, 'master1', true, false),
-    (8, 5, 102, 151,CURRENT_TIMESTAMP, 'master1', true, false),
-    (5, 17, 73, 95,CURRENT_TIMESTAMP, 'master1', true, false),
-    (5, 4, 78, 112,CURRENT_TIMESTAMP, 'master1', true, false),
-    (5, 9, 84, 109,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('b1b84264-a95b-4b53-b7b3-3fba65bd784e', 16, 5, 74, 103,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('a1b84264-a25b-4x53-b4b9-3fbf65bd384e', 3, 5, 202, 226,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84364-b15b-4a23-b7b3-3ffa65bb784e', 8, 5, 102, 151,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('abv84264-bv3b-4a53-b7b9-3fba65bd784e', 5, 17, 73, 95,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('e1b84264-b95b-4a53-b7b9-4fv3c41d784e', 5, 4, 78, 112,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('f32fds21-abr2-4a53-b7b9-3fba65bd784e', 5, 9, 84, 109,CURRENT_TIMESTAMP, 'master1', true, false),
 
-    (3, 16, 139, 158,CURRENT_TIMESTAMP, 'master1', true, false),
-    (16, 5, 74, 103,CURRENT_TIMESTAMP, 'master1', true, false);
+    ('1badc312-b95b-4a53-fef3-3fba65bd784e', 3, 16, 139, 158,CURRENT_TIMESTAMP, 'master1', true, false),
+    ('fef32322-f49f-4a53-b7b9-3fba65bd784e', 16, 5, 74, 103,CURRENT_TIMESTAMP, 'master1', true, false);
