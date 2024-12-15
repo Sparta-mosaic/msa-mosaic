@@ -44,7 +44,7 @@ class HubQueryServiceTest {
   @DisplayName("getHub: 허브 uuid 를 받아 허브를 조회한다.")
   void getHub() {
   	// given
-    final Hub hub = createHub();
+    final Hub hub = create();
 
   	// when
     HubResponse response = hubQueryService.getHub(hub.getUuid());
@@ -58,8 +58,8 @@ class HubQueryServiceTest {
     assertThat(response.getLongitude()).isEqualTo(hub.getCoordinates().getLongitude());
   }
 
-  private Hub createHub() {
-    return hubRepository.save(Hub.createHub(
+  private Hub create() {
+    return hubRepository.save(Hub.create(
         1L, "서울특별시 센터", "서울특별시 송파구 송파대로 55",
         37.456171545341, 126.70541564685742));
   }

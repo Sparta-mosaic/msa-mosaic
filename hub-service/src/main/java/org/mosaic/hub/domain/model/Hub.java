@@ -1,5 +1,6 @@
 package org.mosaic.hub.domain.model;
 
+import static jakarta.persistence.CascadeType.PERSIST;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -9,8 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +29,7 @@ import org.mosaic.hub.libs.entity.BaseEntity;
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor(access = PROTECTED)
 @SQLRestriction("is_deleted = false")
-@Table(name = "p_hubs", indexes = @Index(name = "idx_uuid", columnList = "hub_uuid"))
+@Table(name = "p_hubs")
 public class Hub extends BaseEntity {
 
   @Id
@@ -49,7 +52,11 @@ public class Hub extends BaseEntity {
   @Embedded
   private Coordinates coordinates;
 
-  public static Hub createHub(
+  @Builder.Default
+  @OneToMany(mappedBy = "departureHub", cascade = PERSIST)
+  private List<HubTransfer> hubTransfers = new ArrayList<>();
+
+  public static Hub create(
       Long managerId, String name, String address,
       double latitude, double longitude) {
     return Hub.builder()
@@ -68,5 +75,9 @@ public class Hub extends BaseEntity {
     this.name = name;
     this.address = address;
     this.coordinates = new Coordinates(latitude, longitude);
+  }
+
+  public void addHubTransfer(List<HubTransfer> hubTransfers) {
+    this.hubTransfers.addAll(hubTransfers);
   }
 }

@@ -1,0 +1,34 @@
+### 허브 생성
+POST http://localhost:8080/api/v1/admin/hubs
+Content-Type: application/json
+X-User-Id: 123e4567-e89b-12d3-a456-426614174000
+
+{
+  "managerId": 1,
+  "name": "테스트 허브",
+  "address": "테스트 허브 주소",
+  "latitude": 38,
+  "longitude":132
+}
+
+### 허브 수정
+PUT http://localhost:8080/api/v1/admin/hubs/e1b84264-b95b-4a53-b7b9-3fba65bd784e
+Content-Type: application/json
+X-User-Id: 123e4567-e89b-12d3-a456-426614174000
+
+{
+  "name": "테스트 허브",
+  "address": "테스트 허브 주소",
+  "latitude": 35,
+  "longitude":127
+}
+
+### 허브 삭제
+DELETE http://localhost:8080/api/v1/admin/hubs/e1b84264-b95b-4a53-b7b9-3fba65bd784e
+X-User-Id: 123e4567-e89b-12d3-a456-426614174000
+
+### 허브 조회
+GET http://localhost:8080/api/v1/hubs/e1b84264-b95b-4a53-b7b9-3fba65bd784e
+
+### 허브 서치
+GET http://localhost:8080/api/v1/hubs?name=서울&name=경기

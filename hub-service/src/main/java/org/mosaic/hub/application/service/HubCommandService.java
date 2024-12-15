@@ -1,11 +1,16 @@
 package org.mosaic.hub.application.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.mosaic.hub.application.dtos.CreateHubServiceRequest;
 import org.mosaic.hub.application.dtos.CreateHubResponse;
-import org.mosaic.hub.application.dtos.UpdateHubServiceRequest;
+import org.mosaic.hub.application.dtos.CreateHubServiceRequest;
+import org.mosaic.hub.application.dtos.CreateHubTransferResponse;
+import org.mosaic.hub.application.dtos.CreateHubTransferServiceRequest;
+import org.mosaic.hub.application.dtos.HubTransferInfo;
 import org.mosaic.hub.application.dtos.UpdateHubResponse;
+import org.mosaic.hub.application.dtos.UpdateHubServiceRequest;
 import org.mosaic.hub.domain.model.Hub;
+import org.mosaic.hub.domain.model.HubTransfer;
 import org.mosaic.hub.domain.repository.HubRepository;
 import org.mosaic.hub.libs.exception.CustomException;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,7 +28,7 @@ public class HubCommandService {
 
   @CachePut(cacheNames = "hubCache", key = "#result.hubUuid")
   public CreateHubResponse createHub(CreateHubServiceRequest request) {
-    Hub hub = hubRepository.save(Hub.createHub(
+    Hub hub = hubRepository.save(Hub.create(
         request.getManagerId(), request.getName(), request.getAddress(),
         request.getLatitude(), request.getLongitude()));
 
@@ -31,7 +36,8 @@ public class HubCommandService {
   }
 
   @CachePut(cacheNames = "hubCache", key = "args[0]")
-  public UpdateHubResponse updateHub(String hubUuid, UpdateHubServiceRequest request) {
+  public UpdateHubResponse updateHub(String hubUuid,
+      UpdateHubServiceRequest request) {
     Hub hub = getHubByUuid(hubUuid);
     hub.update(
         request.getManagerId(),
@@ -45,6 +51,28 @@ public class HubCommandService {
   public void deleteHub(String userUuid, String hubUuid) {
     Hub hub = getHubByUuid(hubUuid);
     hub.softDelete(userUuid);
+  }
+
+  public CreateHubTransferResponse createHubTransfer(
+      String departureHubUuid, CreateHubTransferServiceRequest request) {
+    Hub departureHub = getHubByUuid(departureHubUuid);
+
+    List<HubTransfer> hubTransfers = generateHubTransfer(
+        departureHub, request.getHubTransferInfoList());
+
+    departureHub.addHubTransfer(hubTransfers);
+
+    return CreateHubTransferResponse.from(hubTransfers);
+  }
+
+  private List<HubTransfer> generateHubTransfer(
+      Hub departureHub, List<HubTransferInfo> hubTransferInfoList) {
+    return hubTransferInfoList.stream()
+        .map(hubTransferInfo -> HubTransfer.create(
+            departureHub, getHubByUuid(hubTransferInfo.getArrivalHubUuid()),
+            hubTransferInfo.getEstimatedTime(),
+            hubTransferInfo.getEstimatedDistance()))
+        .toList();
   }
 
   private Hub getHubByUuid(String hubUuid) {
