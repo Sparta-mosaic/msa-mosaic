@@ -8,6 +8,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -18,9 +19,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mosaic.product_service.application.dtos.CreateProductResponse;
+import org.mosaic.product_service.application.dtos.ProductResponse;
 import org.mosaic.product_service.application.dtos.UpdateProductDto;
 import org.mosaic.product_service.application.dtos.UpdateProductResponse;
 import org.mosaic.product_service.application.service.ProductCommandService;
+import org.mosaic.product_service.application.service.ProductQueryService;
+import org.mosaic.product_service.libs.util.MosaicResponse;
 import org.mosaic.product_service.presentaion.dtos.CreateProductRequest;
 import org.mosaic.product_service.presentaion.dtos.UpdateProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -39,6 +44,7 @@ class AdminProductControllerTest {
 
   @Autowired private MockMvc mockMvc;
   @MockitoBean private ProductCommandService productCommandService;
+  @MockitoBean private ProductQueryService productQueryService;
 
   @Autowired private ObjectMapper objectMapper;
 
@@ -210,6 +216,68 @@ class AdminProductControllerTest {
                       fieldWithPath("response.productPrice").description("상품 가격"),
                       fieldWithPath("response.productDescription").description("상품 설명"),
                       fieldWithPath("response.stockQuantity").description("재고 수량"))));
+    }
+  }
+
+  @Nested
+  @DisplayName("상품조회")
+  class GetProduct {
+    final String userId = "550e8400-e29b-41d4-a716-446655440006";
+
+    @Test
+    @DisplayName("성공-uuid만 받을 때")
+    void getProductSuccess() throws Exception {
+      final String productUuid = "550e8400-e29b-41d4-a716-446655440002";
+
+      final String url = "/api/v1/admin/products/{productUuid}";
+
+      ProductResponse productResponse =
+          ProductResponse.builder()
+              .companyId("550e8400-e29b-41d4-a716-446655440002")
+              .productUuid("550e8400-e29b-41d4-a716-446655440002")
+              .productHubId("f47ac10b-58cc-4372-a567-0e02b2c3d481")
+              .productName("토요토미 옴니 230 KS-67H")
+              .productPrice(200000L)
+              .productDescription("석유 난로 로터리형")
+              .stockQuantity(1000L)
+              .build();
+
+      MosaicResponse<ProductResponse> response = new MosaicResponse<>(true, productResponse);
+
+      given(productQueryService.getProductResponse(productUuid)).willReturn(response.getResponse());
+
+      mockMvc
+          .perform(
+              get(url, productUuid).header("X-User-Id", userId).accept(MediaType.APPLICATION_JSON))
+          .andExpect(status().isOk())
+          .andDo(
+              document(
+                  "get-product",
+                  pathParameters(parameterWithName("productUuid").description("상품 고유 식별자")),
+                  responseFields(
+                      fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                      fieldWithPath("response").type(JsonFieldType.OBJECT).description("상품 응답 정보"),
+                      fieldWithPath("response.companyId")
+                          .type(JsonFieldType.STRING)
+                          .description("회사 ID"),
+                      fieldWithPath("response.productUuid")
+                          .type(JsonFieldType.STRING)
+                          .description("상품 고유 식별자"),
+                      fieldWithPath("response.productHubId")
+                          .type(JsonFieldType.STRING)
+                          .description("상품 허브 ID"),
+                      fieldWithPath("response.productName")
+                          .type(JsonFieldType.STRING)
+                          .description("상품명"),
+                      fieldWithPath("response.productPrice")
+                          .type(JsonFieldType.NUMBER)
+                          .description("상품 가격"),
+                      fieldWithPath("response.productDescription")
+                          .type(JsonFieldType.STRING)
+                          .description("상품 설명"),
+                      fieldWithPath("response.stockQuantity")
+                          .type(JsonFieldType.NUMBER)
+                          .description("재고 수량"))));
     }
   }
 }
