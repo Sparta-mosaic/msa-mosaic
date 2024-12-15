@@ -46,7 +46,7 @@ public class AdminHubController {
   }
 
   @DeleteMapping("/api/v1/admin/hubs/{hubUuid}")
-  public ResponseEntity<CommonResponse<String>> deleteHub(
+  public ResponseEntity<CommonResponse<Void>> deleteHub(
       @RequestHeader(HEADER_USER_ID) String userUuid,
       @PathVariable String hubUuid) {
     hubCommandService.deleteHub(userUuid, hubUuid);
@@ -66,5 +66,14 @@ public class AdminHubController {
       @PathVariable String hubTransferUuid,
       @Valid @RequestBody UpdateHubTransferRequest request) {
     return ok(hubCommandService.updateHubTransfer(hubUuid, hubTransferUuid, request.toService()));
+  }
+
+  @DeleteMapping("/api/v1/admin/hubs/{hubUuid}/hub-transfers/{hubTransferUuid}")
+  public ResponseEntity<CommonResponse<Void>> deleteHubTransfer(
+      @RequestHeader(HEADER_USER_ID) String userUuid,
+      @PathVariable String hubUuid,
+      @PathVariable String hubTransferUuid) {
+    hubCommandService.deleteHubTransfer(userUuid, hubUuid, hubTransferUuid);
+    return noContent();
   }
 }

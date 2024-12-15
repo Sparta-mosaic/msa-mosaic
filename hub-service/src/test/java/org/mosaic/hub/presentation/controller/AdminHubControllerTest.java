@@ -140,4 +140,20 @@ class AdminHubControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true));
   }
+
+  @Test
+  @DisplayName("deleteHubTransfer: 허브 이동 정보 아이디를 받아 허브 이동 정보를 삭제한다.")
+  void deleteHubTransfer() throws Exception {
+  	// given
+    final String uri = "/api/v1/admin/hubs/{hubUuid}/hub-transfers/{hubTransferUuid}";
+    final String departureHubUuid = UUID.randomUUID().toString();
+    final String hubTransferUuid = UUID.randomUUID().toString();
+
+  	// expected
+    mockMvc.perform(delete(uri, departureHubUuid, hubTransferUuid)
+            .header(HEADER_USER_ID, UUID.randomUUID().toString()))
+        .andDo(print())
+        .andExpect(status().isNoContent())
+        .andExpect(jsonPath("$.success").value(true));
+  }
 }

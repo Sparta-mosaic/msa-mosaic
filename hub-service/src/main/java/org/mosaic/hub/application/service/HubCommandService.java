@@ -70,15 +70,24 @@ public class HubCommandService {
   public UpdateTransferResponse updateHubTransfer(
       String departureHubUuid, String hubTransferUuid,
       UpdateHubTransferServiceRequest request) {
-    Hub departureHub = getHubByUuid(departureHubUuid);
-    HubTransfer hubTransfer = findHubTransfer(departureHub, hubTransferUuid);
-    hubTransfer.update(request.getEstimatedTime(), request.getEstimatedDistance());
+    HubTransfer hubTransfer = findHubTransfer(departureHubUuid,
+        hubTransferUuid);
+    hubTransfer.update(request.getEstimatedTime(),
+        request.getEstimatedDistance());
 
     return UpdateTransferResponse.from(hubTransfer);
   }
 
-  private HubTransfer findHubTransfer(Hub departureHub, String hubTransferUuid) {
-    return departureHub.getHubTransfers().stream()
+  public void deleteHubTransfer(
+      String userUuid, String departureHubUuid, String hubTransferUuid) {
+    HubTransfer hubTransfer = findHubTransfer(departureHubUuid,
+        hubTransferUuid);
+    hubTransfer.softDelete(userUuid);
+  }
+
+  private HubTransfer findHubTransfer(
+      String departureHubUuid, String hubTransferUuid) {
+    return getHubByUuid(departureHubUuid).getHubTransfers().stream()
         .filter(hubTransfer -> hubTransfer.getUuid().equals(hubTransferUuid))
         .findFirst()
         .orElseThrow(() -> new CustomException(
