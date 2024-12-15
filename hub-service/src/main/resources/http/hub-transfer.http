@@ -1,0 +1,19 @@
+### 허브 이동 정보 생성
+POST http://localhost:8080/api/v1/admin/hubs/e1b84264-b95b-4a53-b7b9-3fba65bd784e/hub-transfers
+Content-Type: application/json
+X-User-Id: 123e4567-e89b-12d3-a456-426614174000
+
+{
+  "hubTransferInfoList": [
+    {
+      "arrivalHubUuid": "a4d984c7-71bb-4eeb-b329-5ef2d39c8c63",
+      "estimatedTime": 76,
+      "estimatedDistance": 88
+    },
+    {
+      "arrivalHubUuid": "ee7a252b-39cf-4411-8dc4-5b7d76e0c945",
+      "estimatedTime": 88,
+      "estimatedDistance": 108
+    }
+  ]
+}
