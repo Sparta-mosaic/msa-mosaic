@@ -44,3 +44,4 @@ public class ProductCommandService {
 
     return UpdateProductResponse.of(updateProduct);
   }
+}
