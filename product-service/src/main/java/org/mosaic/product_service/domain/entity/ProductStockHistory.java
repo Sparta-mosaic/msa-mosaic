@@ -51,6 +51,9 @@ public class ProductStockHistory extends BaseEntity {
 		this.stockType = stockType;
 	}
 
+	public void update(Long quantity) {
+		this.quantity = quantity;
+	}
 }
 
 
