@@ -10,11 +10,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mosaic.hub.application.dtos.HubTransferInfo;
 import org.mosaic.hub.application.service.HubCommandService;
 import org.mosaic.hub.presentation.dtos.CreateHubRequest;
+import org.mosaic.hub.presentation.dtos.CreateHubTransferRequest;
 import org.mosaic.hub.presentation.dtos.UpdateHubRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -61,7 +64,7 @@ class AdminHubControllerTest {
   void updateHub() throws Exception {
     // given
     final String uri = "/api/v1/admin/hubs/{hubUuid}";
-    final String hubUuid = "e1b84264-b95b-4a53-b7b9-3fba65bd784e";
+    final String hubUuid = UUID.randomUUID().toString();
 
     final Long managerId = 1L;
     final String name = "서울특별시 센터";
@@ -85,13 +88,36 @@ class AdminHubControllerTest {
   void deleteHub() throws Exception {
     // given
     final String uri = "/api/v1/admin/hubs/{hubUuid}";
-    final String hubUuid = "e1b84264-b95b-4a53-b7b9-3fba65bd784e";
+    final String hubUuid = UUID.randomUUID().toString();
 
     // expected
     mockMvc.perform(delete(uri, hubUuid)
             .header(HEADER_USER_ID, UUID.randomUUID().toString()))
         .andDo(print())
         .andExpect(status().isNoContent())
+        .andExpect(jsonPath("$.success").value(true));
+  }
+
+  @Test
+  @DisplayName("createHubTransfer: 허브 이동 정보를 받아 생성한다.")
+  void createHubTransfer() throws Exception {
+    // given
+    final String uri = "/api/v1/admin/hubs/{hubUuid}/hub-transfers";
+    final String departureHubUuid = UUID.randomUUID().toString();
+
+    final HubTransferInfo hubTransferInfo = new HubTransferInfo(
+        UUID.randomUUID().toString(), 100, 130.0);
+    final HubTransferInfo hubTransferInfo2 = new HubTransferInfo(
+        UUID.randomUUID().toString(), 110, 150.0);
+    CreateHubTransferRequest request = new CreateHubTransferRequest(
+        List.of(hubTransferInfo, hubTransferInfo2));
+
+    // expected
+    mockMvc.perform(post(uri, departureHubUuid)
+            .contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(request)))
+        .andDo(print())
+        .andExpect(status().isCreated())
         .andExpect(jsonPath("$.success").value(true));
   }
 }
