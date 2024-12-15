@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.product_service.application.dtos.CreateProductResponse;
 import org.mosaic.product_service.application.dtos.UpdateProductResponse;
+
 import org.mosaic.product_service.application.service.ProductCommandService;
 import org.mosaic.product_service.libs.util.MosaicResponse;
 import org.mosaic.product_service.presentaion.dtos.CreateProductRequest;
@@ -46,4 +47,5 @@ public class AdminProductController {
       @PathVariable String productUuid, @Valid @RequestBody UpdateProductRequest req) {
     return ok(productCommandService.updateProduct(productUuid, req.toDto()));
   }
+  
 }
