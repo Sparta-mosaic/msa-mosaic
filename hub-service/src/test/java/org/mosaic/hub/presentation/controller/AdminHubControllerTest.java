@@ -19,6 +19,7 @@ import org.mosaic.hub.application.service.HubCommandService;
 import org.mosaic.hub.presentation.dtos.CreateHubRequest;
 import org.mosaic.hub.presentation.dtos.CreateHubTransferRequest;
 import org.mosaic.hub.presentation.dtos.UpdateHubRequest;
+import org.mosaic.hub.presentation.dtos.UpdateHubTransferRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -118,6 +119,25 @@ class AdminHubControllerTest {
             .content(objectMapper.writeValueAsString(request)))
         .andDo(print())
         .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.success").value(true));
+  }
+
+  @Test
+  @DisplayName("updateHubTransfer: 허브 이동 수정 정보를 받아 수정한다.")
+  void updateHubTransfer() throws Exception {
+    // given
+    final String uri = "/api/v1/admin/hubs/{hubUuid}/hub-transfers/{hubTransferUuid}";
+    final String departureHubUuid = UUID.randomUUID().toString();
+    final String hubTransferUuid = UUID.randomUUID().toString();
+
+    final UpdateHubTransferRequest request = new UpdateHubTransferRequest(200, 250.0);
+
+    // expected
+    mockMvc.perform(put(uri, departureHubUuid, hubTransferUuid)
+            .contentType(APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(request)))
+        .andDo(print())
+        .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true));
   }
 }

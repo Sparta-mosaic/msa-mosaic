@@ -10,11 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.mosaic.hub.application.dtos.CreateHubResponse;
 import org.mosaic.hub.application.dtos.CreateHubTransferResponse;
 import org.mosaic.hub.application.dtos.UpdateHubResponse;
+import org.mosaic.hub.application.dtos.UpdateTransferResponse;
 import org.mosaic.hub.application.service.HubCommandService;
 import org.mosaic.hub.libs.util.ApiResponseUtils.CommonResponse;
 import org.mosaic.hub.presentation.dtos.CreateHubRequest;
 import org.mosaic.hub.presentation.dtos.CreateHubTransferRequest;
 import org.mosaic.hub.presentation.dtos.UpdateHubRequest;
+import org.mosaic.hub.presentation.dtos.UpdateHubTransferRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,5 +58,13 @@ public class AdminHubController {
       @PathVariable String hubUuid,
       @Valid @RequestBody CreateHubTransferRequest request) {
     return created(hubCommandService.createHubTransfer(hubUuid, request.toService()));
+  }
+
+  @PutMapping("/api/v1/admin/hubs/{hubUuid}/hub-transfers/{hubTransferUuid}")
+  public ResponseEntity<CommonResponse<UpdateTransferResponse>> updateHubTransfer(
+      @PathVariable String hubUuid,
+      @PathVariable String hubTransferUuid,
+      @Valid @RequestBody UpdateHubTransferRequest request) {
+    return ok(hubCommandService.updateHubTransfer(hubUuid, hubTransferUuid, request.toService()));
   }
 }

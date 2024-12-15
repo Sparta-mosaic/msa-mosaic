@@ -62,4 +62,10 @@ public class HubTransfer extends BaseEntity {
         .estimatedDistance(estimatedDistance)
         .build();
   }
+
+  public void update(
+      int estimatedTime, double estimatedDistance) {
+    this.estimatedTime = estimatedTime;
+    this.estimatedDistance = estimatedDistance;
+  }
 }
