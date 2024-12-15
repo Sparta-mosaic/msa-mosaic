@@ -62,3 +62,8 @@ X-User-Id: 550e8400-e29b-41d4-a716-446655440006
   "productDescription": "샤오미 발히터입니다.",
   "stockQuantity": 10000
 }
+
+
+### 상품 조회
+GET http://localhost:8080/api/v1/admin/products/550e8400-e29b-41d4-a716-446655440002
+X-User-Id: 550e8400-e29b-41d4-a716-446655440006
