@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: slack-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: false
+        default_batch_fetch_size: 1000
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: never
+#      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+
+server:
+  port: 19093
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+
+
+slack:
+  bot-token: ${SLACK_BOT_TOKEN}
+  postMessageUrl : "https://slack.com/api/chat.postMessage"
+  channel:
+    monitor: "#delivery-bot"
+
+my-service:
+  ribbon:
+    eureka:
+      enabled: true
