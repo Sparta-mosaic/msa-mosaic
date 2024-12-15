@@ -9,6 +9,8 @@ import org.mosaic.hub.application.dtos.CreateHubTransferServiceRequest;
 import org.mosaic.hub.application.dtos.HubTransferInfo;
 import org.mosaic.hub.application.dtos.UpdateHubResponse;
 import org.mosaic.hub.application.dtos.UpdateHubServiceRequest;
+import org.mosaic.hub.application.dtos.UpdateHubTransferServiceRequest;
+import org.mosaic.hub.application.dtos.UpdateTransferResponse;
 import org.mosaic.hub.domain.model.Hub;
 import org.mosaic.hub.domain.model.HubTransfer;
 import org.mosaic.hub.domain.repository.HubRepository;
@@ -63,6 +65,24 @@ public class HubCommandService {
     departureHub.addHubTransfer(hubTransfers);
 
     return CreateHubTransferResponse.from(hubTransfers);
+  }
+
+  public UpdateTransferResponse updateHubTransfer(
+      String departureHubUuid, String hubTransferUuid,
+      UpdateHubTransferServiceRequest request) {
+    Hub departureHub = getHubByUuid(departureHubUuid);
+    HubTransfer hubTransfer = findHubTransfer(departureHub, hubTransferUuid);
+    hubTransfer.update(request.getEstimatedTime(), request.getEstimatedDistance());
+
+    return UpdateTransferResponse.from(hubTransfer);
+  }
+
+  private HubTransfer findHubTransfer(Hub departureHub, String hubTransferUuid) {
+    return departureHub.getHubTransfers().stream()
+        .filter(hubTransfer -> hubTransfer.getUuid().equals(hubTransferUuid))
+        .findFirst()
+        .orElseThrow(() -> new CustomException(
+            HttpStatus.NOT_FOUND, "존재하지 않는 허브 이동 정보입니다."));
   }
 
   private List<HubTransfer> generateHubTransfer(
