@@ -100,4 +100,13 @@ public class Product extends BaseEntity {
 		this.stockQuantity = stockHistories;
 	}
 
+	public void update(String companyId, String productHubId, String productName,
+		Long productPrice, String productDescription, Long stockHistories) {
+		this.companyId = companyId;
+		this.productHubId = productHubId;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productDescription = productDescription;
+		this.stockQuantity = stockHistories;
+	}
 }

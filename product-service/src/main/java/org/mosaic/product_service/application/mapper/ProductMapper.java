@@ -1,6 +1,7 @@
 package org.mosaic.product_service.application.mapper;
 
 import org.mosaic.product_service.application.dtos.CreateProductDto;
+import org.mosaic.product_service.application.dtos.UpdateProductDto;
 import org.mosaic.product_service.domain.entity.Product;
 import org.mosaic.product_service.domain.entity.enums.StockType;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapper {
 
-	public Product productDtoToEntity(CreateProductDto dto){
+	public Product createProductDtoToEntity(CreateProductDto dto){
 			Product product = Product.builder()
 				.companyId(dto.getCompanyId())
 				.productHubId(dto.getProductHubId())
@@ -21,4 +22,15 @@ public class ProductMapper {
 			return product;
 	}
 
+	public Product updateProductDtoToEntity(Product product, UpdateProductDto req) {
+		product.getStockHistories().forEach(
+			history -> history.update(req.getStockQuantity())
+		);
+
+		product.update(req.getCompanyId(), req.getProductHubId(),
+			           req.getProductName(), req.getProductPrice(),
+			           req.getProductDescription(), req.getStockQuantity());
+
+		return product;
+	}
 }
