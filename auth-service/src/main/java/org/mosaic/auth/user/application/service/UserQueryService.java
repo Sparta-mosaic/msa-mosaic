@@ -5,6 +5,7 @@ import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.libs.exception.CustomException;
 import org.mosaic.auth.libs.exception.ExceptionStatus;
+import org.mosaic.auth.user.application.dto.UserFeignResponse;
 import org.mosaic.auth.user.application.dto.UserPageResponse;
 import org.mosaic.auth.user.application.dto.UserResponse;
 import org.mosaic.auth.user.domain.entity.user.User;
@@ -23,8 +24,6 @@ public class UserQueryService {
 
   public UserResponse findUserById(Long userId) {
 
-    // TODO: 요청자 본인의 정보만 확인 할 수 있도록 설정 필요 (MASTER 제외)
-
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
@@ -37,5 +36,13 @@ public class UserQueryService {
     Page<User> userEntityPage = userRepository.findAll(booleanBuilder, pageable);
     return UserPageResponse.of(userEntityPage);
 
+  }
+
+  public UserFeignResponse getFeignUserResponse(Long userId) {
+
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
+
+    return UserFeignResponse.of(user);
   }
 }
