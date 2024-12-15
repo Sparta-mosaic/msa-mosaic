@@ -6,14 +6,16 @@ import static org.mosaic.product_service.libs.util.ApiResponseUtils.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.product_service.application.dtos.CreateProductResponse;
+import org.mosaic.product_service.application.dtos.ProductResponse;
 import org.mosaic.product_service.application.dtos.UpdateProductResponse;
-
 import org.mosaic.product_service.application.service.ProductCommandService;
+import org.mosaic.product_service.application.service.ProductQueryService;
 import org.mosaic.product_service.libs.util.MosaicResponse;
 import org.mosaic.product_service.presentaion.dtos.CreateProductRequest;
 import org.mosaic.product_service.presentaion.dtos.UpdateProductRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminProductController {
 
   private final ProductCommandService productCommandService;
+  private final ProductQueryService productQueryService;
 
   @PostMapping()
   public ResponseEntity<MosaicResponse<CreateProductResponse>> createProduct(
@@ -47,5 +50,10 @@ public class AdminProductController {
       @PathVariable String productUuid, @Valid @RequestBody UpdateProductRequest req) {
     return ok(productCommandService.updateProduct(productUuid, req.toDto()));
   }
-  
+
+  @GetMapping("/{productUuid}")
+  public ResponseEntity<MosaicResponse<ProductResponse>> getProduct(
+      @PathVariable String productUuid) {
+    return ok(productQueryService.getProductResponse(productUuid));
+  }
 }

@@ -25,7 +25,7 @@ import org.mosaic.product_service.libs.common.entity.BaseEntity;
 @Getter
 @NoArgsConstructor
 @Table(name = "P_PRODUCTS")
-@SQLRestriction("IS_DELETE = FALSE")
+@SQLRestriction("IS_DELETE = FALSE AND IS_PUBLIC = TRUE")
 public class Product extends BaseEntity {
 
   @Id
