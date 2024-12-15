@@ -26,10 +26,10 @@ public class ApiResponseUtils {
             .build());
   }
 
-  public static ResponseEntity<CommonResponse<String>> noContent() {
+  public static ResponseEntity<CommonResponse<Void>> noContent() {
     ResponseEntity.noContent().build();
     return ResponseEntity.status(HttpStatus.NO_CONTENT)
-        .body(CommonResponse.<String>builder()
+        .body(CommonResponse.<Void>builder()
             .success(true)
             .build());
   }
