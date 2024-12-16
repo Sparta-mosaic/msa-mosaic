@@ -16,7 +16,7 @@ spring:
         - id: slack-service
           uri: lb://slack-service
           predicates:
-            - Path=/api/v1/slack/**
+            - Path=/api/v1/slack/**, /api/v1/admin/slack/**
         - id: ai-service
           uri: lb://ai-service
           predicates:
