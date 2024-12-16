@@ -25,32 +25,34 @@ import org.mosaic.product_service.libs.common.entity.BaseEntity;
 @SQLRestriction("IS_DELETE = FALSE AND IS_PUBLIC = TRUE")
 public class ProductStockHistory extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PRODUCT_STOCK_HISTORY_ID")
-	private Long productStockHistoryID;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "PRODUCT_STOCK_HISTORY_ID")
+  private Long productStockHistoryID;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PRODUCT_ID")
-	private Product product;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "PRODUCT_ID")
+  private Product product;
 
-	@Column(name = "QUANTITY")
-	private Long quantity;
+  @Column(name = "QUANTITY")
+  private Long quantity;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "STOCK_TYPE")
-	private StockType stockType;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "STOCK_TYPE")
+  private StockType stockType;
 
-	@Builder
-	private ProductStockHistory(Product product, Long quantity, StockType stockType) {
-		this.product = product;
-		this.quantity = quantity;
-		this.stockType = stockType;
-	}
+  @Builder
+  private ProductStockHistory(Product product, Long quantity, StockType stockType) {
+    this.product = product;
+    this.quantity = quantity;
+    this.stockType = stockType;
+  }
 
-	public void update(Long quantity) {
-		this.quantity = quantity;
-	}
+  public void update(Long quantity) {
+    this.quantity = quantity;
+  }
+
+  void changeOrder(Product product) {
+    this.product = product;
+  }
 }
-
-
