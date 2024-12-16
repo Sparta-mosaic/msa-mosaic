@@ -4,6 +4,8 @@ package org.mosaic.auth.libs.config.base;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
@@ -16,40 +18,46 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
+
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
     @CreatedBy
-    @Column(name = "created_by", updatable = false)
+    @Column(nullable = true)
     private String createdBy;
 
     @LastModifiedDate
-    @Column(name = "updated_at")
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
 
     @LastModifiedBy
-    @Column(name = "updated_by")
     private String updatedBy;
 
-    @Column(name = "deleted_at")
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime deletedAt;
 
-    @Column(name = "deleted_by")
+    @Column
     private String deletedBy;
 
-    @Column(name = "is_deleted")
-    private Boolean isDeleted = false;
+    @Column(nullable = false)
+    private boolean isPublic = true;
 
-    @Column(name = "is_public")
-    private Boolean isPublic = true;
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 
-
-    public void delete() {
+    public void delete(String userUuid) {
         this.deletedAt = LocalDateTime.now();
-        this.isDeleted = true;
+        this.deletedBy = userUuid;
         this.isPublic = false;
+        this.isDeleted = true;
+    }
 
+    public void createby(String userUuid) {
+        this.createdBy = userUuid;
     }
 
     public void updatePrivate() {
