@@ -52,7 +52,7 @@ dependencies {
 
 	// spring cloud
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 	// queryDsl
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.auth.libs.security.filter.JWTFilter;
 import org.mosaic.auth.libs.security.filter.LoginFilter;
-import org.mosaic.auth.libs.security.service.JwtService;
 import org.mosaic.auth.libs.security.utils.JwtUtil;
 import org.mosaic.auth.user.application.service.UserQueryService;
 import org.springframework.context.annotation.Bean;
@@ -30,12 +29,11 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final UserQueryService userService;
     private final JwtUtil jwtUtil;
-    private final JwtService jwtService;
     private final AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
     public JWTFilter jwtFilter() {
-        return new JWTFilter(jwtUtil, jwtService);
+        return new JWTFilter(jwtUtil);
     }
 
     @Bean
