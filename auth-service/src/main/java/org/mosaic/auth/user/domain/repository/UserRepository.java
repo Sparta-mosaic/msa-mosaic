@@ -11,4 +11,5 @@ public interface UserRepository extends QuerydslPredicateExecutor<User> {
 
   Optional<User> findById(Long userId);
 
+  Optional<User> findByUsername(String username);
 }
