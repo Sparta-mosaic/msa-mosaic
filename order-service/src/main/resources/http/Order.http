@@ -1,5 +1,5 @@
 ### 주문 생성
-POST http://localhost:19001/api/v1/orders
+POST http://localhost:19007/api/v1/orders
 Content-Type: application/json
 X-User-Id: 550e8400-e29b-41d4-a716-446655440006
 
@@ -11,20 +11,43 @@ X-User-Id: 550e8400-e29b-41d4-a716-446655440006
     {
       "productId": "550e8400-e29b-41d4-a716-446655440000",
       "productName": "샤오미 전기 히터",
-      "quantity": 5,
+      "quantity": 10,
       "unitPrice": 100000
     },
     {
       "productId": "550e8400-e29b-41d4-a716-446655440002",
       "productName": "토요토미 옴니 230 KS-67H",
-      "quantity": 1,
+      "quantity": 10,
       "unitPrice": 200000
     },
     {
       "productId": "550e8400-e29b-41d4-a716-446655440005",
       "productName": "베어샤오슝 BEAR 발난로 DNQ-A02X1",
-      "quantity": 3,
+      "quantity": 10,
       "unitPrice": 30000
     }
   ]
 }
+
+### 주문 생성
+POST http://localhost:19007/api/v1/orders
+Content-Type: application/json
+X-User-Id: 550e8400-e29b-41d4-a716-446655440006
+
+
+{
+  "supplierCompanyId": "550e8400-e29b-41d4-a716-446655440000",
+  "receiverCompanyId": "550e8400-e29b-41d4-a716-446655440001",
+  "orderDetails": [
+    {
+      "productId": "550e8400-e29b-41d4-a716-446655440000",
+      "productName": "샤오미 전기 히터",
+      "quantity": 1000000,
+      "unitPrice": 100000
+    }
+  ]
+}
+
+
+###
+GET http://localhost:19007/api/v1/orders/cf515949-c358-47da-8ff1-f23076489758

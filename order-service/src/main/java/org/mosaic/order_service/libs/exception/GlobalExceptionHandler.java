@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     ex.getBindingResult()
         .getAllErrors()
         .forEach(
-            (error) -> {
+            error -> {
               String fieldName = ((FieldError) error).getField();
               String errorMessage = error.getDefaultMessage();
               errors.put(fieldName, errorMessage);
@@ -42,5 +42,14 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(AuthException.class)
   public ResponseEntity<MosaicResponse<String>> handleCustomException(AuthException e) {
     return ApiResponseUtils.failed(e.getStatus(), e);
+  }
+
+  @ExceptionHandler(OrderNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public ResponseEntity<Map<String, String>> handleProductNotFoundException(
+      OrderNotFoundException ex) {
+    Map<String, String> error = new HashMap<>();
+    error.put("error", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
   }
 }

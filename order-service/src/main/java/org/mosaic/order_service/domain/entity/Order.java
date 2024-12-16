@@ -89,6 +89,7 @@ public class Order extends BaseEntity {
 
   public void addOrderStateHistory(OrderState state) {
     OrderStateHistory history = OrderStateHistory.builder().orderState(state).build();
+    this.orderState = state;
     history.changeOrder(this);
     this.orderStateHistory.add(history);
   }

@@ -38,7 +38,10 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.4'
     runtimeOnly 'org.postgresql:postgresql'
-  
+
+    //kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 
     //lombok
     compileOnly 'org.projectlombok:lombok'

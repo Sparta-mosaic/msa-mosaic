@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
 import org.mosaic.product_service.domain.entity.enums.StockType;
 import org.mosaic.product_service.libs.common.entity.BaseEntity;
+import org.mosaic.product_service.libs.exception.InsufficientStockException;
 
 @Entity
 @Getter
@@ -110,5 +111,20 @@ public class Product extends BaseEntity {
     this.productPrice = productPrice;
     this.productDescription = productDescription;
     this.stockQuantity = stockHistories;
+  }
+
+  public void deductQuantity(Long quantity) {
+    if (quantity <= 0) {
+      throw new IllegalArgumentException("차감할 수량은 0보다 커야 합니다.");
+    }
+    if (stockQuantity == 0) {
+      throw new InsufficientStockException("재고가 없습니다.");
+    }
+    if (stockQuantity < quantity) {
+      throw new InsufficientStockException(
+          "요청한 수량(" + quantity + ")이 현재 재고(" + stockQuantity + ")보다 많습니다.");
+    }
+    this.stockQuantity -= quantity;
+    addStockHistory(quantity, StockType.OUTBOUND);
   }
 }
