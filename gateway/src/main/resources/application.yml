@@ -12,7 +12,7 @@ spring:
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path=/api/v1/user/**, /api/v1/admin/user/**, /api/v1/company/**, /api/v1/admin/company/**
+            - Path=/api/v1/auth/**, /api/v1/admin/auth/**, /api/v1/company/**, /api/v1/admin/company/**
         - id: slack-service
           uri: lb://slack-service
           predicates:
@@ -45,6 +45,10 @@ spring:
       discovery:
         locator:
           enabled: true
+
+service:
+  jwt:
+    secret: ${JWT_SECRET}
 
 eureka:
   client:
