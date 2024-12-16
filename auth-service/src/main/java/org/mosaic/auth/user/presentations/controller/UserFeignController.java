@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("api/v1/feign/user")
+@RequestMapping("api/v1/feign/auth")
 @RequiredArgsConstructor
 @Slf4j
 public class UserFeignController {
