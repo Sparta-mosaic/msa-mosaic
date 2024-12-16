@@ -6,7 +6,11 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ExceptionStatus {
 
-  MESSAGE_REQUEST_FAILED(HttpStatus.BAD_REQUEST, "메시지 전송에 실패하였습니다.");
+  BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
+
+  MESSAGE_REQUEST_FAILED(HttpStatus.BAD_REQUEST, "메시지 전송에 실패하였습니다."),
+  SLACK_MESSAGE_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지 않는 슬랙 메시지 입니다.");
+
 
   private final int status;
   private final String message;

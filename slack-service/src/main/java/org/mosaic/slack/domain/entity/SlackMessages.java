@@ -37,13 +37,21 @@ public class SlackMessages extends BaseEntity {
       name = "slack_message_uuid")
   private String slackMessageUUID;
 
-  @Column(nullable = false, columnDefinition = "TEXT")
-  private String content;
+  @Column(nullable = false, name = "receiver_slack_id")
+  private String receiverSlackId;
 
-  public static SlackMessages create(
-      String content) {
+  @Column(nullable = false, name = "receiver_slack_email")
+  private String receiverSlackEmail;
+
+  @Column(nullable = false, columnDefinition = "TEXT")
+  private String text;
+
+
+  public static SlackMessages create(String slackId,String email, String text) {
     return SlackMessages.builder()
-        .content(content)
+        .receiverSlackId(slackId)
+        .receiverSlackEmail(email)
+        .text(text)
         .build();
   }
 }
