@@ -9,7 +9,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -53,13 +52,22 @@ public class User extends BaseEntity {
   @Column(nullable = false, name = "slack_email")
   private String slackEmail;
 
-  public static User create(String username, String password, UserRole role,
+  @Column(nullable = false, name = "is_activated")
+  private Boolean isActivate = true;
+
+  public static User create(
+      String uuid,
+      String username,
+      String password,
+      UserRole role,
       String slackEmail) {
     return User.builder()
+        .userUUID(uuid)
         .username(username)
         .password(password)
         .role(role)
         .slackEmail(slackEmail)
+        .isActivate(true)
         .build();
   }
 }
