@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mosaic.auth.libs.security.utils.JwtUtil;
-import org.mosaic.auth.user.domain.entity.user.UserRole;
+import org.mosaic.auth.domain.model.user.UserRole;
 import org.springframework.stereotype.Service;
 
 @Service

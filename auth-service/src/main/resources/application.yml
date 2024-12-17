@@ -3,13 +3,13 @@ spring:
     name: auth-service
 
   jwt:
-    secret: ${JWT_SECRET}
+    secret: UExPeaCVJ4gJc6hZIazq52TrMjJSaR7q7pNo475qYUo=
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/mosaic
+    username: root
+    password: pass!
 
   jpa:
     show-sql: true

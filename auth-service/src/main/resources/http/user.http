@@ -1,0 +1,35 @@
+### 유저 생성
+POST http://localhost:19092/api/v1/auth/signUp
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "password": "Password1!",
+  "slackEmail": "tester@gmail.com"
+}
+
+### 마스터 생성
+POST http://localhost:19092/api/v1/admin/auth/signUp
+Content-Type: application/json
+
+{
+  "username": "adminTester",
+  "password": "Password1!",
+  "slackEmail": "master@gmail.com"
+}
+
+### 로그인
+POST http://localhost:19092/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "adminTester",
+  "password": "Password1!"
+}
+
+### 유저 조회 (마스터)
+GET http://localhost:19092/api/v1/auth/b4386d7e-8897-4101-8ce5-5f478f8b9f1a
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6ImE4Yjk3YTAxLTJhMmYtNDE3ZS1hZGZiLWFhYjczYzMxZTliZCIsInJvbGUiOiJNQVNURVIiLCJpYXQiOjE3MzQ0NDI0MzIsImV4cCI6MTczNjI0MjQzMn0.JqqeTDf85yAtPxdRB4Dka7k96UuZeDL8nSJSqmsVICo
+
+### 유저 조회 (내 정보)
+GET http://localhost:19092/api/v1/auth/z23fef12-8f5f-4872-b983-2b50ad958003

@@ -14,7 +14,7 @@ import java.util.Base64;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
-import org.mosaic.auth.user.domain.entity.user.UserRole;
+import org.mosaic.auth.domain.model.user.UserRole;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class JwtUtil {
     @Value("${spring.jwt.secret}")
     private String jwtSecret;
     private static final String USERUUID_CLAIM_KEY = "userUuid";
-    private Long accessTokenExpirationPeriod = 60L * 30;
+    private Long accessTokenExpirationPeriod = 60 * 30 * 1000L;
 
 
     @PostConstruct

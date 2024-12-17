@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.mosaic.auth.user.domain.entity.user.UserRole;
+import org.mosaic.auth.domain.model.user.UserRole;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,11 +21,10 @@ public class AuthenticatedUserDto {
   private Boolean isActivate;
 
   public static AuthenticatedUserDto createAuthenticatedUserDto(String userUUID, UserRole role, Boolean isActivate) {
-    return new AuthenticatedUserDto().builder()
+    return AuthenticatedUserDto.builder()
         .userUUID(userUUID)
         .role(role)
         .isActivate(isActivate)
         .build();
-
   }
 }
