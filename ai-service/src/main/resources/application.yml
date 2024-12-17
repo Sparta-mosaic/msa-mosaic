@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: ai-service
+
+  jwt:
+    secret: ${JWT_SECRET}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: false
+        default_batch_fetch_size: 1000
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+#      schema-locations: classpath:schema.sql
+#      data-locations: classpath:data.sql
+
+server:
+  port: 19094
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+
+gemini:
+  api:
+    url: ${GEMINI_URL}
+    key: ${GEMINI_KEY}
+    name: ${GEMINI_MODEL_NAME}
+
+logging:
+  level:
+    org.springframework.security: DEBUG

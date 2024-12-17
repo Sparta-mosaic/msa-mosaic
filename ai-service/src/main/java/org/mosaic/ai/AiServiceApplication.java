@@ -1,4 +1,4 @@
-package org.mosaic.ai_service;
+package org.mosaic.ai;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

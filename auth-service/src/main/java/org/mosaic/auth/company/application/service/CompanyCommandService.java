@@ -36,7 +36,7 @@ public class CompanyCommandService {
   public CompanyResponse createCompany(CompanyDto request, CustomUserDetails userDetails) {
 
     HubResponse hubResponse = hubClient.getHub(request.getHubUuid());
-    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
+    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse.toString());
     Long hubId = hubResponse.getHubId();
 
     if(hubId == null) {
@@ -55,6 +55,7 @@ public class CompanyCommandService {
         hubResponse.getHubId());
     company.createdBy(userDetails.getUserUuid());
 
+    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", company.toString());
     return CompanyResponse.of(companyRepository.save(company));
   }
 
@@ -79,12 +80,12 @@ public class CompanyCommandService {
   public CompanyResponse updateCompanyHubId(UpdateCompanyHubIdDto request, CustomUserDetails userDetails) {
 
     HubResponse hubResponse = hubClient.getHub(request.getHubUuid());
+    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse.toString());
+    Long hubId = hubResponse.getHubId();
 
-    if(!hubResponse.getIsPublic()) {
+    if(hubId == null) {
       throw new CustomException(ExceptionStatus.INVALID_HUB_ID);
     }
-
-    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
 
     Company company = companyRepository.findByCompanyUUID(request.getCompanyUuid())
         .orElseThrow(() -> new CustomException(ExceptionStatus.COMPANY_NOT_FOUND));
