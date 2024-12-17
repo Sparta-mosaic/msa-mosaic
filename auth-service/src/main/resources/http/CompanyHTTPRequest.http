@@ -65,7 +65,7 @@ DELETE http://localhost:19092/api/v1/admin/company/{{companyId}}
 
 ### 배송 정보를 위한 내용
 POST http://localhost:19092/api/v1/internal/deliverys
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDQ1NzU3MywiZXhwIjoxNzM2MjU3NTczfQ.P1TA5fEENCCWDNvPdKLErn0NpSc1WQKmlh4iBzMLpMI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDQ2NzU4NiwiZXhwIjoxNzM2MjY3NTg2fQ.Uf6jpQnKNkTzbVk041UnvTopO6R4VOwOCkOe9CAoJ9A
 Content-Type: application/json
 
 {

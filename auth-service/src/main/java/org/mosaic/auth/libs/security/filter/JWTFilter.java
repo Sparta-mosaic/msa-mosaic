@@ -21,57 +21,62 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil;
+  private final JwtUtil jwtUtil;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
 
-        if (SecurityContextHolder.getContext().getAuthentication() != null) {
-            log.debug("JWTFilter - Authentication already exists in SecurityContext. Skipping.");
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        String requestURI = request.getRequestURI();
-        String authorization = request.getHeader("Authorization");
-
-        log.debug("JWTFilter - Processing request: {}, Authorization header: {}", request.getRequestURL(), authorization);
-
-        if (requestURI.equals("/api/v1/auth/login") ||
-            requestURI.equals("/api/v1/auth/signUp") ||
-            requestURI.equals("/api/v1/admin/auth/signUp")) {
-            log.debug("JWTFilter - Skipping authentication for public endpoints: {}", requestURI);
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-
-        String token = authorization.substring(7);
-
-        try {
-
-            String userUuid = jwtUtil.getUserUuid(token);
-            UserRole role = jwtUtil.getRole(token);
-
-            AuthenticatedUserDto authenticatedUserDto = AuthenticatedUserDto.createAuthenticatedUserDto(userUuid, role, true);
-            CustomUserDetails customOAuth2User = new CustomUserDetails(authenticatedUserDto);
-
-            Authentication authToken = new UsernamePasswordAuthenticationToken(customOAuth2User, null, customOAuth2User.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-        } catch (BadCredentialsException e) {
-            log.error("JWTFilter - Authentication failed: {}", e.getMessage());
-            handleUnauthorizedRedirect(response);
-            return;
-        }
-
-        filterChain.doFilter(request, response);
+    if (SecurityContextHolder.getContext().getAuthentication() != null) {
+      log.debug("JWTFilter - Authentication already exists in SecurityContext. Skipping.");
+      filterChain.doFilter(request, response);
+      return;
     }
 
+    String requestURI = request.getRequestURI();
+    String authorization = request.getHeader("Authorization");
 
+    log.debug(
+        "JWTFilter - Processing request: {}, Authorization header: {}",
+        request.getRequestURL(),
+        authorization);
 
-    private void handleUnauthorizedRedirect(HttpServletResponse response) throws IOException {
-        log.info("JWTFilterV1 - Unauthorized access, redirecting to login.");
-        response.sendRedirect("/login?unauthorizedRedirect=true");
+    if (requestURI.equals("/api/v1/auth/login")
+        || requestURI.equals("/api/v1/auth/signUp")
+        || requestURI.equals("/api/v1/admin/auth/signUp")
+        || requestURI.equals("/api/v1/internal/deliverys")) {
+      log.debug("JWTFilter - Skipping authentication for public endpoints: {}", requestURI);
+      filterChain.doFilter(request, response);
+      return;
     }
+
+    String token = authorization.substring(7);
+
+    try {
+
+      String userUuid = jwtUtil.getUserUuid(token);
+      UserRole role = jwtUtil.getRole(token);
+
+      AuthenticatedUserDto authenticatedUserDto =
+          AuthenticatedUserDto.createAuthenticatedUserDto(userUuid, role, true);
+      CustomUserDetails customOAuth2User = new CustomUserDetails(authenticatedUserDto);
+
+      Authentication authToken =
+          new UsernamePasswordAuthenticationToken(
+              customOAuth2User, null, customOAuth2User.getAuthorities());
+      SecurityContextHolder.getContext().setAuthentication(authToken);
+    } catch (BadCredentialsException e) {
+      log.error("JWTFilter - Authentication failed: {}", e.getMessage());
+      handleUnauthorizedRedirect(response);
+      return;
+    }
+
+    filterChain.doFilter(request, response);
+  }
+
+  private void handleUnauthorizedRedirect(HttpServletResponse response) throws IOException {
+    log.info("JWTFilterV1 - Unauthorized access, redirecting to login.");
+    response.sendRedirect("/login?unauthorizedRedirect=true");
+  }
 }

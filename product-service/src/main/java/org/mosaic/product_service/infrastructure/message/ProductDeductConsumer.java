@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.mosaic.product_service.application.dtos.CompanyHubUuidDto;
 import org.mosaic.product_service.application.dtos.ProductDeductDto;
 import org.mosaic.product_service.application.service.ProductMessageService;
 import org.mosaic.product_service.libs.common.config.JpaAuditConfig;
@@ -43,26 +44,30 @@ public class ProductDeductConsumer {
       log.info("Received message with UUID: {} and userId: {}", orderUuid, userId);
       jpaAuditConfig.getUserId(userId);
 
-      List<ProductDeductDto> dtos = deserializePayload(payload);
-      productMessageService.deductProductQuantity(dtos);
+      List<ProductDeductDto> productDeductDto = deserializePayload(payload);
+      List<CompanyHubUuidDto> companyHubUuidDto =
+          productMessageService.deductProductQuantity(productDeductDto);
 
       log.info("Successfully processed deduction for order: {}", key);
-      sendSuccessMessage(orderUuid, userId);
+      sendSuccessMessage(orderUuid, userId, companyHubUuidDto);
     } catch (Exception e) {
       sendErrorMessage(orderUuid, userId, e.getMessage());
       log.error("Error occurred while deduct product : {}", e.getMessage());
     }
   }
 
-  private List<ProductDeductDto> deserializePayload(String payload) throws JsonProcessingException {
-    return objectMapper.readValue(payload, new TypeReference<List<ProductDeductDto>>() {});
-  }
-
-  private void sendSuccessMessage(String orderUuid, String userId) {
-    ProducerRecord<String, String> producerRecord =
-        new ProducerRecord<>("SUCCESS_PRODUCT_QUANTITY", orderUuid, orderUuid);
-    producerRecord.headers().add("USER_ID", userId.getBytes(StandardCharsets.UTF_8));
-    kafkaTemplate.send(producerRecord);
+  private void sendSuccessMessage(
+      String orderUuid, String userId, List<CompanyHubUuidDto> companyHubUuidDto) {
+    try {
+      String companyHubUuidDtoJson = objectMapper.writeValueAsString(companyHubUuidDto);
+      ProducerRecord<String, String> producerRecord =
+          new ProducerRecord<>("SUCCESS_PRODUCT_QUANTITY", orderUuid, companyHubUuidDtoJson);
+      producerRecord.headers().add("USER_ID", userId.getBytes(StandardCharsets.UTF_8));
+      kafkaTemplate.send(producerRecord);
+    } catch (JsonProcessingException e) {
+      log.error("Error serializing CompanyHubUuidDto: {}", e.getMessage());
+      sendErrorMessage(orderUuid, userId, "Error processing success message");
+    }
   }
 
   private void sendErrorMessage(String orderUuid, String userId, String errorMessage) {
@@ -71,5 +76,9 @@ public class ProductDeductConsumer {
         new ProducerRecord<>("ERROR_PRODUCT_QUANTITY", orderUuid, fullErrorMessage);
     producerRecord.headers().add("USER_ID", userId.getBytes(StandardCharsets.UTF_8));
     kafkaTemplate.send(producerRecord);
+  }
+
+  private List<ProductDeductDto> deserializePayload(String payload) throws JsonProcessingException {
+    return objectMapper.readValue(payload, new TypeReference<List<ProductDeductDto>>() {});
   }
 }
