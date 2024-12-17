@@ -2,17 +2,19 @@ package org.mosaic.gateway;
 
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import java.util.Base64;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -20,9 +22,10 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class LocalJwtAuthenticationFilter implements GlobalFilter {
 
-    @Value("${service.jwt.secret}")
-    private String secretKey;
+    private static final String AUTHENTICATION_SCHEME = "Bearer ";
 
+    @Value("${jwt.secret}")
+    private String secret;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -32,44 +35,59 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
             return chain.filter(exchange);
         }
 
-        String token = extractToken(exchange);
+        String authorizationHeader = exchange.getRequest().getHeaders()
+            .getFirst(HttpHeaders.AUTHORIZATION);
 
-        if(token == null || !validateToken(exchange, token)) {
+        if (isNotValidHeader(authorizationHeader)) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
 
-        return chain.filter(exchange);
-    }
-
-    private String extractToken(ServerWebExchange exchange) {
-        String authorization = exchange.getRequest().getHeaders().getFirst("Authorization");
-        // 헤더에 필요한 authorization 내용이 들어오는 지 확인
-        if(authorization != null && authorization.startsWith("Bearer ")) {
-            return authorization.substring(7);
+        SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+        String token = authorizationHeader.replace(AUTHENTICATION_SCHEME, "");
+        if (isNotValidToken(key, token)) {
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
         }
-        return null;
+
+        ServerHttpRequest httpRequest = generateRequest(exchange, key, token);
+
+        return chain.filter(exchange.mutate().request(httpRequest).build());
     }
 
+    private ServerHttpRequest generateRequest(
+        ServerWebExchange exchange, SecretKey key, String token) {
 
-    private boolean validateToken(ServerWebExchange exchange, String token) {
+        Claims claims = getClaims(key, token);
+
+        String userUuid = claims.get("userUuid", String.class);
+        String userRole = claims.get("role", String.class);
+
+      return exchange.getRequest().mutate()
+          .header("X-User-Id", userUuid)
+          .header("X-User-Role", userRole)
+          .build();
+    }
+
+    private Claims getClaims(SecretKey key, String token) {
+      return Jwts.parser()
+          .verifyWith(key)
+          .build()
+          .parseSignedClaims(token)
+          .getPayload();
+    }
+
+    private boolean isNotValidHeader(String authorizationHeader) {
+        return !StringUtils.hasText(authorizationHeader)
+            || !authorizationHeader.startsWith(AUTHENTICATION_SCHEME);
+    }
+
+    private boolean isNotValidToken(SecretKey key, String jwt) {
         try {
-            SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
-            Jws<Claims> claimsJws = Jwts.parser()
-                    .verifyWith(key)
-                    .build().parseSignedClaims(token);
-            log.info("#####payload :: " + claimsJws.getPayload().toString());
-
-            Claims claims = claimsJws.getPayload();
-            exchange.getRequest().mutate()
-                .header("X-User-Id", claims.get("userUuid").toString())
-                .header("X-Role", claims.get("role").toString())
-                .header("Authorization", token)
-                .build();
-            return true;
-        } catch (Exception e) {
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(jwt);
             return false;
+        } catch (Exception e) {
+            return true;
         }
     }
-
 }
