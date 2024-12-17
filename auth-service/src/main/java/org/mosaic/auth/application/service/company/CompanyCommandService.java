@@ -33,7 +33,6 @@ public class CompanyCommandService {
   public CompanyResponse createCompany(CompanyDto request, CustomUserDetails userDetails) {
 
     HubResponse hubResponse = hubClient.getHub(request.getHubUuid()).getResponse();
-    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
     Long hubId = hubResponse.getHubId();
 
     if(hubId == null) {
@@ -76,15 +75,12 @@ public class CompanyCommandService {
   public CompanyResponse updateCompanyHubId(UpdateCompanyHubIdDto request, CustomUserDetails userDetails) {
 
     HubResponse hubResponse = hubClient.getHub(request.getHubUuid()).getResponse();
-    HubResponse hubResponse = hubClient.getHub(request.getHubUuid());
-    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse.toString());
     Long hubId = hubResponse.getHubId();
 
     if(hubId == null) {
       throw new CustomException(ExceptionStatus.INVALID_HUB_ID);
     }
 
-    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
 
     Company company = companyRepository.findByCompanyUUID(request.getCompanyUuid())
         .orElseThrow(() -> new CustomException(ExceptionStatus.COMPANY_NOT_FOUND));
