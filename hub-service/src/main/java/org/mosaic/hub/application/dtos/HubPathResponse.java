@@ -14,8 +14,9 @@ public class HubPathResponse {
   private String hubUuid;
   private String hubName;
   private int time;
+  private double distance;
 
-  public static HubPathResponse create(String hubUuid, String hubName, int time){
-    return new HubPathResponse(hubUuid, hubName, time);
+  public static HubPathResponse create(String hubUuid, String hubName, int time, double distance) {
+    return new HubPathResponse(hubUuid, hubName, time, distance);
   }
 }
