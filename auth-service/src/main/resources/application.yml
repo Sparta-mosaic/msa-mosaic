@@ -20,11 +20,13 @@ spring:
         default_batch_fetch_size: 1000
     open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     defer-datasource-initialization: true
   sql:
     init:
-      mode: never
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
 
 server:
   port: 19092
