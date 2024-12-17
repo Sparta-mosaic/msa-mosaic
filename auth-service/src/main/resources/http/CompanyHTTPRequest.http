@@ -5,7 +5,7 @@ GET http://localhost:19092/api/v1/company/{{companyUuid}}
 GET http://localhost:19092/api/v1/company
 
 ### Create Company
-POST http://localhost:19091/api/v1/company
+POST http://localhost:19092/api/v1/company
 Content-Type: application/json
 
 {
@@ -61,3 +61,14 @@ Content-Type: application/json
 
 ### [ADMIN] Delete Company
 DELETE http://localhost:19092/api/v1/admin/company/{{companyId}}
+
+
+### 배송 정보를 위한 내용
+POST http://localhost:19092/api/v1/internal/deliverys
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDQ1NzU3MywiZXhwIjoxNzM2MjU3NTczfQ.P1TA5fEENCCWDNvPdKLErn0NpSc1WQKmlh4iBzMLpMI
+Content-Type: application/json
+
+{
+  "supplierCompanyId": "ef674968-7419-4e69-94dc-a4e4aae08f94",
+  "receiverCompanyId": "6f4e4608-0b9a-4fdd-9c4b-2e2efc2f7daa"
+}
