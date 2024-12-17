@@ -1,6 +1,6 @@
 package org.mosaic.hub.domain.model;
 
-import static jakarta.persistence.CascadeType.PERSIST;
+import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -52,8 +52,7 @@ public class Hub extends BaseEntity {
   @Embedded
   private Coordinates coordinates;
 
-  @Builder.Default
-  @OneToMany(mappedBy = "departureHub", cascade = PERSIST)
+  @OneToMany(mappedBy = "departureHub", cascade = ALL)
   private List<HubTransfer> hubTransfers = new ArrayList<>();
 
   public static Hub create(
@@ -65,6 +64,7 @@ public class Hub extends BaseEntity {
         .name(name)
         .address(address)
         .coordinates(new Coordinates(latitude, longitude))
+        .hubTransfers(new ArrayList<>())
         .build();
   }
 

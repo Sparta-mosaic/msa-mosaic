@@ -24,7 +24,7 @@ public class UpdateHubResponse {
   private String createdBy;
   private LocalDateTime updatedAt;
   private String updatedBy;
-  private boolean isPublic;
+  private Boolean isPublic;
 
   public static UpdateHubResponse from(Hub hub) {
     return UpdateHubResponse.builder()

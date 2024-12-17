@@ -20,11 +20,11 @@ spring:
         default_batch_fetch_size: 1000
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     defer-datasource-initialization: true
   sql:
     init:
-      mode: always
+      mode: never
 #      schema-locations: classpath:schema.sql
 #      data-locations: classpath:data.sql
 

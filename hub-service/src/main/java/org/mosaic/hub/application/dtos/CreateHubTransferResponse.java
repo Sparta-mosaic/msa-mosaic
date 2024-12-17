@@ -1,12 +1,14 @@
 package org.mosaic.hub.application.dtos;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mosaic.hub.domain.model.HubTransfer;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
 public class CreateHubTransferResponse {
 
   private List<HubTransferResponse> hubTransfers;

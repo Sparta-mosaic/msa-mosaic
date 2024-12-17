@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mosaic.hub.application.service.HubQueryService;
@@ -49,4 +50,22 @@ class HubControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.success").value(true));
   }
+  
+  @Test
+  @DisplayName("getHubPath: 출발 허브 UUID, 도착 허브 UUID 를 입력받아 허브 경로를 조회한다.")
+  void getHubPath() throws Exception {
+  	// given
+    final String uri = "/api/v1/hub-paths";
+    final String departureHubUuid = UUID.randomUUID().toString();
+    final String arrivalHubUuid = UUID.randomUUID().toString();
+
+    // expected
+    mockMvc.perform(get(uri)
+            .queryParam("departureHubUuid", departureHubUuid)
+            .queryParam("arrivalHubUuid", arrivalHubUuid))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.success").value(true));
+  }
+  
 }

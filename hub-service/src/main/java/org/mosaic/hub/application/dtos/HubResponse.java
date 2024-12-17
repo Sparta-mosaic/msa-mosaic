@@ -6,13 +6,16 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.mosaic.hub.domain.model.Hub;
 
 @Getter
 @Builder(access = PRIVATE)
 @AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 public class HubResponse {
 
+  private Long hubId;
   private String hubUuid;
   private Long managerId;
   private String name;
@@ -23,10 +26,11 @@ public class HubResponse {
   private String createdBy;
   private LocalDateTime updatedAt;
   private String updatedBy;
-  private boolean isPublic;
+  private Boolean isPublic;
 
   public static HubResponse from(Hub hub) {
     return HubResponse.builder()
+        .hubId(hub.getId())
         .hubUuid(hub.getUuid())
         .managerId(hub.getManagerId())
         .name(hub.getName())

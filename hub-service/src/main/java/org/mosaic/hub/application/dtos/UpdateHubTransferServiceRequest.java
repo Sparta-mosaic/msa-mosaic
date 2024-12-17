@@ -1,10 +1,12 @@
 package org.mosaic.hub.application.dtos;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
 public class UpdateHubTransferServiceRequest {
 
   private int estimatedTime;

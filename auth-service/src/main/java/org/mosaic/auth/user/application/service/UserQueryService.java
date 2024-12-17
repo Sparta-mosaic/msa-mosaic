@@ -35,7 +35,7 @@ public class UserQueryService {
 
   public UserFeignResponse getFeignUserResponse(String  userUuid) {
 
-    User user = userRepository.findByUserUuid(userUuid)
+    User user = userRepository.findByUserUUID(userUuid)
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
     return UserFeignResponse.of(user);
@@ -61,7 +61,7 @@ public class UserQueryService {
 
   public UserResponse findUserBySelf(String userUuid, CustomUserDetails userDetails) {
 
-    User user = userRepository.findByUserUuid(userUuid)
+    User user = userRepository.findByUserUUID(userUuid)
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
     if(!user.getUserUUID().equals(userDetails.getUserUuid())) {

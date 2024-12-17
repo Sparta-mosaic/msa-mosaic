@@ -45,7 +45,7 @@ public class UserCommandService {
 
   public Object updateUserRole(UpdateUserRoleRequest request, CustomUserDetails userDetails) {
 
-    User user = userRepository.findByUserUuid(request.getUserUuid())
+    User user = userRepository.findByUserUUID(request.getUserUuid())
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
     user.updateUserRole(UserRole.valueOf(request.getRole()));
