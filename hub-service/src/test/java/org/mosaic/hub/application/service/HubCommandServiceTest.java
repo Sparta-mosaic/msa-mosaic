@@ -108,7 +108,7 @@ class HubCommandServiceTest {
             response.getLatitude(), response.getLongitude(),
             response.getCreatedAt(), response.getCreatedBy(),
             response.getUpdatedAt(), response.getUpdatedBy(),
-            response.isPublic());
+            response.getIsPublic());
   }
 
   @Test
@@ -150,8 +150,8 @@ class HubCommandServiceTest {
 
     final List<HubTransferInfo> hubTransferInfoList = List.of(
         hubTransferInfo, hubTransferInfo2);
-    final CreateHubTransferServiceRequest request = new CreateHubTransferServiceRequest(
-        hubTransferInfoList);
+    final CreateHubTransferServiceRequest request = CreateHubTransferServiceRequest
+        .create(hubTransferInfoList);
 
     // when
     CreateHubTransferResponse response = hubCommandService.createHubTransfer(
