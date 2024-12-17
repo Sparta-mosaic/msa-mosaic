@@ -1,3 +1,5 @@
 ### 허브 경로 조회
 GET http://localhost:19095/api/v1/hub-paths?departureHubUuid=e1b84264-b95b-4a53-b7b9-3fba65bd784e&arrivalHubUuid=5f19e4d3-8a42-4af1-abc7-1f0c621627d9
 
+### 내부용 허브 경로 조회
+GET http://localhost:19095/api/v1/internal/hub-paths?departureHubUuid=e1b84264-b95b-4a53-b7b9-3fba65bd784e&arrivalHubUuid=5f19e4d3-8a42-4af1-abc7-1f0c621627d9
