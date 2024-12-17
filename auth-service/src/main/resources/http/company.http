@@ -1,0 +1,16 @@
+### 가게 생성
+POST http://localhost:19092/api/v1/company
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDQ0Mzc3NSwiZXhwIjoxNzM2MjQzNzc1fQ.mmKm0zDcL4H13nXRYFr_QU3-5yg3eOQBlQo3a_wvRLY
+Content-Type: application/json
+
+{
+  "name": "JunCompany",
+  "address": "addressaddress",
+  "companyType": "SUPPLY",
+  "userUuid": "899683e4-0212-4ec6-9a7f-7f58464e92bd",
+  "hubUuid": "c10a579b-d097-4424-a964-d8e362d27a4f"
+}
+
+### 가게 조회
+GET http://localhost:19092/api/v1/company/d0606df6-051f-4076-a442-04709e10d522
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDQ0Mzc3NSwiZXhwIjoxNzM2MjQzNzc1fQ.mmKm0zDcL4H13nXRYFr_QU3-5yg3eOQBlQo3a_wvRLY

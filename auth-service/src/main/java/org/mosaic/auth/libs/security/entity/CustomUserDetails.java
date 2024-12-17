@@ -3,7 +3,7 @@ package org.mosaic.auth.libs.security.entity;
 import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.mosaic.auth.user.domain.entity.user.UserRole;
+import org.mosaic.auth.domain.model.user.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
