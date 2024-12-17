@@ -53,7 +53,7 @@ public class UserAdminController {
             HttpStatus.OK);
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/signUp")
     public ResponseEntity<ApiResult<UserResponse>> createMasterUser(
         @RequestBody SignUpMasterRequest request) {
 

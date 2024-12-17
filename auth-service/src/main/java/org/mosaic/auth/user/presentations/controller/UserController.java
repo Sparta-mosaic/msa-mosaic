@@ -42,8 +42,8 @@ public class UserController {
             HttpStatus.OK);
     }
 
-    @PostMapping("/signIn")
-    public ResponseEntity<ApiResult<String>> signIn(
+    @PostMapping("/signUp")
+    public ResponseEntity<ApiResult<String>> signUP(
         @RequestBody @Valid SignUpCompanyRequest request) {
 
         userCommandService.createUser(request.toDto(passwordEncoder));
