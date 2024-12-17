@@ -38,12 +38,12 @@ public class CompanyController {
     private final CompanyQueryService companyQueryService;
     private final CompanyCommandService companyCommandService;
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/{companyUuid}")
     public ResponseEntity<ApiResult<CompanyResponse>> getCompany(
-        @PathVariable Long companyId) {
+        @PathVariable String companyUuid) {
 
         return new ResponseEntity<>(success(
-            companyQueryService.findCompanyById(companyId)),
+            companyQueryService.findCompanyByUuid(companyUuid)),
             HttpStatus.OK);
     }
 
@@ -58,25 +58,27 @@ public class CompanyController {
 
     @PostMapping
     public ResponseEntity<ApiResult<CompanyResponse>> createCompany(
-        @RequestBody CreateCompanyRequest request){
+        @RequestBody CreateCompanyRequest request,
+        @AuthenticationPrincipal CustomUserDetails userDetails){
 
         return new ResponseEntity<>(success(
-            companyCommandService.createCompany(request.toDTO())),
+            companyCommandService.createCompany(request.toDTO(), userDetails)),
             HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<ApiResult<CompanyResponse>> updateCompany(
-        @RequestBody UpdateCompanyRequest request){
+        @RequestBody UpdateCompanyRequest request,
+        @AuthenticationPrincipal CustomUserDetails userDetails){
 
         return new ResponseEntity<>(success(
-            companyCommandService.updateCompany(request.toDTO())),
+            companyCommandService.updateCompany(request.toDTO(), userDetails)),
             HttpStatus.OK);
     }
 
     @DeleteMapping("/{companyId}")
     public ResponseEntity<ApiResult<String>> deleteCompanyByManager(
-        @PathVariable Long companyId,
+        @PathVariable String companyId,
         @AuthenticationPrincipal CustomUserDetails userDetails){
 
         companyCommandService.delete(companyId, userDetails);

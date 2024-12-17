@@ -12,7 +12,7 @@ import org.mosaic.auth.company.domain.entity.company.CompanyType;
 public class UpdateCompanyRequest {
 
   @NotBlank
-  private Long companyId;
+  private String companyUuid;
   @NotBlank
   private String name;
   @NotBlank
@@ -21,7 +21,7 @@ public class UpdateCompanyRequest {
   private CompanyType companyType;
 
   public UpdateCompanyDto toDTO() {
-    return UpdateCompanyDto.create(companyId, name, address, companyType);
+    return UpdateCompanyDto.create(companyUuid, name, address, companyType);
   }
 
 }

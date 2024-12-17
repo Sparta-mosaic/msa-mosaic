@@ -8,13 +8,13 @@ import lombok.Getter;
 @Builder(access = AccessLevel.PRIVATE)
 public class UpdateCompanyHubIdDto {
 
-  private Long companyId;
-  private Long hubId;
+  private String  companyUuid;
+  private String  hubUuid;
 
-  public static UpdateCompanyHubIdDto create(Long companyId, Long hubId) {
+  public static UpdateCompanyHubIdDto create(String companyUuid, String  hubUuid) {
     return UpdateCompanyHubIdDto.builder()
-        .companyId(companyId)
-        .hubId(hubId)
+        .companyUuid(companyUuid)
+        .hubUuid(hubUuid)
         .build();
   }
 

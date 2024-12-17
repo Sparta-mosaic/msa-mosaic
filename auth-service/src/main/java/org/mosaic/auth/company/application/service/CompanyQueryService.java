@@ -24,8 +24,8 @@ public class CompanyQueryService {
   private final UserRepository userRepository;
   private final CompanyRepository companyRepository;
 
-  public CompanyResponse findCompanyById(Long companyId) {
-    Company company = companyRepository.findById(companyId)
+  public CompanyResponse findCompanyByUuid(String companyUuid) {
+    Company company = companyRepository.findByCompanyUUID(companyUuid)
         .orElseThrow(() -> new CustomException(ExceptionStatus.COMPANY_NOT_FOUND));
 
     return CompanyResponse.of(company);

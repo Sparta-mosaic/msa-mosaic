@@ -13,16 +13,16 @@ public class CompanyDto {
   private String name;
   private String address;
   private CompanyType companyType;
-  private Long userId;
-  private Long hubId;
+  private String userUuid;
+  private String hubUuid;
 
-  public static CompanyDto create(String name, String address, CompanyType companyType, Long userId, Long hubId) {
+  public static CompanyDto create(String name, String address, CompanyType companyType, String  userUuid, String  hubUuid) {
     return CompanyDto.builder()
         .name(name)
         .address(address)
         .companyType(companyType)
-        .userId(userId)
-        .hubId(hubId)
+        .userUuid(userUuid)
+        .hubUuid(hubUuid)
         .build();
   }
 
