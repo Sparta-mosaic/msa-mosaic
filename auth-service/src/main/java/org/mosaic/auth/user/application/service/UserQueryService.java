@@ -10,6 +10,7 @@ import org.mosaic.auth.user.application.dto.UserFeignResponse;
 import org.mosaic.auth.user.application.dto.UserPageResponse;
 import org.mosaic.auth.user.application.dto.UserResponse;
 import org.mosaic.auth.user.domain.entity.user.User;
+import org.mosaic.auth.user.domain.entity.user.UserRole;
 import org.mosaic.auth.user.domain.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,7 +65,8 @@ public class UserQueryService {
     User user = userRepository.findByUserUUID(userUuid)
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
-    if(!user.getUserUUID().equals(userDetails.getUserUuid())) {
+    if(!userDetails.getUserRole().equals(UserRole.MASTER) &&
+        !user.getUserUUID().equals(userDetails.getUserUuid())) {
       throw new CustomException(ExceptionStatus.AUTHENTICATION_INVALID_USER);
     }
 

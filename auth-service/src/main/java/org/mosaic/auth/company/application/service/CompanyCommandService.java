@@ -1,19 +1,21 @@
 package org.mosaic.auth.company.application.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mosaic.auth.company.application.dtos.CompanyDto;
 import org.mosaic.auth.company.application.dtos.CompanyResponse;
+import org.mosaic.auth.company.application.dtos.HubResponse;
 import org.mosaic.auth.company.application.dtos.UpdateCompanyDto;
 import org.mosaic.auth.company.application.dtos.UpdateCompanyHubIdDto;
 import org.mosaic.auth.company.domain.entity.company.Company;
 import org.mosaic.auth.company.domain.repository.CompanyRepository;
+import org.mosaic.auth.company.infrastructure.HubClient;
 import org.mosaic.auth.libs.exception.CustomException;
 import org.mosaic.auth.libs.exception.ExceptionStatus;
 import org.mosaic.auth.libs.security.entity.CustomUserDetails;
 import org.mosaic.auth.user.domain.entity.user.User;
 import org.mosaic.auth.user.domain.entity.user.UserRole;
 import org.mosaic.auth.user.domain.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,21 +24,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CompanyCommandService {
 
   private final UserRepository userRepository;
   private final CompanyRepository companyRepository;
+  private final HubClient hubClient;
 
 
   @PreAuthorize("hasAnyRole('ROLE_MASTER', 'ROLE_HUB_MANAGER')")
   public CompanyResponse createCompany(CompanyDto request, CustomUserDetails userDetails) {
 
-    // TODO: 허브 아이디 유효성 확인 필요
+    HubResponse hubResponse = hubClient.getHub(request.getHubUuid());
+
+    if(!hubResponse.getIsPublic()) {
+      throw new CustomException(ExceptionStatus.INVALID_HUB_ID);
+    }
+
+    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
 
     User user = userRepository.findByUserUUID(request.getUserUuid())
         .orElseThrow(() -> new RuntimeException("User not found"));
-
-//    Hub hub = getFeignHub(request.getHubUuid());
 
     Company company = Company.create(
         request.getId(),
@@ -44,7 +52,7 @@ public class CompanyCommandService {
         request.getAddress(),
         request.getCompanyType(),
         user,
-        1L);
+        hubResponse.getHubId());
     company.createdBy(userDetails.getUserUuid());
 
     return CompanyResponse.of(companyRepository.save(company));
@@ -70,7 +78,13 @@ public class CompanyCommandService {
 
   public CompanyResponse updateCompanyHubId(UpdateCompanyHubIdDto request, CustomUserDetails userDetails) {
 
-    // TODO: 허브 아이디 유효성 확인 필요
+    HubResponse hubResponse = hubClient.getHub(request.getHubUuid());
+
+    if(!hubResponse.getIsPublic()) {
+      throw new CustomException(ExceptionStatus.INVALID_HUB_ID);
+    }
+
+    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
 
     Company company = companyRepository.findByCompanyUUID(request.getCompanyUuid())
         .orElseThrow(() -> new CustomException(ExceptionStatus.COMPANY_NOT_FOUND));
@@ -81,7 +95,7 @@ public class CompanyCommandService {
       throw new CustomException(ExceptionStatus.UNAUTHORIZED);
     }
 
-//    company.updateHubId(request.getHubId());
+    company.updateHubId(hubResponse.getHubId());
     company.updatedBy(userDetails.getUserUuid());
 
     return CompanyResponse.of(company);
