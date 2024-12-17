@@ -60,4 +60,8 @@ public class DeliveryDriver extends BaseEntity {
         .deliveryOrder(deliveryOrder)
         .build();
   }
+
+  public void updateLatestStatus(boolean isLatest) {
+    this.isLatest = isLatest;
+  }
 }
