@@ -19,8 +19,8 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,6 +66,7 @@ public class CompanyController {
             HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_COMPANY', 'ROLE_HUB_MANAGER')")
     @PutMapping
     public ResponseEntity<ApiResult<CompanyResponse>> updateCompany(
         @RequestBody UpdateCompanyRequest request,
@@ -76,15 +77,5 @@ public class CompanyController {
             HttpStatus.OK);
     }
 
-    @DeleteMapping("/{companyId}")
-    public ResponseEntity<ApiResult<String>> deleteCompanyByManager(
-        @PathVariable String companyId,
-        @AuthenticationPrincipal CustomUserDetails userDetails){
-
-        companyCommandService.delete(companyId, userDetails);
-
-        return new ResponseEntity<>(success("Delete Company Success"),
-            HttpStatus.OK);
-    }
 
 }

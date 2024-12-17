@@ -36,12 +36,12 @@ public class CompanyCommandService {
   public CompanyResponse createCompany(CompanyDto request, CustomUserDetails userDetails) {
 
     HubResponse hubResponse = hubClient.getHub(request.getHubUuid());
+    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
+    Long hubId = hubResponse.getHubId();
 
-    if(!hubResponse.getIsPublic()) {
+    if(hubId == null) {
       throw new CustomException(ExceptionStatus.INVALID_HUB_ID);
     }
-
-    log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
 
     User user = userRepository.findByUserUUID(request.getUserUuid())
         .orElseThrow(() -> new RuntimeException("User not found"));
