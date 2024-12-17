@@ -11,6 +11,7 @@ import org.mosaic.auth.company.application.service.CompanyQueryService;
 import org.mosaic.auth.company.domain.entity.company.Company;
 import org.mosaic.auth.company.presentations.dtos.CreateCompanyRequest;
 import org.mosaic.auth.company.presentations.dtos.UpdateCompanyRequest;
+import org.mosaic.auth.libs.security.entity.CustomUserDetails;
 import org.mosaic.auth.libs.util.ApiResponseUtil.ApiResult;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,7 +19,8 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,12 +38,12 @@ public class CompanyController {
     private final CompanyQueryService companyQueryService;
     private final CompanyCommandService companyCommandService;
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/{companyUuid}")
     public ResponseEntity<ApiResult<CompanyResponse>> getCompany(
-        @PathVariable Long companyId) {
+        @PathVariable String companyUuid) {
 
         return new ResponseEntity<>(success(
-            companyQueryService.findCompanyById(companyId)),
+            companyQueryService.findCompanyByUuid(companyUuid)),
             HttpStatus.OK);
     }
 
@@ -56,30 +58,24 @@ public class CompanyController {
 
     @PostMapping
     public ResponseEntity<ApiResult<CompanyResponse>> createCompany(
-        @RequestBody CreateCompanyRequest request){
+        @RequestBody CreateCompanyRequest request,
+        @AuthenticationPrincipal CustomUserDetails userDetails){
 
         return new ResponseEntity<>(success(
-            companyCommandService.createCompany(request.toDTO())),
+            companyCommandService.createCompany(request.toDTO(), userDetails)),
             HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_COMPANY', 'ROLE_HUB_MANAGER')")
     @PutMapping
     public ResponseEntity<ApiResult<CompanyResponse>> updateCompany(
-        @RequestBody UpdateCompanyRequest request){
+        @RequestBody UpdateCompanyRequest request,
+        @AuthenticationPrincipal CustomUserDetails userDetails){
 
         return new ResponseEntity<>(success(
-            companyCommandService.updateCompany(request.toDTO())),
+            companyCommandService.updateCompany(request.toDTO(), userDetails)),
             HttpStatus.OK);
     }
 
-    @DeleteMapping("/{companyId}")
-    public ResponseEntity<ApiResult<String>> deleteCompanyByManager(
-        @PathVariable Long companyId){
-
-        companyCommandService.delete(companyId);
-
-        return new ResponseEntity<>(success("Delete Company Success"),
-            HttpStatus.OK);
-    }
 
 }

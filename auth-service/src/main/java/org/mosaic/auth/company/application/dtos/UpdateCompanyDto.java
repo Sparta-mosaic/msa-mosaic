@@ -9,15 +9,15 @@ import org.mosaic.auth.company.domain.entity.company.CompanyType;
 @Builder(access = AccessLevel.PRIVATE)
 public class UpdateCompanyDto {
 
-  private Long companyId;
+  private String companyUuid;
   private String name;
   private String address;
   private CompanyType companyType;
 
-  public static UpdateCompanyDto create(Long id, String name, String address,
+  public static UpdateCompanyDto create(String companyUuid, String name, String address,
       CompanyType companyType) {
     return UpdateCompanyDto.builder()
-        .companyId(id)
+        .companyType(companyType)
         .name(name)
         .address(address)
         .companyType(companyType)

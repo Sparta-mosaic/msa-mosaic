@@ -1,0 +1,63 @@
+### Get A Company
+GET http://localhost:19092/api/v1/company/{{companyUuid}}
+
+### Get All Companies
+GET http://localhost:19092/api/v1/company
+
+### Create Company
+POST http://localhost:19091/api/v1/company
+Content-Type: application/json
+
+{
+  "name": "세상에서가장맛있는족발",
+  "address": "서울시 영등포구 당산동 2가 12, 1층",
+  "companyType": "DEMAND",
+  "userUuid": "f1c61955-e2e1-41f9-88ee-a24656e1714c",
+  "hubUuid": "b0b0a5b7-58e4-4933-81bc-0ec7dc957b67"
+}
+
+### Update Company
+PUT http://localhost:19092/api/v1/company
+Content-Type: application/json
+
+{
+  "name": "세상에서가장맛있는족발",
+  "address": "서울시 영등포구 당산동 2가 12, 1층",
+  "companyType": "SUPPLY",
+  "userUuid": "",
+  "hubUuid": ""
+}
+
+### Delete Company
+DELETE http://localhost:19092/api/v1/company/{{companyId}}
+
+
+### [ADMIN] Create Company
+POST http://localhost:19092/api/v1/admin/company
+Content-Type: application/json
+
+{
+  "companyUuid": "",
+  "hubUuid": ""
+}
+
+### [ADMIN] Update Company
+PUT http://localhost:19092/api/v1/admin/company
+Content-Type: application/json
+
+{
+  "companyUuid": "",
+  "hubUuid": ""
+}
+
+### [ADMIN] Update Hub ID Only
+PATCH http://localhost:19092/api/v1/admin/company
+Content-Type: application/json
+
+{
+  "companyUuid": "",
+  "hubUuid": ""
+}
+
+### [ADMIN] Delete Company
+DELETE http://localhost:19092/api/v1/admin/company/{{companyId}}

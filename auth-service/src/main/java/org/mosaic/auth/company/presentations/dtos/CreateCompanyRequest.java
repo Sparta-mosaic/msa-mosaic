@@ -18,12 +18,12 @@ public class CreateCompanyRequest {
   @NotBlank
   private CompanyType companyType;
   @NotBlank
-  private Long userId;
+  private String userUuid;
   @NotBlank
-  private Long hubId;
+  private String hubUuid;
 
   public CompanyDto toDTO() {
-    return CompanyDto.create(name, address, companyType, userId, hubId);
+    return CompanyDto.create(name, address, companyType, userUuid, hubUuid);
   }
 
 }

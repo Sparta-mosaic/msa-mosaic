@@ -11,12 +11,12 @@ import org.mosaic.auth.company.application.dtos.UpdateCompanyHubIdDto;
 public class UpdateCompanyHubIdRequest {
 
   @NotBlank
-  private Long companyId;
+  private String companyUuid;
   @NotBlank
-  private Long hubId;
+  private String hubUuid;
 
   public UpdateCompanyHubIdDto toDTO() {
-    return UpdateCompanyHubIdDto.create(companyId, hubId);
+    return UpdateCompanyHubIdDto.create(companyUuid, hubUuid);
   }
 
 }

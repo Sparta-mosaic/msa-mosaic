@@ -56,8 +56,11 @@ public abstract class BaseEntity {
         this.isDeleted = true;
     }
 
-    public void createby(String userUuid) {
+    public void createdBy(String userUuid) {
         this.createdBy = userUuid;
+    }
+    public void updatedBy(String userUuid) {
+        this.updatedBy = userUuid;
     }
 
     public void updatePrivate() {

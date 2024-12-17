@@ -11,4 +11,6 @@ public interface CompanyRepository extends QuerydslPredicateExecutor<Company> {
   Company save(Company company);
 
   Optional<Company> findById(Long companyId);
+
+  Optional<Company> findByCompanyUUID(String companyUuid);
 }

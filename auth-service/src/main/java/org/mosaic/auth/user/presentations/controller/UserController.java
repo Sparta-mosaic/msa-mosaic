@@ -34,7 +34,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResult<UserResponse>> getUser(
-        @PathVariable Long userId,
+        @PathVariable String userId,
         @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         return new ResponseEntity<>(success(
@@ -42,8 +42,8 @@ public class UserController {
             HttpStatus.OK);
     }
 
-    @PostMapping("/signIn")
-    public ResponseEntity<ApiResult<String>> signIn(
+    @PostMapping("/signUp")
+    public ResponseEntity<ApiResult<String>> signUP(
         @RequestBody @Valid SignUpCompanyRequest request) {
 
         userCommandService.createUser(request.toDto(passwordEncoder));
