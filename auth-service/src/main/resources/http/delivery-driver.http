@@ -1,0 +1,11 @@
+### 배송 담당자 생성
+POST http://localhost:19092/api/v1/delivery-drivers
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDQ2NTg0NywiZXhwIjoxNzM2MjY1ODQ3fQ.Js8cerSwLGYzr3bfFrMf2enWpEZwo1AfZoavEFkE2ts
+
+{
+  "userId": 1,
+  "hubUuid": "e1b84264-b95b-4a53-b7b9-3fba65bd784e",
+  "slackEmail": "slack@gmail.com",
+  "deliveryDriverType": "HUB"
+}

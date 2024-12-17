@@ -235,3 +235,55 @@ VALUES
     ('ab81495c-3a6c-43f9-8e1e-00be2aac4029', '이마트 창원점', '경남 창원시 성산구 완암로 28',
      'DEMAND', 37, 'c10a579b-d097-4424-a964-d8e362d27a4f',
      CURRENT_TIMESTAMP, 'master1', true, false);
+
+
+INSERT INTO P_DELIVERY_DRIVERS (DELIVERY_DRIVER_ID, DELIVERY_DRIVER_UUID, HUB_UUID, SLACK_EMAIL, TYPE, DELIVERY_ORDER, IS_PUBLIC, IS_DELETED, CREATED_AT, CREATED_BY)
+VALUES
+    (1, '4f3578cb-4d89-4b7f-9c88-72a8f4aeb941', NULL, 'driver1@slack.com', 'HUB', 1, TRUE, FALSE, NOW(), 'admin'),
+    (2, 'b9b35c5f-e56d-41c5-b9ed-e7f7a720ed91', NULL, 'driver2@slack.com', 'HUB', 2, TRUE, FALSE, NOW(), 'admin'),
+    (3, 'ddf8f2b8-0b60-4a92-9d97-b27a44b39f7b', NULL, 'driver3@slack.com', 'HUB', 3, TRUE, FALSE, NOW(), 'admin'),
+    (4, '1c2f8e69-47fd-43e7-b086-dc53a0ae3482', NULL, 'driver4@slack.com', 'HUB', 4, TRUE, FALSE, NOW(), 'admin'),
+    (5, '77f5e3b5-2c4d-4781-8779-4b8d32c14e0d', NULL, 'driver5@slack.com', 'HUB', 5, TRUE, FALSE, NOW(), 'admin'),
+    (6, 'f3c82cf0-d034-47a2-8196-b77e0d24bb64', NULL, 'driver6@slack.com', 'HUB', 6, TRUE, FALSE, NOW(), 'admin'),
+    (7, '94392e7f-bae6-44d9-95f0-458b5e8c11a2', NULL, 'driver7@slack.com', 'HUB', 7, TRUE, FALSE, NOW(), 'admin'),
+    (8, '71f7a2b1-1f6e-46b3-b9b0-4b7a9ca7b287', NULL, 'driver8@slack.com', 'HUB', 8, TRUE, FALSE, NOW(), 'admin'),
+    (9, '5e8d105e-f396-4b36-8e0b-cf885f5fd10f', NULL, 'driver9@slack.com', 'HUB', 9, TRUE, FALSE, NOW(), 'admin'),
+    (10, 'a3488ed9-1c9f-4c36-b084-57751e9c9a1e', NULL, 'driver10@slack.com', 'HUB', 10, TRUE, FALSE, NOW(), 'admin');
+
+WITH hub_uuids AS (
+    VALUES
+        ('e1b84264-b95b-4a53-b7b9-3fba65bd784e'),
+        ('a4d984c7-71bb-4eeb-b329-5ef2d39c8c63'),
+        ('ee7a252b-39cf-4411-8dc4-5b7d76e0c945'),
+        ('5f19e4d3-8a42-4af1-abc7-1f0c621627d9'),
+        ('cb3d914b-b08f-41d7-9c8a-c64f7db8ab21'),
+        ('0c66a9da-092f-4505-9a29-8f7ba531bfb3'),
+        ('781118dc-0d1b-4c89-83b5-bbfbdb19a497'),
+        ('cd781be2-6ef8-43a4-b56c-b1093f0938cf'),
+        ('d4e21760-28f3-4528-a60f-648b29275076'),
+        ('6a158b7c-fc16-4c7a-8715-fb592e9d11ff'),
+        ('f4908056-9c33-42e5-9bc7-ecf6b60c6d4a'),
+        ('b0b0a5b7-58e4-4933-81bc-0ec7dc957b67'),
+        ('8bc37a5d-bb5a-4b5b-b26a-8a7ebc8ec63a'),
+        ('7204a4ad-8c55-4e5e-bfa1-e85065016b99'),
+        ('3fc6e6e7-6a23-4df1-9b74-3e28a8c2c17c'),
+        ('0628e362-5b0f-4bc5-84d7-3ef7c6919c9b'),
+        ('c10a579b-d097-4424-a964-d8e362d27a4f')
+),
+     company_inserts AS (
+         SELECT
+             (SELECT COALESCE(MAX(DELIVERY_DRIVER_ID), 0) FROM P_DELIVERY_DRIVERS) + ROW_NUMBER() OVER () AS delivery_driver_id,
+                 md5(random()::text) AS delivery_driver_uuid,
+             hub_uuids.column1 AS hub_uuid,
+             'company' || ROW_NUMBER() OVER () AS slack_email,
+                 'COMPANY' AS type,
+             ROW_NUMBER() OVER (PARTITION BY hub_uuids.column1 ORDER BY random()) AS delivery_order,  -- hub_uuid 별로 1~10까지 순서대로 증가
+                 TRUE AS is_public,
+             FALSE AS is_deleted,
+             NOW() AS created_at,
+             'admin' AS created_by
+         FROM hub_uuids
+                  CROSS JOIN generate_series(1, 10)  -- 각 hub_uuid 당 10명의 배송 담당자 생성
+     )
+INSERT INTO P_DELIVERY_DRIVERS (DELIVERY_DRIVER_ID, DELIVERY_DRIVER_UUID, HUB_UUID, SLACK_EMAIL, TYPE, DELIVERY_ORDER, IS_PUBLIC, IS_DELETED, CREATED_AT, CREATED_BY)
+SELECT * FROM company_inserts;
