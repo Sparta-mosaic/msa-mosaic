@@ -4,6 +4,7 @@ import static org.mosaic.hub.libs.util.ApiResponseUtils.ok;
 
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.mosaic.hub.application.dtos.GetHubPathResponse;
 import org.mosaic.hub.application.dtos.HubPageResponse;
 import org.mosaic.hub.application.dtos.HubResponse;
 import org.mosaic.hub.application.service.HubQueryService;
@@ -16,6 +17,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,5 +37,11 @@ public class HubController {
       @QuerydslPredicate(root = Hub.class) Predicate predicate,
       @PageableDefault(sort = {"createdAt", "updatedAt"}, direction = Direction.DESC) Pageable pageable) {
     return ok(hubQueryService.searchHub(predicate, pageable));
+  }
+
+  @GetMapping("/api/v1/hub-paths")
+  public ResponseEntity<CommonResponse<GetHubPathResponse>> getHubPath(
+      @RequestParam String departureHubUuid, @RequestParam String arrivalHubUuid) {
+    return ok(hubQueryService.getHubPath(departureHubUuid, arrivalHubUuid));
   }
 }

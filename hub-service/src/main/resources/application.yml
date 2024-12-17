@@ -5,3 +5,6 @@ spring:
   profiles:
     active: dev
     include: datasource
+
+server:
+  port: 19095

@@ -16,7 +16,6 @@ import org.mosaic.hub.domain.model.HubTransfer;
 import org.mosaic.hub.domain.repository.HubRepository;
 import org.mosaic.hub.libs.exception.CustomException;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,6 @@ public class HubCommandService {
 
   private final HubRepository hubRepository;
 
-  @CachePut(cacheNames = "hubCache", key = "#result.hubUuid")
   public CreateHubResponse createHub(CreateHubServiceRequest request) {
     Hub hub = hubRepository.save(Hub.create(
         request.getManagerId(), request.getName(), request.getAddress(),
@@ -37,9 +35,9 @@ public class HubCommandService {
     return CreateHubResponse.from(hub);
   }
 
-  @CachePut(cacheNames = "hubCache", key = "args[0]")
-  public UpdateHubResponse updateHub(String hubUuid,
-      UpdateHubServiceRequest request) {
+  @CacheEvict(cacheNames = "hubCache", key = "args[0]")
+  public UpdateHubResponse updateHub(
+      String hubUuid, UpdateHubServiceRequest request) {
     Hub hub = getHubByUuid(hubUuid);
     hub.update(
         request.getManagerId(),
@@ -55,6 +53,7 @@ public class HubCommandService {
     hub.softDelete(userUuid);
   }
 
+  @CacheEvict(cacheNames = "hubPathCache", key = "args[0]")
   public CreateHubTransferResponse createHubTransfer(
       String departureHubUuid, CreateHubTransferServiceRequest request) {
     Hub departureHub = getHubByUuid(departureHubUuid);
@@ -67,6 +66,7 @@ public class HubCommandService {
     return CreateHubTransferResponse.from(hubTransfers);
   }
 
+  @CacheEvict(cacheNames = "hubPathCache", key = "args[0]")
   public UpdateTransferResponse updateHubTransfer(
       String departureHubUuid, String hubTransferUuid,
       UpdateHubTransferServiceRequest request) {
@@ -78,10 +78,11 @@ public class HubCommandService {
     return UpdateTransferResponse.from(hubTransfer);
   }
 
+  @CacheEvict(cacheNames = "hubPathCache", key = "args[0]")
   public void deleteHubTransfer(
       String userUuid, String departureHubUuid, String hubTransferUuid) {
-    HubTransfer hubTransfer = findHubTransfer(departureHubUuid,
-        hubTransferUuid);
+    HubTransfer hubTransfer = findHubTransfer(
+        departureHubUuid, hubTransferUuid);
     hubTransfer.softDelete(userUuid);
   }
 
@@ -97,10 +98,10 @@ public class HubCommandService {
   private List<HubTransfer> generateHubTransfer(
       Hub departureHub, List<HubTransferInfo> hubTransferInfoList) {
     return hubTransferInfoList.stream()
-        .map(hubTransferInfo -> HubTransfer.create(
-            departureHub, getHubByUuid(hubTransferInfo.getArrivalHubUuid()),
-            hubTransferInfo.getEstimatedTime(),
-            hubTransferInfo.getEstimatedDistance()))
+        .map(hubTransferInfo -> {
+          Hub arrivalHub = getHubByUuid(hubTransferInfo.getArrivalHubUuid());
+          return HubTransfer.create(departureHub, arrivalHub, hubTransferInfo.getEstimatedTime(), hubTransferInfo.getEstimatedDistance());
+        })
         .toList();
   }
 
