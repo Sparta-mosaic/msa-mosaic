@@ -1,0 +1,10 @@
+###테스트
+GET http://localhost:19009/api/v1/hub
+
+
+###
+POST http://localhost:19009/api/v1/hub
+Content-Type:application/json
+
+{
+}

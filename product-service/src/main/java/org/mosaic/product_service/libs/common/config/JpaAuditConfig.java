@@ -29,7 +29,6 @@ public class JpaAuditConfig {
     this.userId = userId;
   }
 
-  // Private 메서드
   private Optional<String> getCurrentAuditor() {
     return Optional.ofNullable(userId).or(this::getHeaderUserId).or(this::throwAuthException);
   }
