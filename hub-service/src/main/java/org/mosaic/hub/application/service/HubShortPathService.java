@@ -30,7 +30,8 @@ public class HubShortPathService {
   private final HubRepository hubRepository;
 
   @Cacheable(value = "hubPathCache", key = "#departureHubUuid")
-  public Map<String, List<HubPathResponse>> findShortestPaths(String departureHubUuid) {
+  public Map<String, List<HubPathResponse>> findShortestPaths(
+      String departureHubUuid) {
     Hub departureHub = getHubByUuid(departureHubUuid);
 
     Map<String, String> hubNameMap = new HashMap<>();
@@ -45,46 +46,61 @@ public class HubShortPathService {
       Map<String, String> hubNameMap,
       String departureHubUuid) {
 
-    Map<String, Integer> hubTimeMap = new HashMap<>();
+    Map<String, HubTimeDistance> hubTimeDistanceMap = new HashMap<>();
     Map<String, String> history = new HashMap<>();
-    PriorityQueue<HubNode> queue = new PriorityQueue<>(Comparator.comparingInt(HubNode::getTime));
+    PriorityQueue<HubNode> queue = new PriorityQueue<>(
+        Comparator.comparingInt(HubNode::getTime));
 
-    hubTimeMap.put(departureHubUuid, 0);
+    hubTimeDistanceMap.put(departureHubUuid, new HubTimeDistance(0, 0.0));
     queue.add(new HubNode(departureHubUuid, 0));
 
     while (!queue.isEmpty()) {
       HubNode current = queue.poll();
 
-      if (current.getTime() > hubTimeMap.getOrDefault(current.getHubUuid(), Integer.MAX_VALUE)) continue;
+      if (current.getTime() > hubTimeDistanceMap.getOrDefault(
+              current.getHubUuid(),
+              new HubTimeDistance(Integer.MAX_VALUE, Double.MAX_VALUE))
+          .getEstimatedTime()) {
+        continue;
+      }
 
       List<HubTransfer> hubTransfers = graph.get(current.getHubUuid());
       for (HubTransfer hubTransfer : hubTransfers) {
-        int newTime = hubTimeMap.get(current.getHubUuid()) + hubTransfer.getEstimatedTime();
+        int nextTime = hubTimeDistanceMap.get(current.getHubUuid())
+            .getEstimatedTime() + hubTransfer.getEstimatedTime();
+
+        double nextDistance = hubTimeDistanceMap.get(current.getHubUuid())
+            .getEstimatedDistance() + hubTransfer.getEstimatedDistance();
 
         String nextHubUuid = hubTransfer.getArrivalHub().getUuid();
-        if (newTime < hubTimeMap.getOrDefault(nextHubUuid, Integer.MAX_VALUE)) {
-          hubTimeMap.put(nextHubUuid, newTime);
+        if (nextTime < hubTimeDistanceMap.getOrDefault(
+            nextHubUuid, new HubTimeDistance(Integer.MAX_VALUE, Double.MAX_VALUE))
+            .getEstimatedTime()) {
+          hubTimeDistanceMap.put(nextHubUuid, new HubTimeDistance(nextTime, nextDistance));
           history.put(nextHubUuid, current.getHubUuid());
-          queue.add(new HubNode(nextHubUuid, newTime));
+          queue.add(new HubNode(nextHubUuid, nextTime));
         }
       }
     }
 
-    return organizeShortestPaths(hubNameMap, hubTimeMap, history);
+    return organizeShortestPaths(hubNameMap, hubTimeDistanceMap, history);
   }
 
   private Map<String, List<HubPathResponse>> organizeShortestPaths(
       Map<String, String> hubNameMap,
-      Map<String, Integer> hubTimeMap,
+      Map<String, HubTimeDistance> hubTimeDistanceMap,
       Map<String, String> history) {
 
     Map<String, List<HubPathResponse>> shortestPaths = new HashMap<>();
 
     for (String arrivalHubUuid : hubNameMap.keySet()) {
       LinkedList<HubPathResponse> path = new LinkedList<>();
-      for (String hubUuid = arrivalHubUuid; hubUuid != null; hubUuid = history.get(hubUuid)) {
+      for (String hubUuid = arrivalHubUuid; hubUuid != null;
+          hubUuid = history.get(hubUuid)) {
         path.addFirst(HubPathResponse.create(
-            hubUuid, hubNameMap.get(hubUuid), hubTimeMap.get(hubUuid)));
+            hubUuid, hubNameMap.get(hubUuid),
+            hubTimeDistanceMap.get(hubUuid).getEstimatedTime(),
+            hubTimeDistanceMap.get(hubUuid).getEstimatedDistance()));
       }
       shortestPaths.put(arrivalHubUuid, path);
     }
@@ -109,7 +125,9 @@ public class HubShortPathService {
     while (!queue.isEmpty()) {
       Hub currentHub = queue.poll();
 
-      if (visited.contains(currentHub.getUuid())) continue;
+      if (visited.contains(currentHub.getUuid())) {
+        continue;
+      }
 
       visited.add(currentHub.getUuid());
       hubNameMap.put(currentHub.getUuid(), currentHub.getName());
@@ -117,14 +135,25 @@ public class HubShortPathService {
 
       for (HubTransfer transfer : currentHub.getHubTransfers()) {
         Hub nextHub = transfer.getArrivalHub();
-        if (!visited.contains(nextHub.getUuid())) queue.add(nextHub);
+        if (!visited.contains(nextHub.getUuid())) {
+          queue.add(nextHub);
+        }
       }
     }
   }
 
   @Getter
   @AllArgsConstructor
+  private static class HubTimeDistance {
+
+    private int estimatedTime;
+    private double estimatedDistance;
+  }
+
+  @Getter
+  @AllArgsConstructor
   private static class HubNode {
+
     private String hubUuid;
     private int time;
   }

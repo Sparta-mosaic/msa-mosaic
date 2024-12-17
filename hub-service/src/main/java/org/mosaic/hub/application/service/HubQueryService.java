@@ -39,8 +39,8 @@ public class HubQueryService {
     return HubPageResponse.from(hubPage);
   }
 
-  public GetHubPathResponse getHubPath(String departureHubUuid,
-      String arrivalHubUuid) {
+  public GetHubPathResponse getHubPath(
+      String departureHubUuid, String arrivalHubUuid) {
     Map<String, List<HubPathResponse>> allPaths = shortPathService.findShortestPaths(
         departureHubUuid);
     return GetHubPathResponse.from(
