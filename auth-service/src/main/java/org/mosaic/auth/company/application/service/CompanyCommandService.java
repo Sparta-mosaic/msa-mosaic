@@ -9,6 +9,7 @@ import org.mosaic.auth.company.domain.entity.company.Company;
 import org.mosaic.auth.company.domain.repository.CompanyRepository;
 import org.mosaic.auth.libs.exception.CustomException;
 import org.mosaic.auth.libs.exception.ExceptionStatus;
+import org.mosaic.auth.libs.security.entity.CustomUserDetails;
 import org.mosaic.auth.user.domain.entity.user.User;
 import org.mosaic.auth.user.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -65,11 +66,11 @@ public class CompanyCommandService {
     return CompanyResponse.of(company);
   }
 
-  public void delete(Long companyId) {
+  public void delete(Long companyId, CustomUserDetails userDetails) {
 
     Company company = companyRepository.findById(companyId)
         .orElseThrow(() -> new CustomException(ExceptionStatus.COMPANY_NOT_FOUND));
 
-    company.delete();
+    company.delete(userDetails.getUserUuid());
   }
 }

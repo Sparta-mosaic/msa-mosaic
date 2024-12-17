@@ -11,6 +11,7 @@ import org.mosaic.auth.company.application.service.CompanyQueryService;
 import org.mosaic.auth.company.domain.entity.company.Company;
 import org.mosaic.auth.company.presentations.dtos.CreateCompanyRequest;
 import org.mosaic.auth.company.presentations.dtos.UpdateCompanyRequest;
+import org.mosaic.auth.libs.security.entity.CustomUserDetails;
 import org.mosaic.auth.libs.util.ApiResponseUtil.ApiResult;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,7 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,9 +76,10 @@ public class CompanyController {
 
     @DeleteMapping("/{companyId}")
     public ResponseEntity<ApiResult<String>> deleteCompanyByManager(
-        @PathVariable Long companyId){
+        @PathVariable Long companyId,
+        @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        companyCommandService.delete(companyId);
+        companyCommandService.delete(companyId, userDetails);
 
         return new ResponseEntity<>(success("Delete Company Success"),
             HttpStatus.OK);
