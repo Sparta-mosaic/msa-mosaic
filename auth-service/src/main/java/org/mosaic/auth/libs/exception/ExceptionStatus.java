@@ -14,8 +14,10 @@ public enum ExceptionStatus {
 
   // Company
   COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, "업체가 존재하지 않습니다."),
-  INVALID_HUB_ID(HttpStatus.BAD_REQUEST, "허브가 존재하지 않습니다.");
+  INVALID_HUB_ID(HttpStatus.BAD_REQUEST, "허브가 존재하지 않습니다."),
 
+  // Delivery Driver
+  DELIVERY_DRIVER_NOT_FOUND(HttpStatus.NOT_FOUND, "배송 담당자가 존재하지 않습니다.");
 
   private final int status;
   private final String message;
