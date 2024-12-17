@@ -5,8 +5,8 @@ X-User-Id: 550e8400-e29b-41d4-a716-446655440006
 
 
 {
-  "supplierCompanyId": "550e8400-e29b-41d4-a716-446655440000",
-  "receiverCompanyId": "550e8400-e29b-41d4-a716-446655440001",
+  "supplierCompanyId": "ef674968-7419-4e69-94dc-a4e4aae08f94",
+  "receiverCompanyId": "f2e82b8e-4d40-4ece-8d2d-5cff1bde3868",
   "orderDetails": [
     {
       "productId": "550e8400-e29b-41d4-a716-446655440000",
@@ -15,10 +15,10 @@ X-User-Id: 550e8400-e29b-41d4-a716-446655440006
       "unitPrice": 100000
     },
     {
-      "productId": "550e8400-e29b-41d4-a716-446655440002",
-      "productName": "토요토미 옴니 230 KS-67H",
+      "productId": "550e8400-e29b-41d4-a716-446655440003",
+      "productName": "샤오미 히팅패드 HEATINGPAD7",
       "quantity": 10,
-      "unitPrice": 200000
+      "unitPrice": 45000
     },
     {
       "productId": "550e8400-e29b-41d4-a716-446655440005",
@@ -42,12 +42,13 @@ X-User-Id: 550e8400-e29b-41d4-a716-446655440006
     {
       "productId": "550e8400-e29b-41d4-a716-446655440000",
       "productName": "샤오미 전기 히터",
-      "quantity": 1000000,
-      "unitPrice": 100000
+      "quantity": 10,
+      "unitPrice": 10000
     }
   ]
 }
 
 
-###
-GET http://localhost:19007/api/v1/orders/cf515949-c358-47da-8ff1-f23076489758
+### 상품정보  인터널
+GET http://localhost:19007/api/v1/interl/orders/fe9bfdd4-dc9a-4e4e-bbc5-e3ca00d7ed3f
+X-User-Id: 550e8400-e29b-41d4-a716-446655440006

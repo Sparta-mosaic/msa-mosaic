@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.mosaic.order_service.application.dtos.ProductDeductDto;
+import org.mosaic.order_service.libs.exception.AuthException;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,10 @@ public class ProductDeductProducer {
 
   public void send(String topic, String orderUuid, List<ProductDeductDto> dto) {
     try {
-      String userId = auditorAware.getCurrentAuditor().orElse("unknown");
+      String userId =
+          auditorAware
+              .getCurrentAuditor()
+              .orElseThrow(() -> new AuthException(HttpStatus.BAD_REQUEST, "접근 할 수 없습니다."));
 
       String jsonPayload = objectMapper.writeValueAsString(dto);
 
