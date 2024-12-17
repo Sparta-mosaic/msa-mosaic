@@ -18,11 +18,11 @@ public class UserFeignController {
 
     private final UserQueryService userQueryService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userUuid}")
     public UserFeignResponse getUser(
-        @PathVariable Long userId) {
+        @PathVariable String userUuid) {
         log.info("Get User By FeignClient Success!!");
-        return userQueryService.getFeignUserResponse(userId);
+        return userQueryService.getFeignUserResponse(userUuid);
 
     }
 

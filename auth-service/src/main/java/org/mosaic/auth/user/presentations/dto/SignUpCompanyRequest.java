@@ -34,7 +34,7 @@ public class SignUpCompanyRequest {
   private String slackEmail;
 
   public UserDto toDto(PasswordEncoder passwordEncoder) {
-    return UserDto.create(
+    return UserDto.create(null,
         username, passwordEncoder.encode(password),
         UserRole.COMPANY, slackEmail);
 

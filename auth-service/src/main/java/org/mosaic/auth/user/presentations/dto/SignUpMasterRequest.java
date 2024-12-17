@@ -24,6 +24,6 @@ public class SignUpMasterRequest {
     private String slackEmail;
 
     public UserDto toDTO(PasswordEncoder passwordEncoder) {
-        return UserDto.create(username, passwordEncoder.encode(password), UserRole.MASTER, slackEmail);
+        return UserDto.create(null, username, passwordEncoder.encode(password), UserRole.MASTER, slackEmail);
     }
 }

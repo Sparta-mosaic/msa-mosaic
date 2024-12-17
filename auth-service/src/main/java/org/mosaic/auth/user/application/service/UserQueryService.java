@@ -25,12 +25,6 @@ public class UserQueryService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
-  public User findUserByUuid(Long userId) {
-
-    return userRepository.findById(userId)
-        .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
-  }
-
   public UserPageResponse findAllByQueryDslPaging(Predicate predicate, Pageable pageable) {
 
     BooleanBuilder booleanBuilder = new BooleanBuilder(predicate);
@@ -39,9 +33,9 @@ public class UserQueryService {
 
   }
 
-  public UserFeignResponse getFeignUserResponse(Long userId) {
+  public UserFeignResponse getFeignUserResponse(String  userUuid) {
 
-    User user = userRepository.findById(userId)
+    User user = userRepository.findByUserUuid(userUuid)
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
     return UserFeignResponse.of(user);
@@ -65,9 +59,9 @@ public class UserQueryService {
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
   }
 
-  public UserResponse findUserBySelf(Long userId, CustomUserDetails userDetails) {
+  public UserResponse findUserBySelf(String userUuid, CustomUserDetails userDetails) {
 
-    User user = userRepository.findById(userId)
+    User user = userRepository.findByUserUuid(userUuid)
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
     if(!user.getUserUUID().equals(userDetails.getUserUuid())) {

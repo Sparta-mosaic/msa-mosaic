@@ -34,7 +34,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResult<UserResponse>> getUser(
-        @PathVariable Long userId,
+        @PathVariable String userId,
         @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         return new ResponseEntity<>(success(

@@ -70,4 +70,12 @@ public class User extends BaseEntity {
         .isActivate(true)
         .build();
   }
+
+  public void updateUserRole(UserRole role) {
+    this.role = role;
+  }
+
+  public void update(String slackEmail) {
+    this.slackEmail = slackEmail;
+  }
 }
