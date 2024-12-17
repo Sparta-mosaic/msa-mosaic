@@ -1,0 +1,67 @@
+### Login - Company
+POST http://localhost:19092/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "com001",
+  "password": "Com001!!"
+}
+
+### Login - Master
+POST http://localhost:19092/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "master001",
+  "password": "Master001!!"
+}
+
+
+### Get A User
+GET http://localhost:19092/api/v1/auth/53851ddb-99d4-4891-bf5d-dcb8dbc8ead9
+
+### Sign Up - COMPANY
+POST http://localhost:19092/api/v1/auth/signUp
+Content-Type: application/json
+
+{
+  "username": "com001",
+  "password": "Com001!!",
+  "slackEmail": "com001@gmail.com"
+}
+
+### [ADMIN] Get All User
+GET http://localhost:19092/api/v1/admin/auth
+
+### [ADMIN] Sign Up - MASTER
+POST http://localhost:19092/api/v1/admin/auth/signUp
+Content-Type: application/json
+
+{
+  "username": "master001",
+  "password": "Master001!!",
+  "slackEmail": "master001@gmail.com"
+}
+
+### [ADMIN] Update User
+PUT http://localhost:19092/api/v1/admin/auth
+Content-Type: application/json
+
+{
+  "userUuid": "",
+  "role": ""
+}
+
+### [ADMIN] Update User Role Only
+PATCH http://localhost:19092/api/v1/admin/auth
+Content-Type: application/json
+
+{
+  "userUuid": "",
+  "username": "",
+  "slackEmail": ""
+}
+
+### [ADMIN] Delete User
+DELETE http://localhost:19092/api/v1/admin/auth/{{userUuid}}
+
