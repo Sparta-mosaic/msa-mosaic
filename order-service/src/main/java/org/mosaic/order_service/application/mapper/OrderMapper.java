@@ -8,6 +8,7 @@ import org.mosaic.order_service.application.dtos.CreateOrderDto;
 import org.mosaic.order_service.domain.entity.Order;
 import org.mosaic.order_service.domain.entity.OrderDetail;
 import org.mosaic.order_service.domain.enums.OrderState;
+import org.mosaic.order_service.infrastructure.client.dtos.OrderInfoDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,5 +41,13 @@ public class OrderMapper {
     order.addOrderStateHistory(OrderState.PENDING);
 
     return order;
+  }
+
+  public OrderInfoDto orderEntityToOrderInfoDto(Order order) {
+    return OrderInfoDto.builder()
+        .receiverCompanyId(order.getReceiverCompanyId())
+        .supplierCompanyId(order.getSupplierCompanyId())
+        .orderDate(order.getOrderDate())
+        .build();
   }
 }
