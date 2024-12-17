@@ -77,9 +77,6 @@ public class CompanyCommandService {
 
     HubResponse hubResponse = hubClient.getHub(request.getHubUuid()).getResponse();
 
-    if(!hubResponse.getIsPublic()) {
-      throw new CustomException(ExceptionStatus.INVALID_HUB_ID);
-    }
     log.info("[CompanyCommandService] Get HubResponse >>>>>>>>>>>>>>>>>> {} ", hubResponse);
 
     Company company = companyRepository.findByCompanyUUID(request.getCompanyUuid())
