@@ -32,15 +32,15 @@ spring:
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/api/v1/order/**
+            - Path=/api/v1/orders/**
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/api/v1/product/**
+            - Path=/api/v1/products/**
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
-            - Path=/api/v1/delivery/**
+            - Path=/api/v1/deliverys/**
 
       discovery:
         locator:
