@@ -3,13 +3,13 @@ spring:
     name: auth-service
 
   jwt:
-    secret: ${JWT_SECRET}
+    secret: UExPeaCVJ4gJc6hZIazq52TrMjJSaR7q7pNo475qYUo=
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/mosaic
+    username: postgres
+    password: postgres
 
   jpa:
     show-sql: true
@@ -20,7 +20,7 @@ spring:
         default_batch_fetch_size: 1000
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     defer-datasource-initialization: true
   sql:
     init:
