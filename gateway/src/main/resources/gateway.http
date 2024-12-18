@@ -1,0 +1,49 @@
+### 유저 생성
+POST http://localhost:19091/api/v1/auth/signUp
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "password": "Password1!",
+  "slackEmail": "tester@gmail.com"
+}
+
+
+### 로그인
+POST http://localhost:19091/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "password": "Password1!"
+}
+
+### 주문 생성
+POST http://localhost:19091/api/v1/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6IjlhMTVhMDQzLWUzN2QtNGQ3Zi1hMDQ4LTMwZjBlNDIxMWIyMiIsInJvbGUiOiJST0xFX05PTkUiLCJpYXQiOjE3MzQ0ODYxNzksImV4cCI6MTczNjI4NjE3OX0.S_hN978WiUYB6cvZgTtHWIDh1QMK-sEXSisnv8W5eIw
+Content-Type: application/json
+
+{
+  "supplierCompanyId": "ef674968-7419-4e69-94dc-a4e4aae08f94",
+  "receiverCompanyId": "f2e82b8e-4d40-4ece-8d2d-5cff1bde3868",
+  "orderDetails": [
+    {
+      "productId": "550e8400-e29b-41d4-a716-446655440000",
+      "productName": "샤오미 전기 히터",
+      "quantity": 10,
+      "unitPrice": 100000
+    },
+    {
+      "productId": "550e8400-e29b-41d4-a716-446655440003",
+      "productName": "샤오미 히팅패드 HEATINGPAD7",
+      "quantity": 10,
+      "unitPrice": 45000
+    },
+    {
+      "productId": "550e8400-e29b-41d4-a716-446655440005",
+      "productName": "베어샤오슝 BEAR 발난로 DNQ-A02X1",
+      "quantity": 10,
+      "unitPrice": 30000
+    }
+  ]
+}
