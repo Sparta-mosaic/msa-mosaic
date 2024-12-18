@@ -22,8 +22,7 @@
 
 
 # 인프라 아키텍처
-
-![img (2)](https://github.com/user-attachments/assets/5e9bd947-8103-465b-b10d-fa1a12d2dbe9)
+<img width="11206" alt="Sparta" src="https://github.com/user-attachments/assets/63360725-2c0f-4d32-8f0d-b48179b6bfd1" />
 
 # 기술스택
 
@@ -163,8 +162,12 @@
         -   **안정성**: 트래픽이 증가해도 일관된 성능 유지
 
 # ERD
-
+### 연관성을 통합하여 나타낸 구조
 ![img (1)](https://github.com/user-attachments/assets/fb01f295-4009-4663-a8cf-00d09f79dbb0)
-![img](https://github.com/user-attachments/assets/29a360d6-ce2d-4fb3-8ae4-c1f9575020ac)
 
+<br>
+
+### 서비스 별 스키마 분리
+
+![1212 (1)](https://github.com/user-attachments/assets/195b5f8e-f45a-47c8-85a4-767967aa5a77)
 
