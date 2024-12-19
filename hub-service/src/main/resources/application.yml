@@ -13,3 +13,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka
+
+springdoc:
+  swagger-ui:
+    enabled: false
+    operations-sorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    path: /docs/hub-service

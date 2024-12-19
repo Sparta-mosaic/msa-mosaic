@@ -28,13 +28,20 @@ public class JWTFilter extends OncePerRequestFilter {
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 
+    String requestURI = request.getRequestURI();
+
+    if (requestURI.startsWith("/docs")) {
+      log.debug("JWTFilter - Skipping authentication for Swagger endpoint: {}", requestURI);
+      filterChain.doFilter(request, response);
+      return;
+    }
+
     if (SecurityContextHolder.getContext().getAuthentication() != null) {
       log.debug("JWTFilter - Authentication already exists in SecurityContext. Skipping.");
       filterChain.doFilter(request, response);
       return;
     }
 
-    String requestURI = request.getRequestURI();
     String authorization = request.getHeader("Authorization");
 
     log.debug(
