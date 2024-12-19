@@ -1,5 +1,5 @@
 server:
-  port: 19008
+  port: 19098
 
 spring:
   application:
@@ -11,8 +11,8 @@ spring:
       data-locations: classpath:data.sql
   datasource:
     url: jdbc:postgresql://localhost:5432/mosaic
-    username: postgres
-    password: postgres
+    username: root
+    password: pass!
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
   jpa:
@@ -51,3 +51,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+springdoc:
+  swagger-ui:
+    enabled: false
+    operations-sorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    path: /docs/product-service

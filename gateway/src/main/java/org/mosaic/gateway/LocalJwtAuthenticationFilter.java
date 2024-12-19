@@ -14,6 +14,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -31,6 +32,11 @@ public class LocalJwtAuthenticationFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
         String path = exchange.getRequest().getURI().getPath();
+
+        if(new AntPathMatcher().match("/docs/**", path)) {
+            return chain.filter(exchange);
+        }
+
         if(path.equals("/api/v1/auth/login") || path.equals("/api/v1/auth/signUp") || path.equals("/api/v1/admin/auth/signUp")) {
             return chain.filter(exchange);
         }

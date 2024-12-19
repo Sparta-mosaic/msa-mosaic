@@ -12,7 +12,7 @@ spring:
         - id: auth-service
           uri: lb://auth-service
           predicates:
-            - Path=/api/v1/auth/**, /api/v1/admin/auth/**, /api/v1/company/**, /api/v1/admin/company/**
+            - Path=/api/v1/auth/**, /api/v1/admin/auth/**, /api/v1/company/**, /api/v1/admin/company/**, /docs/auth-service
         - id: slack-service
           uri: lb://slack-service
           predicates:
@@ -24,23 +24,19 @@ spring:
         - id: hub-service
           uri: lb://hub-service
           predicates:
-            - Path=/api/v1/hubs/**, /api/v1/admin/hubs/**
-        - id: delivery-driver-service
-          uri: lb://delivery-driver-service
-          predicates:
-            - Path=/api/v1/delivery-driver/**
+            - Path=/api/v1/hubs/**, /api/v1/admin/hubs/**, /docs/hub-service
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/api/v1/orders/**
+            - Path=/api/v1/orders/**, /docs/order-service
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/api/v1/products/**
+            - Path=/api/v1/products/**, /docs/product-service
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
-            - Path=/api/v1/deliverys/**
+            - Path=/api/v1/deliverys/**, /docs/delivery-service
 
       discovery:
         locator:
@@ -53,3 +49,22 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+springdoc:
+  swagger-ui:
+    path: /docs
+    urls[0]:
+      name: auth-service
+      url: /docs/auth-service
+    urls[1]:
+      name: product-service
+      url: /docs/product-service
+    urls[2]:
+      name: order-service
+      url: /docs/order-service
+    urls[3]:
+      name: delivery-service
+      url: /docs/delivery-service
+    urls[4]:
+      name: hub-service
+      url: /docs/hub-service

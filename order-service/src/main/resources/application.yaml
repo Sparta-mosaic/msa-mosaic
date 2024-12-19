@@ -8,8 +8,8 @@ spring:
       data-locations: classpath:data.sql
   datasource:
     url: jdbc:postgresql://localhost:5432/mosaic
-    username: postgres
-    password: postgres
+    username: root
+    password: pass!
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
   jpa:
@@ -45,9 +45,17 @@ spring:
               packages: "*"
 
 server:
-  port: 19007
+  port: 19097
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+springdoc:
+  swagger-ui:
+    enabled: false
+    operations-sorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    path: /docs/order-service
