@@ -52,7 +52,7 @@ public class JWTFilter extends OncePerRequestFilter {
     if (requestURI.equals("/api/v1/auth/login")
         || requestURI.equals("/api/v1/auth/signUp")
         || requestURI.equals("/api/v1/admin/auth/signUp")
-        || requestURI.equals("/api/v1/internal/deliverys")) {
+        || requestURI.matches("/api/v1/internal/.*")) {
       log.debug("JWTFilter - Skipping authentication for public endpoints: {}", requestURI);
       filterChain.doFilter(request, response);
       return;
