@@ -11,12 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.mosaic.slack.presentations.dto.CreateMessageRequestDto;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SlackDirectTemplate {
 
-  public static List<LayoutBlock> of(CreateMessageRequestDto dto) {
+  public static List<LayoutBlock> of(SlackMessageDto dto) {
     return Arrays.asList(
         SectionBlock.builder()
             .text(MarkdownTextObject.builder()
@@ -38,11 +37,10 @@ public class SlackDirectTemplate {
             .text(MarkdownTextObject.builder()
                 .text(
                     "*발송지:*\n" + dto.getDeparture() +
-                        "\n*경유지:*\n" + dto.getStopOver() +
                         "\n*도착지:*\n" + dto.getArrival() +
                         "\n*배송담당자:*\n" + dto.getDeliveryPersonName()+
                         "/" + dto.getDeliveryPersonEmail()  +
-                        "\n*배송 요청 사항:* " + dto.getOrderRequest()
+                        "\n*배송 요청 기한:* " + dto.getDeliveryDeadline()
                 )
                 .build())
             .build(),
@@ -50,9 +48,7 @@ public class SlackDirectTemplate {
         SectionBlock.builder()
             .text(MarkdownTextObject.builder()
                 .text(
-                    "위 내용을 기반으로 도출된 최종 발송 시한은 *" +
-                        dto.getDeliveryDeadline() +
-                        "* 입니다."
+                   dto.getMessage()
                 )
                 .build())
             .build(),
@@ -72,5 +68,6 @@ public class SlackDirectTemplate {
             .build()
     );
   }
+
 
 }

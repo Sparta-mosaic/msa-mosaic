@@ -54,5 +54,9 @@ public abstract class BaseEntity {
         this.isPublic = false;
         this.isDeleted = true;
     }
+
+    public void createdBy(String userUuid) {
+        this.createdBy = userUuid;
+    }
 }
 
