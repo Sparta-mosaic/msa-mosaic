@@ -1,5 +1,7 @@
 ### Save Prompt Template
-POST http://localhost:19094/api/v1/ai/template
+POST http://localhost:19091/api/v1/ai/template
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDY3OTg4MSwiZXhwIjoxNzM2NDc5ODgxfQ.Dc7DvH5f6t-RQV2MU_482bby4KYv3qd5ybcbPIYIQy0
+X-User-Id: 123e4567-e89b-12d3-a456-426614174000
 Content-Type: application/json
 
 {

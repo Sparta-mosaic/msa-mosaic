@@ -3,10 +3,10 @@ package org.mosaic.auth.application.service.user;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.mosaic.auth.application.dtos.user.ClientUserResponse;
 import org.mosaic.auth.libs.exception.CustomException;
 import org.mosaic.auth.libs.exception.ExceptionStatus;
 import org.mosaic.auth.libs.security.entity.CustomUserDetails;
-import org.mosaic.auth.application.dtos.user.UserFeignResponse;
 import org.mosaic.auth.application.dtos.user.UserPageResponse;
 import org.mosaic.auth.application.dtos.user.UserResponse;
 import org.mosaic.auth.domain.model.user.User;
@@ -34,12 +34,12 @@ public class UserQueryService {
 
   }
 
-  public UserFeignResponse getFeignUserResponse(String  userUuid) {
+  public ClientUserResponse getClientUserResponse(String  userUuid) {
 
     User user = userRepository.findByUserUUID(userUuid)
         .orElseThrow(() -> new CustomException(ExceptionStatus.USER_NOT_FOUND));
 
-    return UserFeignResponse.of(user);
+    return ClientUserResponse.of(user);
   }
 
   public User getAuthenticateUser(String username, String password) {

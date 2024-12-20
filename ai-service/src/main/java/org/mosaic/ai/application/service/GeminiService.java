@@ -1,6 +1,7 @@
 package org.mosaic.ai.application.service;
 
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.mosaic.ai.application.dtos.ChatResponse;
 import org.mosaic.ai.domain.entity.AIInteractionLog;
@@ -10,7 +11,7 @@ import org.mosaic.ai.domain.repository.AIPromptTemplateRepository;
 import org.mosaic.ai.libs.exception.CustomException;
 import org.mosaic.ai.libs.exception.ExceptionStatus;
 import org.mosaic.ai.presentation.dtos.ChatRequest;
-import org.mosaic.ai.presentation.dtos.RequestPrompt;
+import org.mosaic.ai.presentation.dtos.PromptRequest;
 import org.mosaic.ai.presentation.dtos.RequestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,7 +41,7 @@ public class GeminiService {
   @Value("${gemini.api.name}")
   private String geminiModel;
 
-  public String getContents(RequestPrompt prompt, String userUuid) {
+  public String createResponse(PromptRequest prompt, String userUuid) {
 
     AIPromptTemplate template = templateRepository
         .findFirstByOrderByCreatedAtDesc()
@@ -53,7 +54,8 @@ public class GeminiService {
     ChatRequest request = new ChatRequest(requestPrompt);
     ChatResponse response = restTemplate.postForObject(requestUrl, request, ChatResponse.class);
 
-    String responseMessage = response.getCandidates().get(0).getContent().getParts().get(0).getText().toString();
+    String responseMessage = Objects.requireNonNull(response)
+        .getCandidates().get(0).getContent().getParts().get(0).getText();
 
     AIInteractionLog interactionLog = AIInteractionLog.create(requestPrompt,responseMessage, geminiModel);
     interactionLog.createdBy(userUuid);
@@ -62,11 +64,12 @@ public class GeminiService {
     return responseMessage;
   }
 
-  public void registPromptTemplate(RequestTemplate template, String userUuid) {
+  public void createPromptTemplate(RequestTemplate template, String userUuid) {
 
     AIPromptTemplate newTemplate =  AIPromptTemplate.create(template.getTemplate());
     newTemplate.createdBy(userUuid);
     templateRepository.save(newTemplate);
 
   }
+
 }

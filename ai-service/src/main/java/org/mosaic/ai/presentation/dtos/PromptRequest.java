@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString
-public class RequestPrompt {
+public class PromptRequest {
 
   @NotBlank
   private String departure;

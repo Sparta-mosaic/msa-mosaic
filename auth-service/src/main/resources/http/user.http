@@ -18,7 +18,7 @@ Content-Type: application/json
   "slackEmail": "master@gmail.com"
 }
 
-### 로그인
+### 로그인 (마스터)
 POST http://localhost:19092/api/v1/auth/login
 Content-Type: application/json
 
@@ -27,10 +27,20 @@ Content-Type: application/json
   "password": "Password1!"
 }
 
+### 로그인
+POST http://localhost:19092/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "password": "Password1!"
+}
+
 ### 유저 조회 (마스터)
-GET http://localhost:19092/api/v1/auth/b4386d7e-8897-4101-8ce5-5f478f8b9f1a
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6ImE4Yjk3YTAxLTJhMmYtNDE3ZS1hZGZiLWFhYjczYzMxZTliZCIsInJvbGUiOiJNQVNURVIiLCJpYXQiOjE3MzQ0NDI0MzIsImV4cCI6MTczNjI0MjQzMn0.JqqeTDf85yAtPxdRB4Dka7k96UuZeDL8nSJSqmsVICo
+GET http://localhost:19092/api/v1/auth/899683e4-0212-4ec6-9a7f-7f58464e92bd
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5OTY4M2U0LTAyMTItNGVjNi05YTdmLTdmNTg0NjRlOTJiZCIsInJvbGUiOiJST0xFX01BU1RFUiIsImlhdCI6MTczNDY3OTg4MSwiZXhwIjoxNzM2NDc5ODgxfQ.Dc7DvH5f6t-RQV2MU_482bby4KYv3qd5ybcbPIYIQy0
 
 
 ### 유저 조회 (내 정보)
-GET http://localhost:19092/api/v1/auth/z23fef12-8f5f-4872-b983-2b50ad958003
+GET http://localhost:19091/api/v1/auth/0eeeb408-9a2c-49bd-a769-7ecb6aabe499
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6IjBlZWViNDA4LTlhMmMtNDliZC1hNzY5LTdlY2I2YWFiZTQ5OSIsInJvbGUiOiJST0xFX05PTkUiLCJpYXQiOjE3MzQ2NzkwNzYsImV4cCI6MTczNjQ3OTA3Nn0.MR-bku71Fm8LS-Z0S4PvIb-IRNJGzViuEqdC3UfZeeQ

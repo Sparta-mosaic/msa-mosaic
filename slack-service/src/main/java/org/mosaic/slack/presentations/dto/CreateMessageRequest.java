@@ -6,18 +6,17 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CreateMessageRequestDto {
+public class CreateMessageRequest {
 
   private String orderId;
-  private String customerName;
-  private String customerEmail;
-  private String deliveryPersonName;
-  private String deliveryPersonEmail;
+  private String customerId;
+  private String deliveryPersonId;
   private String productInfo;
   private String departure;
   private String stopOver;
   private String arrival;
   private String deliveryDeadline;
-  private String orderRequest;
+  private String estimateTime;
+
 
 }

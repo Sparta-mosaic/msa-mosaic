@@ -1,0 +1,17 @@
+### Create and Send delivery Message
+POST http://localhost:19091/api/v1/slack
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyVXVpZCI6Ijg5NTQ3ZWUxLTg3NjYtNDFmZC05ZDJjLTFmMTBjY2VkYTkzYiIsInJvbGUiOiJST0xFX05PTkUiLCJpYXQiOjE3MzQ2ODE2NjMsImV4cCI6MTczNjQ4MTY2M30.77lNVNun3SJhKZfVQRuj-duTuBd_Bu_GNmpfEzeSTbM
+X-User-Id: 89547ee1-8766-41fd-9d2c-1f10cceda93b
+Content-Type: application/json
+
+{
+  "orderId": "22",
+  "customerId": "2790e8d6-9bc5-49b6-9cc7-660a84af1b90",
+  "deliveryPersonId": "f8774455-8f5f-4872-b983-2b50ad958003",
+  "productInfo": "샤오미 전기 히터 2025년 최신상",
+  "departure": "서울특별시 송파구 송파대로 55",
+  "stopOver": "",
+  "arrival": "경북 예천군 호명면 새움1로 10",
+  "deliveryDeadline": "12월 25일 12시 이전까지 꼭 배송해주세요!!",
+  "estimateTime": "7600"
+}
