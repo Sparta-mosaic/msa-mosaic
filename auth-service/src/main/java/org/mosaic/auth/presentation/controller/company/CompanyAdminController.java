@@ -42,7 +42,7 @@ public class CompanyAdminController {
     }
 
     @PutMapping
-    @PreAuthorize("hasAnyRole('MASTER', 'HUB_MANAGER', 'COMPANY')")
+    @PreAuthorize("hasAnyRole('ROLE_MASTER', 'HUB_MANAGER', 'COMPANY')")
     public ResponseEntity<CommonResponse<CompanyResponse>> updateCompany(
         @RequestBody UpdateCompanyRequest request,
         @AuthenticationPrincipal CustomUserDetails userDetails){
